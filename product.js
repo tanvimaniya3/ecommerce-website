@@ -1,28 +1,23 @@
 let params = new URLSearchParams(window.location.search);
 let id = params.get("id");
 
-async function loadProduct(){
+fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
+.then(res => res.json())
+.then(data => {
 
-let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products");
-let data = await res.json();
+let product = data.find(p => p._id == id);
 
-// 🔥 id match fix (string compare)
-let p = data.find(item => item._id.toString() === id);
-
-if(!p){
-alert("Product not found");
+if(!product){
+alert("Product not found ❌");
 return;
 }
 
-// TEXT
-document.getElementById("pName").innerText = p.name;
-document.getElementById("pPrice").innerText = "₹" + p.price;
-document.getElementById("pDesc").innerText = p.description || "No Description";
+// ✅ SAFE rendering
+document.getElementById("mainImage").src = product.image || "";
+document.getElementById("pName").innerText = product.name || "";
+document.getElementById("pPrice").innerText = "₹" + (product.price || 0);
 
-// IMAGE
-document.getElementById("mainImage").src =
-"https://ecommerce-website-pmr7.onrender.com/" + p.image;
-
-}
-
-loadProduct();
+})
+.catch(err => {
+console.log("DETAIL ERROR:", err);
+});
