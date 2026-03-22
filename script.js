@@ -1,5 +1,5 @@
 // 🔥 LOAD PRODUCTS
-fetch("/api/products")
+fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
 showProducts(data);
@@ -40,7 +40,7 @@ box.innerHTML += `
 // 🔥 ADD TO CART (FINAL FIXED)
 function addToCart(id){
 
-fetch("/api/products")
+fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
 
