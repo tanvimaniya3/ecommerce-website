@@ -7,6 +7,8 @@ let quantity = 1;
 // 🔥 LOAD PRODUCT (FINAL WORKING)
 async function loadProduct(){
 
+try{
+
 let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products");
 let data = await res.json();
 
@@ -40,6 +42,11 @@ gallery.innerHTML += `
 <img src="${fullImg}" width="80" onclick="changeImage('${fullImg}')">
 `;
 });
+}
+
+}catch(err){
+console.error(err);
+alert("Error loading product");
 }
 
 }
