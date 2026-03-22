@@ -4,11 +4,18 @@ let id = params.get("id");
 let productData = null;
 let quantity = 1;
 
-// 🔥 load product
+// 🔥 LOAD PRODUCT (FINAL WORKING)
 async function loadProduct(){
 
-let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products/" + id);
-let p = await res.json();
+let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products");
+let data = await res.json();
+
+let p = data.find(item => item._id == id);
+
+if(!p){
+alert("Product not found");
+return;
+}
 
 productData = p;
 
@@ -17,11 +24,11 @@ document.getElementById("pName").innerText = p.name;
 document.getElementById("pPrice").innerText = "₹" + p.price;
 document.getElementById("pDesc").innerText = p.description || "No Description";
 
-// 🔥 IMAGE FIX
+// IMAGE
 document.getElementById("mainImage").src =
 "https://ecommerce-website-pmr7.onrender.com/" + p.image;
 
-// 🔥 GALLERY
+// GALLERY
 let gallery = document.getElementById("gallery");
 gallery.innerHTML = "";
 
@@ -89,7 +96,6 @@ cart.push(productData);
 
 localStorage.setItem("cart", JSON.stringify(cart));
 
-// 👉 direct checkout page
 window.location.href = "checkout.html";
 
 }
