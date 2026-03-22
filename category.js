@@ -7,7 +7,7 @@ document.getElementById("catName").innerText = category;
 
 let allProducts = [];
 
-fetch("/api/products")
+fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
 
@@ -71,7 +71,7 @@ showProducts(sorted);
 // 🔥 ADD TO CART (ONLY ONE FUNCTION)
 function addToCart(id){
 
-fetch("/api/products")
+fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
 
