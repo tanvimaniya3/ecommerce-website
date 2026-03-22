@@ -1,23 +1,12 @@
-async function loadProduct(){
+let product = {
+name: "Cooking Pan",
+price: 499,
+description: "High quality non-stick pan for daily use",
+image: "products/product1.jpg"
+};
 
-let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products");
-let data = await res.json();
+document.getElementById("pName").innerText = product.name;
+document.getElementById("pPrice").innerText = "₹" + product.price;
+document.getElementById("pDesc").innerText = product.description;
 
-// 👉 FIRST PRODUCT
-let p = data[0];
-
-if(!p){
-alert("No product found");
-return;
-}
-
-document.getElementById("pName").innerText = p.name;
-document.getElementById("pPrice").innerText = "₹" + p.price;
-document.getElementById("pDesc").innerText = p.description || "No Description";
-
-document.getElementById("mainImage").src =
-"https://ecommerce-website-pmr7.onrender.com/" + p.image;
-
-}
-
-loadProduct();
+document.getElementById("mainImage").src = product.image;
