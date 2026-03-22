@@ -2,7 +2,7 @@ let params = new URLSearchParams(window.location.search);
 
 let id = params.get("id");
 
-fetch("/api/products")
+fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
 .then(res=>res.json())
 .then(data=>{
 
