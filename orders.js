@@ -1,6 +1,6 @@
 async function loadOrders(){
 
-let res = await fetch("/api/orders");
+let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/orders");
 let orders = await res.json();
 
 let box = document.getElementById("ordersBox");
@@ -39,7 +39,7 @@ box.innerHTML += `
 // 🔥 CHANGE STATUS FUNCTION
 async function changeStatus(id, status){
 
-await fetch("/api/orders/" + id,{
+await fetch("https://ecommerce-website-pmr7.onrender.com/api/orders" + id,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json"
