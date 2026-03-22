@@ -7,23 +7,31 @@ let quantity = 1;
 // 🔥 load product
 async function loadProduct(){
 
-let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products" + id);
+let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products/" + id);
 let p = await res.json();
 
 productData = p;
 
+// TEXT
 document.getElementById("pName").innerText = p.name;
 document.getElementById("pPrice").innerText = "₹" + p.price;
 document.getElementById("pDesc").innerText = p.description || "No Description";
 
-document.getElementById("mainImage").src = p.image;
+// 🔥 IMAGE FIX
+document.getElementById("mainImage").src =
+"https://ecommerce-website-pmr7.onrender.com/" + p.image;
 
+// 🔥 GALLERY
 let gallery = document.getElementById("gallery");
 gallery.innerHTML = "";
 
 if(p.images){
 p.images.forEach(img=>{
-gallery.innerHTML += `<img src="${img}" width="80" onclick="changeImage('${img}')">`;
+let fullImg = "https://ecommerce-website-pmr7.onrender.com/" + img;
+
+gallery.innerHTML += `
+<img src="${fullImg}" width="80" onclick="changeImage('${fullImg}')">
+`;
 });
 }
 
