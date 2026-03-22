@@ -34,7 +34,7 @@ localStorage.setItem("lastOrder", JSON.stringify(order));
 
 
 // 🔥 SEND TO SERVER
-let res = await fetch("/api/orders",{
+let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
