@@ -7,7 +7,7 @@ let quantity = 1;
 // 🔥 load product
 async function loadProduct(){
 
-let res = await fetch("/api/products/" + id);
+let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/products" + id);
 let p = await res.json();
 
 productData = p;
