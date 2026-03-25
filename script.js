@@ -1,26 +1,42 @@
-// 🔥 LOAD PRODUCTS
+// 🔥 LOAD PRODUCTS (FINAL FIXED)
 fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
+console.log("DATA:", data); // debug
 showProducts(data);
+})
+.catch(err => {
+console.log("FETCH ERROR:", err);
+alert("Products load nahi ho rahe ❌");
 });
 
+
+// 🔥 SHOW PRODUCTS
 function showProducts(products){
 
 let box = document.getElementById("productContainer");
 
-if(!box) return;
+// 👉 अगर div नहीं मिला
+if(!box){
+console.log("productContainer nahi mila ❌");
+return;
+}
 
 box.innerHTML = "";
+
+// 👉 अगर data empty है
+if(!products || products.length === 0){
+box.innerHTML = "<h3>No products found ❌</h3>";
+return;
+}
 
 products.forEach(p => {
 
 box.innerHTML += `
-
 <div class="product">
 
 <a href="product.html?id=${p._id}">
-<img src="${p.image}" width="200">
+<img src="https://ecommerce-website-pmr7.onrender.com/${p.image}" width="200">
 <h3>${p.name}</h3>
 </a>
 
@@ -29,7 +45,6 @@ box.innerHTML += `
 <button onclick="addToCart('${p._id}')">Add to Cart</button>
 
 </div>
-
 `;
 
 });
@@ -37,7 +52,7 @@ box.innerHTML += `
 }
 
 
-// 🔥 ADD TO CART (FINAL FIXED)
+// 🔥 ADD TO CART
 function addToCart(id){
 
 fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
@@ -45,6 +60,11 @@ fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
 .then(data => {
 
 let product = data.find(p => p._id == id);
+
+if(!product){
+alert("Product nahi mila ❌");
+return;
+}
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -68,9 +88,11 @@ localStorage.setItem("cart", JSON.stringify(cart));
 
 alert("Product Added To Cart");
 
-// 🔥 cart count update
 updateCartCount();
 
+})
+.catch(err=>{
+console.log("CART ERROR:", err);
 });
 
 }
