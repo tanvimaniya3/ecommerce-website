@@ -1,47 +1,36 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
+<html>
 
-    <html>
+<head>
+<title>Products</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
+</head>
 
-    <head>
-    <title>Product</title>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="product.js"></script>
-    </head>
+<body>
 
-    <body>
+<header class="navbar">
 
-    <header class="navbar">
+<div class="logo">
+<a href="index.html">ShopSphere</a>
+</div>
 
-    <div class="logo">
-    <a href="index.html">ShopSphere</a>
-    </div>
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+<a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+</nav>
 
-    <nav>
-    <a href="index.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-    </nav>
+</header>
 
-    </header>
+<section class="products">
 
-    <section class="product-detail">
+<h2>All Products</h2>
 
-    <img id="pImage" width="350">
+<!-- 🔥 IMPORTANT DIV -->
+<div id="productContainer"></div>
 
-    <div>
+</section>
 
-    <h1 id="pName"></h1>
-
-    <p id="pPrice"></p>
-
-    <p>Premium quality product for your home and lifestyle.</p>
-
-    <button onclick="addToCart()">Add to Cart</button>
-
-    </div>
-
-    </section>
-
-    </body>
-
-    </html>
+</body>
+</html>
