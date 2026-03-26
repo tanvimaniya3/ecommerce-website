@@ -1,23 +1,92 @@
 let params = new URLSearchParams(window.location.search);
 let id = params.get("id");
 
+let productData = null;
+let quantity = 1;
+
+// 🔥 LOAD PRODUCT
 fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
-.then(res => res.json())
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
 
 let product = data.find(p => p._id == id);
 
-if(!product){
-alert("Product not found ❌");
-return;
+productData = product;
+
+document.getElementById("pImage").src = "https://ecommerce-website-pmr7.onrender.com" + product.image;
+document.getElementById("pName").innerText = product.name;
+document.getElementById("pPrice").innerText = "₹" + product.price;
+document.getElementById("pDesc").innerText = product.description || "";
+
+updateCartCount();
+
+});
+
+// 🔥 QTY
+function increaseQty(){
+quantity++;
+document.getElementById("qty").innerText = quantity;
 }
 
-// ✅ SAFE rendering
-document.getElementById("mainImage").src = product.image || "";
-document.getElementById("pName").innerText = product.name || "";
-document.getElementById("pPrice").innerText = "₹" + (product.price || 0);
+function decreaseQty(){
+if(quantity > 1){
+quantity--;
+document.getElementById("qty").innerText = quantity;
+}
+}
 
-})
-.catch(err => {
-console.log("DETAIL ERROR:", err);
+// 🔥 ADD TO CART
+function addToCart(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let existing = cart.find(p => p._id == productData._id);
+
+if(existing){
+existing.qty += quantity;
+}else{
+productData.qty = quantity;
+cart.push(productData);
+}
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+alert("Added to Cart");
+
+updateCartCount();
+
+}
+
+// 🔥 BUY NOW
+function buyNow(){
+
+let cart = [];
+
+productData.qty = 1;
+
+cart.push(productData);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+window.location.href = "checkout.html";
+
+}
+
+// 🔥 CART COUNT
+function updateCartCount(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let count = 0;
+
+cart.forEach(p=>{
+count += p.qty || 1;
 });
+
+let badge = document.getElementById("cartCount");
+
+if(badge){
+badge.innerText = count;
+}
+
+}
