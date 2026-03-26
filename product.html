@@ -1,31 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-<title>Product</title>
-<link rel="stylesheet" href="style.css">
-<script defer src="product.js"></script>
-</head>
-
-<body>
-
-<header class="navbar">
-
-<div class="logo">
-<a href="index.html">ShopSphere</a>
-</div>
-
-<nav>
-<a href="index.html">Home</a>
-<a href="products.html">Products</a>
-<a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-</nav>
-
-</header>
-
 <section class="product-detail">
 
-<img id="mainImage" width="350">
+<img id="pImage" width="350">
 
 <div>
 
@@ -33,13 +8,21 @@
 
 <p id="pPrice"></p>
 
-<p>Premium quality product for your home and lifestyle.</p>
+<p id="pDesc"></p>
+
+<!-- 🔥 Quantity -->
+<div>
+<button onclick="decreaseQty()">-</button>
+<span id="qty">1</span>
+<button onclick="increaseQty()">+</button>
+</div>
+
+<br>
 
 <button onclick="addToCart()">Add to Cart</button>
+
+<button onclick="buyNow()">Buy Now</button>
 
 </div>
 
 </section>
-
-</body>
-</html>
