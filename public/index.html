@@ -1,1 +1,129 @@
-<h1>test</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ShopSphere</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<section>
+<header class="navbar">
+
+<div class="logo">
+<a href="index.html">ShopSphere</a>
+</div>
+
+<nav>
+
+<a href="index.html" style="margin: 40px;">Home</a>
+<a href="products.html" style="margin: 40px;">Products</a>
+<a href="about.html" style="margin: 40px;">About</a>
+<a href="blog.html" style="margin: 40px;">Blog</a>
+<a href="contact.html" style="margin: 40px;">Contact</a>
+<a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+
+</nav>
+
+<div class="icons">
+
+<span class="search-icon" style="font-size: 17px;" onclick="toggleSearch()">🔍</span>
+
+<input type="text" id="searchBox" placeholder="Search..." class="search-input">
+
+<a href="cart.html" style="margin-right: 10px; font-size: 17px;">🛒</a>
+
+</div>
+
+</header>
+
+<!-- HERO SECTION -->
+
+<section class="hero">
+
+<div class="hero-text">
+
+<h1>All You <span>Need</span></h1>
+
+<p>Premium quality products for your home, lifestyle, and everyday needs.</p>
+
+<button class="btn">Shop Now</button>
+
+</div>
+
+</section>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="features">
+
+<div>🚚 Free Shipping</div>
+<div>🛡 Warranty</div>
+<div>👨‍🍳 Chef Approved</div>
+<div>⭐ Premium Quality</div>
+
+</section>
+
+<!-- CATEGORIES -->
+
+<section class="categories">
+
+<h2>Shop by Category</h2>
+
+<div class="category-grid">
+
+<a href="category.html?cat=cookware" class="card">
+<img src="image/category1.jpg">
+<h3>Cookware</h3>
+</a>
+
+<a href="category.html?cat=appliances" class="card">
+<img src="image/category2.jpg">
+<h3>Appliances</h3>
+</a>
+
+<a href="category.html?cat=storage" class="card">
+<img src="image/category3.jpg">
+<h3>Storage</h3>
+</a>
+
+<a href="category.html?cat=dining" class="card">
+<img src="image/category4.jpg">
+<h3>Dining</h3>
+</a>
+
+</div>
+
+</section>
+
+<!-- PRODUCTS -->
+
+<section class="products">
+
+<h2>Featured Products</h2>
+
+<!-- 🔥 IMPORTANT FIX -->
+<div class="product-grid" id="productContainer">
+
+<!-- Products will load here dynamically -->
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>©️ 2026 ShopSphere</p>
+
+</footer>
+
+</body>
+</html>
