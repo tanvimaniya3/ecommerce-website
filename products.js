@@ -14,7 +14,7 @@ box.innerHTML += `
 <div class="product">
 
 <a href="product.html?id=${p._id}">
-<img src="${p.image}" width="200">
+<img src="https://ecommerce-website-pmr7.onrender.com${p.image}" width="200">
 <h3>${p.name}</h3>
 </a>
 
@@ -25,7 +25,25 @@ box.innerHTML += `
 
 });
 
-})
-.catch(err => {
-console.log("PRODUCT ERROR:", err);
+updateCartCount();
+
 });
+
+// 🔥 CART COUNT
+function updateCartCount(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let count = 0;
+
+cart.forEach(p=>{
+count += p.qty || 1;
+});
+
+let badge = document.getElementById("cartCount");
+
+if(badge){
+badge.innerText = count;
+}
+
+}
