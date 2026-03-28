@@ -4,14 +4,21 @@ let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/orders");
 let orders = await res.json();
 
 let box = document.getElementById("ordersBox");
-
 box.innerHTML = "";
 
-orders.reverse().forEach(order => {
+// 🔥 latest first
+orders.reverse();
+
+if(orders.length === 0){
+box.innerHTML = "<h3>No Orders Yet ❌</h3>";
+return;
+}
+
+orders.forEach(order => {
 
 box.innerHTML += `
 
-<div class="order">
+<div class="order" style="border:1px solid #ccc; padding:10px; margin:10px; border-radius:10px;">
 
 <h3>👤 ${order.name}</h3>
 <p>📞 ${order.phone}</p>
@@ -20,19 +27,23 @@ box.innerHTML += `
 <h4>🛒 Products:</h4>
 
 ${order.items.map(p => `
-<div>
+<div style="display:flex; gap:10px; align-items:center;">
 <img src="https://ecommerce-website-pmr7.onrender.com${p.image}" width="60">
-${p.name} - ₹${p.price} x ${p.qty}
+<div>
+${p.name}<br>
+₹${p.price} x ${p.qty}
+</div>
 </div>
 `).join("")}
 
 <br>
 
-<p>Status: ${order.status}</p>
+<p><b>Status:</b> ${order.status}</p>
 
 <select onchange="updateStatus('${order._id}', this.value)">
-<option ${order.status==="Pending"?"selected":""}>Pending</option>
-<option ${order.status==="Shipped"?"selected":""}>Shipped</option>
+<option value="Pending" ${order.status==="Pending"?"selected":""}>Pending</option>
+<option value="Shipped" ${order.status==="Shipped"?"selected":""}>Shipped</option>
+<option value="Delivered" ${order.status==="Delivered"?"selected":""}>Delivered</option>
 </select>
 
 </div>
@@ -42,6 +53,7 @@ ${p.name} - ₹${p.price} x ${p.qty}
 });
 
 }
+
 
 // 🔥 UPDATE STATUS
 async function updateStatus(id, status){
@@ -54,10 +66,11 @@ headers:{
 body: JSON.stringify({status})
 });
 
-alert("Status Updated");
+alert("Status Updated ✅");
 
 loadOrders();
 
 }
 
+// पहली बार load
 loadOrders();
