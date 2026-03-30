@@ -1,6 +1,21 @@
+let allProducts = [];
+
+// 🔥 LOAD PRODUCTS
 fetch("https://ecommerce-website-pmr7.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
+
+allProducts = data; // save full data
+showProducts(data);
+
+})
+.catch(err => {
+console.log("PRODUCT ERROR:", err);
+});
+
+
+// 🔥 SHOW PRODUCTS
+function showProducts(products){
 
 let box = document.getElementById("productContainer");
 
@@ -8,7 +23,12 @@ if(!box) return;
 
 box.innerHTML = "";
 
-data.forEach(p => {
+if(products.length === 0){
+box.innerHTML = "<h3>No Product Found ❌</h3>";
+return;
+}
+
+products.forEach(p => {
 
 box.innerHTML += `
 <div class="product">
@@ -25,25 +45,18 @@ box.innerHTML += `
 
 });
 
-updateCartCount();
-
-});
-
-// 🔥 CART COUNT
-function updateCartCount(){
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-let count = 0;
-
-cart.forEach(p=>{
-count += p.qty || 1;
-});
-
-let badge = document.getElementById("cartCount");
-
-if(badge){
-badge.innerText = count;
 }
+
+
+// 🔍 SEARCH FUNCTION
+function searchProduct(){
+
+let input = document.getElementById("searchInput").value.toLowerCase();
+
+let filtered = allProducts.filter(p =>
+p.name.toLowerCase().includes(input)
+);
+
+showProducts(filtered);
 
 }
