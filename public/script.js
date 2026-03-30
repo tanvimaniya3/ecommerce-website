@@ -117,5 +117,27 @@ cartBox.innerText = count;
 
 }
 
+// 🔍 show/hide search
+function toggleSearch(){
+let box = document.getElementById("searchBox");
+
+if(box.style.display === "none"){
+box.style.display = "inline-block";
+}else{
+box.style.display = "none";
+}
+}
+
+// 🔍 search redirect
+function searchFromHome(){
+
+let value = document.getElementById("searchBox").value;
+
+if(value.length > 2){
+window.location.href = "products.html?search=" + value;
+}
+
+}
+
 // पहली बार load
 updateCartCount();
