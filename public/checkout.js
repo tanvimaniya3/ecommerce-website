@@ -17,7 +17,7 @@ status: "Pending"
 
 localStorage.setItem("lastOrder", JSON.stringify(order));
 
-await fetch("https://ecommerce-website-1-s0j9.onrender.com/api/orders",{
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
