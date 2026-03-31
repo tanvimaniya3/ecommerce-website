@@ -395,3 +395,16 @@ box-shadow:0 0 10px rgba(0,0,0,0.1);
 .order-card p{
 margin:5px 0;
 }
+
+/* serch */
+
+.search-input{
+width:0;
+opacity:0;
+transition:0.3s;
+}
+
+.search-input.active{
+width:150px;
+opacity:1;
+}
