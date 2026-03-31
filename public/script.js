@@ -62,7 +62,13 @@ if(cartBox) cartBox.innerText = count;
 // 🔍 FIXED SEARCH
 function toggleSearch(){
 let box = document.getElementById("searchBox");
-box.classList.toggle("active");
+
+if(box.classList.contains("active")){
+box.classList.remove("active");
+}else{
+box.classList.add("active");
+box.focus();
+}
 }
 
 function searchFromHome(e){
