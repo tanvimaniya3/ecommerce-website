@@ -1,6 +1,6 @@
 async function loadOrders(){
 
-let res = await fetch("https://ecommerce-website-1-s0j9.onrender.com/api/orders");
+let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders");
 let orders = await res.json();
 
 let box = document.getElementById("ordersBox");
@@ -44,7 +44,7 @@ async function changeStatus(id, status){
 
 if(!status) return;
 
-await fetch("https://ecommerce-website-1-s0j9.onrender.com/api/orders/" + id,{
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders/" + id,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json"
