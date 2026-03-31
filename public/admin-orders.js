@@ -1,5 +1,5 @@
 async function loadOrders(){
-let res = await fetch("https://ecommerce-website-1-s0j9.onrender.com/api/orders");
+let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders");
 let orders = await res.json();
 
 let box = document.getElementById("ordersBox");
@@ -14,7 +14,7 @@ box.innerHTML += `
 
 ${order.items.map(p => `
 <div>
-<img src="https://ecommerce-website-1-s0j9.onrender.com${p.image}" width="60">
+<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="60">
 ${p.name} - ₹${p.price} x ${p.qty}
 </div>
 `).join("")}
@@ -33,7 +33,7 @@ ${p.name} - ₹${p.price} x ${p.qty}
 }
 
 async function updateStatus(id, status){
-await fetch("https://ecommerce-website-1-s0j9.onrender.com/api/orders/" + id,{
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders/" + id,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json"
