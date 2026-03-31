@@ -17,7 +17,7 @@ order.items.forEach(p => {
 
 box.innerHTML += `
 <div>
-<img src="https://ecommerce-website-pmr7.onrender.com${p.image}" width="80">
+<img src="https://ecommerce-website-1-s0j9.onrender.com${p.image}" width="80">
 <h4>${p.name}</h4>
 <p>₹${p.price} x ${p.qty}</p>
 </div>
