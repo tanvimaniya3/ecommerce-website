@@ -1,12 +1,7 @@
-// 🔥 LOAD PRODUCTS
 fetch("https://ecommerce-website-1-s0j9.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
 showProducts(data);
-})
-.catch(err => {
-console.log("FETCH ERROR:", err);
-alert("Products load nahi ho rahe ❌");
 });
 
 function showProducts(products){
@@ -29,7 +24,6 @@ box.innerHTML += `
 });
 }
 
-// ADD TO CART
 function addToCart(id){
 fetch("https://ecommerce-website-1-s0j9.onrender.com/api/products")
 .then(res => res.json())
@@ -48,13 +42,11 @@ cart.push(product);
 }
 
 localStorage.setItem("cart", JSON.stringify(cart));
-alert("Product Added To Cart");
+alert("Added to Cart");
 updateCartCount();
-
 });
 }
 
-// CART COUNT
 function updateCartCount(){
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let count = 0;
@@ -67,20 +59,16 @@ let cartBox = document.getElementById("cartCount");
 if(cartBox) cartBox.innerText = count;
 }
 
-// SEARCH
+// 🔍 FIXED SEARCH
 function toggleSearch(){
 let box = document.getElementById("searchBox");
-
-if(box.style.display === "none"){
-box.style.display = "inline-block";
-}else{
-box.style.display = "none";
-}
+box.classList.toggle("active");
 }
 
-function searchFromHome(){
+function searchFromHome(e){
 let value = document.getElementById("searchBox").value;
-if(value.length > 2){
+
+if(e.key === "Enter" && value.length > 2){
 window.location.href = "products.html?search=" + value;
 }
 }
