@@ -1,11 +1,14 @@
 async function loadOrders(){
 
-let res = await fetch("https://ecommerce-website-pmr7.onrender.com/api/orders");
+let res = await fetch("https://ecommerce-website-1-s0j9.onrender.com/api/orders");
 let orders = await res.json();
 
 let box = document.getElementById("ordersBox");
 
 box.innerHTML = "";
+
+// 🔥 latest first
+orders.reverse();
 
 orders.forEach(o => {
 
@@ -21,9 +24,9 @@ box.innerHTML += `
 
 <select onchange="changeStatus('${o._id}', this.value)">
 <option value="">Change Status</option>
-<option value="Pending">Pending</option>
-<option value="Shipped">Shipped</option>
-<option value="Delivered">Delivered</option>
+<option value="Pending" ${o.status==="Pending"?"selected":""}>Pending</option>
+<option value="Shipped" ${o.status==="Shipped"?"selected":""}>Shipped</option>
+<option value="Delivered" ${o.status==="Delivered"?"selected":""}>Delivered</option>
 </select>
 
 <hr>
@@ -39,7 +42,9 @@ box.innerHTML += `
 // 🔥 CHANGE STATUS FUNCTION
 async function changeStatus(id, status){
 
-await fetch("https://ecommerce-website-pmr7.onrender.com/api/orders" + id,{
+if(!status) return;
+
+await fetch("https://ecommerce-website-1-s0j9.onrender.com/api/orders/" + id,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json"
@@ -47,7 +52,7 @@ headers:{
 body: JSON.stringify({status})
 });
 
-alert("Status Updated");
+alert("Status Updated ✅");
 
 loadOrders();
 
