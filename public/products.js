@@ -3,7 +3,7 @@ let allProducts = [];
 let params = new URLSearchParams(window.location.search);
 let searchQuery = params.get("search");
 
-fetch("https://ecommerce-website-1-s0j9.onrender.com/api/products")
+fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
 
@@ -35,7 +35,7 @@ products.forEach(p => {
 box.innerHTML += `
 <div class="product">
 <a href="product.html?id=${p._id}">
-<img src="https://ecommerce-website-1-s0j9.onrender.com${p.image}" width="200">
+<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="200">
 <h3>${p.name}</h3>
 </a>
 <p>₹${p.price}</p>
