@@ -4,7 +4,7 @@ let id = params.get("id");
 let productData = null;
 let quantity = 1;
 
-fetch("https://ecommerce-website-1-s0j9.onrender.com/api/products")
+fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
 .then(res=>res.json())
 .then(data=>{
 
@@ -13,7 +13,7 @@ let product = data.find(p => p._id == id);
 productData = product;
 
 document.getElementById("pImage").src =
-"https://ecommerce-website-1-s0j9.onrender.com" + product.image;
+"https://ecommerce-website-1-psvr.onrender.com" + product.image;
 
 document.getElementById("pName").innerText = product.name;
 document.getElementById("pPrice").innerText = "₹" + product.price;
