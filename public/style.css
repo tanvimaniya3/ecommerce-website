@@ -402,9 +402,16 @@ margin:5px 0;
 width:0;
 opacity:0;
 transition:0.3s;
+padding:6px;
+border:none;
+outline:none;
+background:white;
+color:black;
+border-radius:5px;
 }
 
 .search-input.active{
-width:150px;
+width:160px;
 opacity:1;
+margin-left:10px;
 }
