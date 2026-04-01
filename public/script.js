@@ -79,4 +79,27 @@ window.location.href = "products.html?search=" + value;
 }
 }
 
+// 🔥 SEARCH BUTTON FIX (FINAL)
+document.addEventListener("DOMContentLoaded", function(){
+
+let btn = document.getElementById("searchBtn");
+let box = document.getElementById("searchBox");
+
+if(btn && box){
+
+btn.addEventListener("click", function(){
+box.classList.toggle("active");
+box.focus();
+});
+
+box.addEventListener("keyup", function(e){
+if(e.key === "Enter" && box.value.length > 2){
+window.location.href = "products.html?search=" + box.value;
+}
+});
+
+}
+
+});
+
 updateCartCount();
