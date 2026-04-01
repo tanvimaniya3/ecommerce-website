@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+if(localStorage.getItem("adminLogin") !== "true"){
+window.location.href = "login.html";
+}
+</script>
 <title>Admin Panel</title>
 <script defer src="admin-panel.js"></script>
 </head>
