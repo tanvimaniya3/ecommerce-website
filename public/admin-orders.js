@@ -6,14 +6,13 @@ let orders = await res.json();
 let box = document.getElementById("ordersBox");
 box.innerHTML = "";
 
-// 🔥 STATS VARIABLES
+// 🔥 STATS
 let totalOrders = orders.length;
 let totalRevenue = 0;
 let pending = 0;
 let shipped = 0;
 let delivered = 0;
 
-// 🔥 CALCULATE STATS
 orders.forEach(o => {
 
 if(o.total){
@@ -43,8 +42,19 @@ orders.reverse();
 
 orders.forEach(order => {
 
+// 🆔 Order ID generate
+let orderId = "ORD" + order._id.slice(-5);
+
+// 🎨 status color
+let color = "black";
+if(order.status === "Pending") color = "orange";
+if(order.status === "Shipped") color = "blue";
+if(order.status === "Delivered") color = "green";
+
 box.innerHTML += `
 <div class="order">
+
+<h3>🆔 ${orderId}</h3>
 
 <h3>👤 ${order.name}</h3>
 <p>📞 ${order.phone}</p>
@@ -65,7 +75,12 @@ ${p.name}<br>
 <br>
 
 <p><b>Total:</b> ₹${order.total || "N/A"}</p>
-<p><b>Status:</b> ${order.status}</p>
+
+<p><b>Status:</b> 
+<span style="color:${color}; font-weight:bold;">
+${order.status}
+</span>
+</p>
 
 <select onchange="updateStatus('${order._id}', this.value)">
 <option value="Pending" ${order.status==="Pending"?"selected":""}>Pending</option>
