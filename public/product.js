@@ -1,77 +1,127 @@
+let allProducts = [];
+
+// URL se search query lena
 let params = new URLSearchParams(window.location.search);
-let id = params.get("id");
+let searchQuery = params.get("search");
 
-let productData = null;
-let quantity = 1;
-
+// 🔥 LOAD PRODUCTS
 fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
-.then(res=>res.json())
-.then(data=>{
+.then(res => res.json())
+.then(data => {
 
-let product = data.find(p => p._id == id);
+allProducts = data;
 
-productData = product;
+// agar home se search aaya ho
+if(searchQuery){
+document.getElementById("searchInput").value = searchQuery;
+}
 
-document.getElementById("pImage").src =
-"https://ecommerce-website-1-psvr.onrender.com" + product.image;
+applyFilters();
 
-document.getElementById("pName").innerText = product.name;
-document.getElementById("pPrice").innerText = "₹" + product.price;
-document.getElementById("pDesc").innerText = product.description || "";
-
-updateCartCount();
 });
 
-// QTY
-function increaseQty(){
-quantity++;
-document.getElementById("qty").innerText = quantity;
+
+// 🔥 SHOW PRODUCTS
+function showProducts(products){
+
+let box = document.getElementById("productContainer");
+if(!box) return;
+
+box.innerHTML = "";
+
+if(products.length === 0){
+box.innerHTML = "<h3>No Product Found ❌</h3>";
+return;
 }
 
-function decreaseQty(){
-if(quantity > 1){
-quantity--;
-document.getElementById("qty").innerText = quantity;
-}
-}
+products.forEach(p => {
 
-// ADD TO CART
-function addToCart(){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+box.innerHTML += `
+<div class="product">
 
-let existing = cart.find(p => p._id == productData._id);
+<a href="product.html?id=${p._id}">
+<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="200">
+<h3>${p.name}</h3>
+</a>
 
-if(existing){
-existing.qty += quantity;
-}else{
-productData.qty = quantity;
-cart.push(productData);
-}
+<p>₹${p.price}</p>
 
-localStorage.setItem("cart", JSON.stringify(cart));
-alert("Added to Cart");
-updateCartCount();
-}
+</div>
+`;
 
-// BUY NOW
-function buyNow(){
-let cart = [];
-productData.qty = quantity;
-cart.push(productData);
-
-localStorage.setItem("cart", JSON.stringify(cart));
-window.location.href = "checkout.html";
-}
-
-// CART COUNT
-function updateCartCount(){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-let count = 0;
-cart.forEach(p=>{
-count += p.qty || 1;
 });
 
-let badge = document.getElementById("cartCount");
-if(badge) badge.innerText = count;
+}
+
+
+// 🔥 ALL FILTERS + SEARCH + SORT
+function applyFilters(){
+
+let search = document.getElementById("searchInput").value.toLowerCase();
+let category = document.getElementById("categoryFilter")?.value || "";
+let price = document.getElementById("priceFilter")?.value || "";
+let sort = document.getElementById("sortFilter")?.value || "";
+
+let suggestionBox = document.getElementById("suggestions");
+
+// 🔍 FILTER LOGIC
+let filtered = allProducts.filter(p => {
+
+let matchSearch = p.name.toLowerCase().includes(search);
+
+let matchCategory = category === "" || p.category === category;
+
+let matchPrice = true;
+
+if(price === "low"){
+matchPrice = p.price < 500;
+}
+else if(price === "mid"){
+matchPrice = p.price >= 500 && p.price <= 2000;
+}
+else if(price === "high"){
+matchPrice = p.price > 2000;
+}
+
+return matchSearch && matchCategory && matchPrice;
+
+});
+
+// 🔃 SORT
+if(sort === "low"){
+filtered.sort((a,b)=> a.price - b.price);
+}
+else if(sort === "high"){
+filtered.sort((a,b)=> b.price - a.price);
+}
+
+// show products
+showProducts(filtered);
+
+
+// 🔥 SUGGESTIONS
+if(suggestionBox){
+suggestionBox.innerHTML = "";
+
+if(search.length > 0){
+
+filtered.slice(0,5).forEach(p => {
+suggestionBox.innerHTML += `
+<div onclick="goToProduct('${p._id}')" 
+style="padding:8px; cursor:pointer; border-bottom:1px solid #eee;">
+${p.name}
+</div>
+`;
+});
+
+}
+
+}
+
+}
+
+
+// 🔥 CLICK SUGGESTION
+function goToProduct(id){
+window.location.href = "product.html?id=" + id;
 }
