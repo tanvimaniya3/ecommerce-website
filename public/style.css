@@ -23,6 +23,7 @@ align-items:center;
 padding:20px 60px;
 background:rgba(0,0,0,0.2);  
 z-index:1000;
+gap: 10px;
 }
 
 .logo a{
@@ -397,7 +398,6 @@ margin:5px 0;
 }
 
 /* serch */
-
 .search-input{
 width:0;
 opacity:0;
@@ -405,7 +405,7 @@ transition:0.3s;
 padding:6px;
 border:none;
 outline:none;
-background:white;
+background:rgb(255, 7, 7);
 color:black;
 border-radius:5px;
 }
