@@ -1,29 +1,45 @@
-let allOrders = []; // 🔥 global store
-
-// 🔥 LOAD ORDERS
 async function loadOrders(){
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders");
 let orders = await res.json();
 
-orders.reverse(); // latest first
-
-allOrders = orders; // save all orders
-
-showOrders(orders);
-
-}
-
-// 🔥 SHOW ORDERS
-function showOrders(orders){
-
 let box = document.getElementById("ordersBox");
 box.innerHTML = "";
 
-if(orders.length === 0){
-box.innerHTML = "<h3>No Orders Found ❌</h3>";
-return;
+// 🔥 STATS VARIABLES
+let totalOrders = orders.length;
+let totalRevenue = 0;
+let pending = 0;
+let shipped = 0;
+let delivered = 0;
+
+// 🔥 CALCULATE STATS
+orders.forEach(o => {
+
+if(o.total){
+totalRevenue += o.total;
+}else{
+o.items.forEach(p=>{
+totalRevenue += p.price * p.qty;
+});
 }
+
+if(o.status === "Pending") pending++;
+if(o.status === "Shipped") shipped++;
+if(o.status === "Delivered") delivered++;
+
+});
+
+// 🔥 SHOW STATS
+document.getElementById("totalOrders").innerText = totalOrders;
+document.getElementById("totalRevenue").innerText = totalRevenue;
+document.getElementById("pendingCount").innerText = pending;
+document.getElementById("shippedCount").innerText = shipped;
+document.getElementById("deliveredCount").innerText = delivered;
+
+
+// 🔥 SHOW ORDERS
+orders.reverse();
 
 orders.forEach(order => {
 
@@ -31,6 +47,10 @@ box.innerHTML += `
 <div class="order">
 
 <h3>👤 ${order.name}</h3>
+<p>📞 ${order.phone}</p>
+<p>📍 ${order.address}, ${order.state} - ${order.pincode}</p>
+
+<h4>🛒 Items:</h4>
 
 ${order.items.map(p => `
 <div style="display:flex; gap:10px; align-items:center;">
@@ -44,6 +64,7 @@ ${p.name}<br>
 
 <br>
 
+<p><b>Total:</b> ₹${order.total || "N/A"}</p>
 <p><b>Status:</b> ${order.status}</p>
 
 <select onchange="updateStatus('${order._id}', this.value)">
@@ -59,28 +80,6 @@ ${p.name}<br>
 
 }
 
-// 🔍 FILTER + SEARCH
-function filterOrders(){
-
-let text = document.getElementById("searchOrder").value.toLowerCase();
-let status = document.getElementById("statusFilter").value;
-
-let filtered = allOrders.filter(o => {
-
-let matchText =
-o.name.toLowerCase().includes(text) ||
-o.phone?.includes(text);
-
-let matchStatus =
-status === "" || o.status === status;
-
-return matchText && matchStatus;
-
-});
-
-showOrders(filtered);
-
-}
 
 // 🔥 UPDATE STATUS
 async function updateStatus(id, status){
@@ -96,7 +95,6 @@ body: JSON.stringify({status})
 alert("Status Updated ✅");
 
 loadOrders();
-
 }
 
 // पहली बार load
