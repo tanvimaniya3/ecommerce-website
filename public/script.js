@@ -59,27 +59,7 @@ let cartBox = document.getElementById("cartCount");
 if(cartBox) cartBox.innerText = count;
 }
 
-// 🔍 FIXED SEARCH
-function toggleSearch(){
-let box = document.getElementById("searchBox");
-
-if(box.classList.contains("active")){
-box.classList.remove("active");
-}else{
-box.classList.add("active");
-box.focus();
-}
-}
-
-function searchFromHome(e){
-let value = document.getElementById("searchBox").value;
-
-if(e.key === "Enter" && value.length > 2){
-window.location.href = "products.html?search=" + value;
-}
-}
-
-// 🔥 SEARCH BUTTON FIX (FINAL)
+// 🔥 FINAL SEARCH FIX (ONLY THIS USED)
 document.addEventListener("DOMContentLoaded", function(){
 
 let btn = document.getElementById("searchBtn");
