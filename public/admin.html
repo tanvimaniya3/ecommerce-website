@@ -44,8 +44,6 @@ margin-top:10px;
 }
 </style>
 
-<script defer src="admin.js"></script>
-
 </head>
 
 <body>
@@ -62,6 +60,32 @@ margin-top:10px;
 <p id="error"></p>
 
 </div>
+
+<!-- ✅ JS yahi add kiya hai (external file ki need nahi) -->
+<script>
+
+function login(){
+
+let user = document.getElementById("username").value.trim();
+let pass = document.getElementById("password").value.trim();
+
+if(user === "admin" && pass === "1234"){
+
+// ✅ correct key
+localStorage.setItem("adminLogin","true");
+
+// 👉 IMPORTANT: yaha apna admin page ka exact naam likho
+window.location.href = "admin.html";
+
+}else{
+
+document.getElementById("error").innerText = "Wrong Username or Password ❌";
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
