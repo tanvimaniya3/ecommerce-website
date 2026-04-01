@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>Order Confirmed</title>
+<link rel="stylesheet" href="style.css">
 <script defer src="confirm.js"></script>
 </head>
 
 <body>
 
-<h1>🎉 Order Placed Successfully!</h1>
+<div style="text-align:center; padding:40px;">
 
-<h3>Customer Details</h3>
+<h2>🎉 Order Placed Successfully</h2>
+
+<p id="orderId"></p>
+
+</div>
+
+<div style="display:flex; gap:30px; padding:30px; flex-wrap:wrap;">
+
+<!-- 🛒 ITEMS -->
+<div style="flex:1; background:white; padding:20px; border-radius:10px;">
+
+<h3>🛒 Order Items</h3>
+
+<div id="orderItems"></div>
+
+<h3 id="totalAmount"></h3>
+
+</div>
+
+<!-- 📦 DETAILS -->
+<div style="flex:1; background:white; padding:20px; border-radius:10px;">
+
+<h3>📦 Delivery Details</h3>
 
 <p id="cName"></p>
 <p id="cPhone"></p>
 <p id="cAddress"></p>
 
-<h3>Products</h3>
+</div>
 
-<div id="orderItems"></div>
-
-<br>
-
-<a href="index.html">
-<button>Continue Shopping</button>
-</a>
+</div>
 
 </body>
 </html>
