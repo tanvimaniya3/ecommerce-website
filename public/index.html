@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <title>ShopSphere</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- JS FILE -->
 <script defer src="script.js"></script>
+
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-
-<section>
 <header class="navbar">
 
 <div class="logo">
@@ -19,117 +19,82 @@
 </div>
 
 <nav>
-
-<a href="index.html" style="margin: 40px;">Home</a>
-<a href="products.html" style="margin: 40px;">Products</a>
-<a href="about.html" style="margin: 40px;">About</a>
-<a href="blog.html" style="margin: 40px;">Blog</a>
-<a href="contact.html" style="margin: 40px;">Contact</a>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+<a href="about.html">About</a>
+<a href="blog.html">Blog</a>
+<a href="contact.html">Contact</a>
 <a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-
 </nav>
 
 <div class="icons">
 
 <!-- 🔍 SEARCH ICON -->
-<span class="search-icon" id="searchBtn">🔍</span>
+<span class="search-icon" id="searchBtn" style="cursor:pointer;">🔍</span>
 
-<!-- 🔍 HIDDEN SEARCH BOX -->
+<!-- 🔍 SEARCH BOX -->
 <input 
 type="text" 
 id="searchBox" 
 placeholder="Search products..." 
-class="search-input" 
-style="display:none; padding:8px; margin-left:10px;"
-onkeyup="searchFromHome()">
-
-<a href="cart.html" style="margin-right: 10px; font-size: 17px;">🛒</a>
+class="search-input">
 
 </div>
 
 </header>
 
-<!-- HERO SECTION -->
-
+<!-- HERO -->
 <section class="hero">
-
 <div class="hero-text">
-
 <h1>All You <span>Need</span></h1>
 <p>Premium quality products for your home, lifestyle, and everyday needs.</p>
-
 <button class="btn">Shop Now</button>
-
 </div>
-
-</section>
-
 </section>
 
 <!-- FEATURES -->
-
 <section class="features">
-
 <div>🚚 Free Shipping</div>
 <div>🛡 Warranty</div>
 <div>👨‍🍳 Chef Approved</div>
 <div>⭐ Premium Quality</div>
-
-</section>
-
-<!-- CATEGORIES -->
-
-<section class="categories">
-
-<h2>Shop by Category</h2>
-
-<div class="category-grid">
-
-<a href="category.html?cat=cookware" class="card">
-<img src="image/category1.jpg">
-<h3>Cookware</h3>
-</a>
-
-<a href="category.html?cat=appliances" class="card">
-<img src="image/category2.jpg">
-<h3>Appliances</h3>
-</a>
-
-<a href="category.html?cat=storage" class="card">
-<img src="image/category3.jpg">
-<h3>Storage</h3>
-</a>
-
-<a href="category.html?cat=dining" class="card">
-<img src="image/category4.jpg">
-<h3>Dining</h3>
-</a>
-
-</div>
-
 </section>
 
 <!-- PRODUCTS -->
-
 <section class="products">
-
 <h2>Featured Products</h2>
-
-<div class="product-grid" id="productContainer">
-
-<!-- Products will load here -->
-
-</div>
-
+<div class="product-grid" id="productContainer"></div>
 </section>
 
 <!-- FOOTER -->
-
 <footer>
-
 <p>©️ 2026 ShopSphere</p>
-
 </footer>
+
+<!-- 🔥 FINAL SEARCH FIX (INLINE JS) -->
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+let btn = document.getElementById("searchBtn");
+let box = document.getElementById("searchBox");
+
+if(btn && box){
+
+btn.addEventListener("click", function(){
+box.classList.toggle("active");
+box.focus();
+});
+
+box.addEventListener("keyup", function(e){
+if(e.key === "Enter" && box.value.length > 2){
+window.location.href = "products.html?search=" + box.value;
+}
+});
+
+}
+
+});
+</script>
 
 </body>
 </html>
