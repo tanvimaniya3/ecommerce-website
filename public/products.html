@@ -27,13 +27,56 @@
 
 <h2>All Products</h2>
 
+<!-- 🔥 FILTER BAR -->
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; position:relative;">
+
+<!-- 🔍 SEARCH -->
 <input 
 type="text" 
 id="searchInput" 
 placeholder="🔍 Search products..." 
-onkeyup="searchProduct()" 
-style="padding:10px; width:250px; margin-bottom:20px;">
-<div id="suggestions" style="background:white; position:absolute; width:250px; z-index:1000;"></div>
+onkeyup="applyFilters()" 
+style="padding:10px; width:200px;">
+
+<!-- 📂 CATEGORY -->
+<select id="categoryFilter" onchange="applyFilters()" style="padding:10px;">
+<option value="">All Categories</option>
+<option value="cookware">Cookware</option>
+<option value="appliances">Appliances</option>
+<option value="storage">Storage</option>
+<option value="dining">Dining</option>
+</select>
+
+<!-- 💰 PRICE -->
+<select id="priceFilter" onchange="applyFilters()" style="padding:10px;">
+<option value="">All Prices</option>
+<option value="low">Below ₹500</option>
+<option value="mid">₹500 - ₹2000</option>
+<option value="high">Above ₹2000</option>
+</select>
+
+<!-- 🔃 SORT -->
+<select id="sortFilter" onchange="applyFilters()" style="padding:10px;">
+<option value="">Sort By</option>
+<option value="low">Price Low → High</option>
+<option value="high">Price High → Low</option>
+</select>
+
+<!-- 🔥 SUGGESTIONS -->
+<div id="suggestions" style="
+background:white;
+position:absolute;
+top:45px;
+left:0;
+width:200px;
+z-index:1000;
+border-radius:5px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+"></div>
+
+</div>
+
+<!-- PRODUCTS -->
 <div id="productContainer"></div>
 
 </section>
