@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <title>Checkout</title>
+<link rel="stylesheet" href="style.css">
 <script defer src="checkout.js"></script>
 </head>
 
 <body>
 
-<h2>Checkout Form</h2>
+<h2 style="text-align:center;">🧾 Checkout</h2>
+
+<div style="display:flex; gap:30px; padding:30px; flex-wrap:wrap;">
+
+<!-- 🛒 ORDER SUMMARY -->
+<div style="flex:1; background:white; padding:20px; border-radius:10px;">
+
+<h3>🛒 Order Summary</h3>
+
+<div id="orderItems"></div>
+
+<h3 id="totalAmount" style="margin-top:20px;"></h3>
+
+</div>
+
+
+<!-- 📦 FORM -->
+<div style="flex:1; background:white; padding:20px; border-radius:10px;">
+
+<h3>📦 Shipping Details</h3>
 
 <form id="orderForm">
 
-<input id="name" placeholder="Name" required><br><br>
-<input id="phone" placeholder="Phone" required><br><br>
-<input id="pincode" placeholder="Pincode" required><br><br>
-<input id="state" placeholder="State" required><br><br>
+<input type="text" id="name" placeholder="Full Name" required style="width:100%; padding:10px; margin:10px 0;"><br>
 
-<textarea id="address" placeholder="Address" required></textarea><br><br>
+<input type="text" id="phone" placeholder="Phone Number" required style="width:100%; padding:10px; margin:10px 0;"><br>
 
-<button type="submit">Place Order</button>
+<input type="text" id="pincode" placeholder="Pincode" required style="width:100%; padding:10px; margin:10px 0;"><br>
+
+<input type="text" id="state" placeholder="State" required style="width:100%; padding:10px; margin:10px 0;"><br>
+
+<textarea id="address" placeholder="Full Address" required style="width:100%; padding:10px; margin:10px 0;"></textarea>
+
+<button type="submit" style="padding:12px; width:100%; background:black; color:white; border:none; cursor:pointer;">
+Place Order
+</button>
 
 </form>
+
+</div>
+
+</div>
 
 </body>
 </html>
