@@ -1,33 +1,30 @@
-// 🔥 GLOBAL STORE (search के लिए)
 let allOrders = [];
+let currentFilter = "All";
 
 async function loadOrders(){
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders");
 let orders = await res.json();
 
-// 🔥 SAVE FOR SEARCH
 allOrders = orders;
 
-let box = document.getElementById("ordersBox");
-box.innerHTML = "";
-
-// 🔥 STATS
 let totalOrders = orders.length;
 let totalRevenue = 0;
 let pending = 0;
 let shipped = 0;
 let delivered = 0;
 
+// 🔥 CALCULATE
 orders.forEach(o => {
 
-if(o.total){
-totalRevenue += o.total;
-}else{
+let orderTotal = 0;
+
 o.items.forEach(p=>{
-totalRevenue += p.price * p.qty;
+orderTotal += p.price * p.qty;
 });
-}
+
+o.calculatedTotal = orderTotal;
+totalRevenue += orderTotal;
 
 if(o.status === "Pending") pending++;
 if(o.status === "Shipped") shipped++;
@@ -42,25 +39,64 @@ document.getElementById("pendingCount").innerText = pending;
 document.getElementById("shippedCount").innerText = shipped;
 document.getElementById("deliveredCount").innerText = delivered;
 
-
-// 🔥 SHOW ORDERS
-orders.reverse();
-
-orders.forEach(order => {
-
-renderOrder(order, box);
-
-});
+showFilteredOrders(orders.reverse());
 
 }
 
 
-// 🔥 RENDER SINGLE ORDER (reuse)
-function renderOrder(order, box){
+// 🔍 SEARCH
+function searchOrders(){
+
+let input = document.getElementById("searchInput").value.toLowerCase();
+
+let filtered = allOrders.filter(order => {
+
+let orderId = "ord" + order._id.slice(-5);
+
+return (
+order.name.toLowerCase().includes(input) ||
+order.phone.includes(input) ||
+orderId.includes(input)
+);
+
+});
+
+// filter with status also
+if(currentFilter !== "All"){
+filtered = filtered.filter(o => o.status === currentFilter);
+}
+
+showFilteredOrders(filtered);
+
+}
+
+
+// 🔘 FILTER CLICK
+function filterStatus(status){
+
+currentFilter = status;
+
+let filtered = allOrders;
+
+if(status !== "All"){
+filtered = allOrders.filter(o => o.status === status);
+}
+
+showFilteredOrders(filtered);
+
+}
+
+
+// 🔥 SHOW UI
+function showFilteredOrders(orders){
+
+let box = document.getElementById("ordersBox");
+box.innerHTML = "";
+
+orders.forEach(order => {
 
 let orderId = "ORD" + order._id.slice(-5);
 
-// 🎨 status color
 let color = "black";
 if(order.status === "Pending") color = "orange";
 if(order.status === "Shipped") color = "blue";
@@ -89,7 +125,7 @@ ${p.name}<br>
 
 <br>
 
-<p><b>Total:</b> ₹${order.total || "N/A"}</p>
+<p><b>Total:</b> ₹${order.calculatedTotal}</p>
 
 <p><b>Status:</b> 
 <span style="color:${color}; font-weight:bold;">
@@ -105,38 +141,13 @@ ${order.status}
 
 </div>
 `;
-}
 
-
-// 🔍 SEARCH FUNCTION
-function searchOrders(){
-
-let input = document.getElementById("searchInput").value.toLowerCase();
-
-let filtered = allOrders.filter(order => {
-
-let orderId = "ord" + order._id.slice(-5);
-
-return (
-order.name.toLowerCase().includes(input) ||
-order.phone.includes(input) ||
-orderId.includes(input)
-);
-
-});
-
-// 🔥 SHOW FILTERED
-let box = document.getElementById("ordersBox");
-box.innerHTML = "";
-
-filtered.forEach(order => {
-renderOrder(order, box);
 });
 
 }
 
 
-// 🔥 UPDATE STATUS
+// 🔄 UPDATE STATUS
 async function updateStatus(id, status){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders/" + id,{
@@ -152,5 +163,6 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
-// पहली बार load
+
+// INIT
 loadOrders();
