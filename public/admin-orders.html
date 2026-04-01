@@ -28,6 +28,7 @@ flex:1;
 min-width:150px;
 text-align:center;
 font-weight:bold;
+cursor:pointer;
 }
 
 .order{
@@ -45,14 +46,18 @@ background:white;
 
 <h2>📊 Admin Dashboard</h2>
 
-<!-- 🔥 STATS -->
+<!-- 🔥 CLICK FILTER CARDS -->
 <div class="stats">
 
-<div class="card">📦 Orders: <span id="totalOrders">0</span></div>
-<div class="card">💰 Revenue: ₹<span id="totalRevenue">0</span></div>
-<div class="card">⏳ Pending: <span id="pendingCount">0</span></div>
-<div class="card">🚚 Shipped: <span id="shippedCount">0</span></div>
-<div class="card">✅ Delivered: <span id="deliveredCount">0</span></div>
+<div class="card" onclick="filterStatus('All')">📦 All <br><span id="totalOrders">0</span></div>
+
+<div class="card" onclick="filterStatus('Pending')">⏳ Pending <br><span id="pendingCount">0</span></div>
+
+<div class="card" onclick="filterStatus('Shipped')">🚚 Shipped <br><span id="shippedCount">0</span></div>
+
+<div class="card" onclick="filterStatus('Delivered')">✅ Delivered <br><span id="deliveredCount">0</span></div>
+
+<div class="card">💰 ₹<span id="totalRevenue">0</span></div>
 
 </div>
 
