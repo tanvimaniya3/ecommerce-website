@@ -1,72 +1,72 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+function loadCart(){
+
 let box = document.getElementById("cartItems");
 let totalBox = document.getElementById("totalPrice");
-
-function renderCart(){
 
 box.innerHTML = "";
 
 let total = 0;
 
-cart.forEach((p,index)=>{
+cart.forEach((p, index) => {
 
-if(!p.qty){
-p.qty = 1;
-}
-
-let price = Number(p.price);
-
-total += price * p.qty;
+total += p.price * p.qty;
 
 box.innerHTML += `
-
-<div>
-
-<img src="${p.image}" width="100">
+<div class="cart-item">
 
 <h3>${p.name}</h3>
+<p>₹${p.price}</p>
 
-<p>₹${price}</p>
+<div style="display:flex; align-items:center; gap:10px;">
 
-<button onclick="decreaseQty(${index})">-</button>
+<button onclick="decreaseQty(${index})">➖</button>
 
 <span>${p.qty}</span>
 
-<button onclick="increaseQty(${index})">+</button>
+<button onclick="increaseQty(${index})">➕</button>
+
+<button onclick="removeItem(${index})" style="margin-left:20px; color:red;">❌ Remove</button>
 
 </div>
 
+</div>
 <hr>
-
 `;
 
 });
 
-totalBox.innerText = total;
-
-// cart count
-let badge = document.getElementById("cartCount");
-if(badge){
-badge.innerText = cart.length;
-}
-
-localStorage.setItem("cart", JSON.stringify(cart));
+totalBox.innerText = "Total: ₹" + total;
 
 }
 
+
+// ➕ increase
 function increaseQty(index){
 cart[index].qty += 1;
-renderCart();
+saveCart();
 }
 
+// ➖ decrease
 function decreaseQty(index){
 if(cart[index].qty > 1){
 cart[index].qty -= 1;
-}else{
-cart.splice(index,1);
 }
-renderCart();
+saveCart();
 }
 
-renderCart();
+// ❌ remove
+function removeItem(index){
+cart.splice(index,1);
+saveCart();
+}
+
+// 💾 save
+function saveCart(){
+localStorage.setItem("cart", JSON.stringify(cart));
+loadCart();
+}
+
+// पहली बार load
+loadCart();
