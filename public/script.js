@@ -68,8 +68,14 @@ let box = document.getElementById("searchBox");
 if(btn && box){
 
 btn.addEventListener("click", function(){
-box.classList.toggle("active");
+
+if(box.style.display === "none" || box.style.display === ""){
+box.style.display = "block";
 box.focus();
+}else{
+box.style.display = "none";
+}
+
 });
 
 box.addEventListener("keyup", function(e){
