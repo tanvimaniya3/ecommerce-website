@@ -1,7 +1,13 @@
+// 🔥 GLOBAL STORE (search के लिए)
+let allOrders = [];
+
 async function loadOrders(){
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders");
 let orders = await res.json();
+
+// 🔥 SAVE FOR SEARCH
+allOrders = orders;
 
 let box = document.getElementById("ordersBox");
 box.innerHTML = "";
@@ -42,7 +48,16 @@ orders.reverse();
 
 orders.forEach(order => {
 
-// 🆔 Order ID generate
+renderOrder(order, box);
+
+});
+
+}
+
+
+// 🔥 RENDER SINGLE ORDER (reuse)
+function renderOrder(order, box){
+
 let orderId = "ORD" + order._id.slice(-5);
 
 // 🎨 status color
@@ -90,7 +105,32 @@ ${order.status}
 
 </div>
 `;
+}
 
+
+// 🔍 SEARCH FUNCTION
+function searchOrders(){
+
+let input = document.getElementById("searchInput").value.toLowerCase();
+
+let filtered = allOrders.filter(order => {
+
+let orderId = "ord" + order._id.slice(-5);
+
+return (
+order.name.toLowerCase().includes(input) ||
+order.phone.includes(input) ||
+orderId.includes(input)
+);
+
+});
+
+// 🔥 SHOW FILTERED
+let box = document.getElementById("ordersBox");
+box.innerHTML = "";
+
+filtered.forEach(order => {
+renderOrder(order, box);
 });
 
 }
