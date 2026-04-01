@@ -2,6 +2,11 @@
 <html>
 
 <head>
+  <script>
+if(localStorage.getItem("adminLogin") !== "true"){
+window.location.href = "login.html";
+}
+</script>
 <title>Admin Login</title>
 
 <style>
