@@ -6,7 +6,7 @@
 
 <style>
 body{
-font-family:Arial;
+font-family: Arial;
 background:#f5f5f5;
 margin:0;
 }
@@ -19,7 +19,7 @@ align-items:center;
 height:100vh;
 }
 
-.card{
+.card-login{
 background:white;
 padding:30px;
 border-radius:10px;
@@ -53,11 +53,31 @@ display:none;
 padding:20px;
 }
 
-.order{
+.stats{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.card{
 background:white;
-padding:15px;
-margin:10px 0;
+padding:20px;
 border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+flex:1;
+min-width:150px;
+text-align:center;
+font-weight:bold;
+cursor:pointer;
+}
+
+.order{
+border:1px solid #ccc;
+padding:15px;
+margin-bottom:20px;
+border-radius:10px;
+background:white;
 }
 </style>
 
@@ -70,7 +90,7 @@ border-radius:10px;
 <!-- 🔐 LOGIN -->
 <div id="loginBox" class="box">
 
-<div class="card">
+<div class="card-login">
 
 <h2>🔐 Admin Login</h2>
 
@@ -91,6 +111,31 @@ border-radius:10px;
 <h2>📊 Admin Dashboard</h2>
 
 <button onclick="logout()" style="width:150px;">🚪 Logout</button>
+
+<!-- 🔥 STATS -->
+<div class="stats">
+
+<div class="card" onclick="filterStatus('All')">📦 Orders: <span id="totalOrders">0</span></div>
+
+<div class="card" onclick="filterStatus('Pending')">⏳ Pending: <span id="pendingCount">0</span></div>
+
+<div class="card" onclick="filterStatus('Shipped')">🚚 Shipped: <span id="shippedCount">0</span></div>
+
+<div class="card" onclick="filterStatus('Delivered')">✅ Delivered: <span id="deliveredCount">0</span></div>
+
+<div class="card">💰 Revenue: ₹<span id="totalRevenue">0</span></div>
+
+</div>
+
+<h2>📦 All Orders</h2>
+
+<!-- 🔍 SEARCH -->
+<input 
+type="text" 
+id="searchInput" 
+placeholder="🔍 Search name / phone / order id..."
+onkeyup="searchOrders()"
+style="padding:10px; width:300px; margin-bottom:20px;">
 
 <div id="ordersBox"></div>
 
