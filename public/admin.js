@@ -184,7 +184,7 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
-// ➕ ADD PRODUCT (FINAL FIX)
+// ➕ ADD PRODUCT (AUTO RETRY FIX)
 document.addEventListener("DOMContentLoaded", function(){
 
 let form = document.getElementById("productForm");
@@ -199,29 +199,34 @@ let formData = new FormData(form);
 
 try{
 
+// 🔥 FIRST TRY
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
 body: formData
 });
 
-// 🔥 RESPONSE CHECK
+// ❌ अगर fail → retry
 if(!res.ok){
-throw new Error("Server Error");
+
+console.log("Retrying...");
+await new Promise(r => setTimeout(r, 4000)); // wait 4 sec
+
+res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
+method:"POST",
+body: formData
+});
+
 }
 
 let data = await res.json();
 
-console.log("SUCCESS:", data);
-
-alert("Product Added Successfully ✅");
-
+alert("Product Added ✅");
 form.reset();
 
 }catch(err){
 
-console.log("ERROR:", err);
-
-alert("❌ Backend error / image issue / server sleep");
+alert("❌ Still error - check backend");
+console.log(err);
 
 }
 
