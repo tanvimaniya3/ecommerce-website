@@ -4,12 +4,12 @@ const multer = require("multer");
 const cors = require("cors");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// 🔥 CORS FIX (IMPORTANT)
+// 🔥 CORS
 app.use(cors());
 
-// 🔥 MongoDB Connect
+// 🔥 MongoDB
 mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.mongodb.net/shopDB?retryWrites=true&w=majority")
 .then(()=> console.log("MongoDB Connected ✅"))
 .catch(err => console.log(err));
@@ -18,7 +18,7 @@ mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.m
 app.use(express.static("public"));
 app.use(express.json());
 
-// 📸 Image Upload
+// 📸 Upload Setup
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "public/uploads"),
   filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
@@ -61,21 +61,38 @@ app.get("/api/products/:id", async (req, res) => {
   res.json(data);
 });
 
-// 👉 Add product
+// 👉 Add product (FIXED)
 app.post("/api/products", upload.single("image"), async (req, res) => {
 
-  let newProduct = new Product({
-    name: req.body.name,
-    price: req.body.price,
-    category: req.body.category,
-    image: "/uploads/" + req.file.filename,
-    images: req.body.images ? req.body.images.split(",") : [],
-    description: req.body.description
-  });
+  try{
 
-  await newProduct.save();
+    let imagePath = "";
 
-  res.json({ message: "Product Added ✅" });
+    // 🔥 safe check (IMPORTANT FIX)
+    if(req.file){
+      imagePath = "/uploads/" + req.file.filename;
+    }
+
+    let newProduct = new Product({
+      name: req.body.name,
+      price: req.body.price,
+      category: req.body.category,
+      image: imagePath, // अब crash नहीं होगा
+      images: req.body.images ? req.body.images.split(",") : [],
+      description: req.body.description
+    });
+
+    await newProduct.save();
+
+    res.json({ message: "Product Added ✅" });
+
+  }catch(err){
+
+    console.log("ERROR:", err);
+    res.status(500).json({ message: "Server Error ❌" });
+
+  }
+
 });
 
 // ================= ORDERS =================
@@ -99,7 +116,7 @@ app.put("/api/orders/:id", async (req, res) => {
   res.json({ message: "Order Updated ✅" });
 });
 
-// 🔥 Start server
+// 🔥 Server
 app.listen(PORT, () => {
-  console.log("Server running on http://localhost:3000");
+  console.log("Server running");
 });
