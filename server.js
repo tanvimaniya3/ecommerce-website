@@ -3,6 +3,16 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const cors = require("cors");
 
+const fs = require("fs");
+const path = require("path");
+
+// 🔥 uploads folder auto create
+const uploadPath = path.join(__dirname, "public/uploads");
+
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -20,7 +30,7 @@ app.use(express.json());
 
 // 📸 Upload Setup
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "public/uploads"),
+  destination: (req, file, cb) => cb(null, uploadPath),
   filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
 });
 const upload = multer({ storage });
