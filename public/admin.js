@@ -166,7 +166,6 @@ ${order.status}
 
 </div>
 `;
-
 });
 }
 
@@ -185,7 +184,7 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
-// ➕ ADD PRODUCT
+// ➕ ADD PRODUCT (FIXED)
 document.addEventListener("DOMContentLoaded", function(){
 
 let form = document.getElementById("productForm");
@@ -198,6 +197,8 @@ e.preventDefault();
 
 let formData = new FormData(form);
 
+try{
+
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
 body: formData
@@ -208,6 +209,13 @@ let data = await res.json();
 alert(data.message || "Product Added ✅");
 
 form.reset();
+
+}catch(err){
+
+alert("Error adding product ❌");
+console.log(err);
+
+}
 
 });
 
