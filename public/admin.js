@@ -184,7 +184,7 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
-// ➕ ADD PRODUCT (AUTO RETRY FIX)
+// ➕ ADD PRODUCT (NO IMAGE TEST)
 document.addEventListener("DOMContentLoaded", function(){
 
 let form = document.getElementById("productForm");
@@ -195,38 +195,37 @@ form.addEventListener("submit", async function(e){
 
 e.preventDefault();
 
-let formData = new FormData(form);
+// 🔥 simple JSON भेज रहे हैं (no file)
+let data = {
+name: form.name.value,
+price: form.price.value,
+category: form.category.value,
+description: form.description.value,
+images: form.images.value
+};
 
 try{
 
-// 🔥 FIRST TRY
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
-body: formData
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify(data)
 });
 
-// ❌ अगर fail → retry
-if(!res.ok){
+let result = await res.json();
 
-console.log("Retrying...");
-await new Promise(r => setTimeout(r, 4000)); // wait 4 sec
-
-res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
-method:"POST",
-body: formData
-});
-
-}
-
-let data = await res.json();
+console.log(result);
 
 alert("Product Added ✅");
+
 form.reset();
 
 }catch(err){
 
-alert("❌ Still error - check backend");
 console.log(err);
+alert("❌ Backend issue");
 
 }
 
