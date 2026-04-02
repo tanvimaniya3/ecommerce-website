@@ -184,7 +184,7 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
-// ➕ ADD PRODUCT (FIXED)
+// ➕ ADD PRODUCT (FINAL FIX)
 document.addEventListener("DOMContentLoaded", function(){
 
 let form = document.getElementById("productForm");
@@ -204,16 +204,24 @@ method:"POST",
 body: formData
 });
 
+// 🔥 RESPONSE CHECK
+if(!res.ok){
+throw new Error("Server Error");
+}
+
 let data = await res.json();
 
-alert(data.message || "Product Added ✅");
+console.log("SUCCESS:", data);
+
+alert("Product Added Successfully ✅");
 
 form.reset();
 
 }catch(err){
 
-alert("Error adding product ❌");
-console.log(err);
+console.log("ERROR:", err);
+
+alert("❌ Backend error / image issue / server sleep");
 
 }
 
