@@ -184,3 +184,33 @@ body: JSON.stringify({status})
 alert("Status Updated ✅");
 loadOrders();
 }
+
+// ➕ ADD PRODUCT
+document.addEventListener("DOMContentLoaded", function(){
+
+let form = document.getElementById("productForm");
+
+if(form){
+
+form.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+let formData = new FormData(form);
+
+let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
+method:"POST",
+body: formData
+});
+
+let data = await res.json();
+
+alert(data.message || "Product Added ✅");
+
+form.reset();
+
+});
+
+}
+
+});
