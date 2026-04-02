@@ -185,52 +185,46 @@ loadOrders();
 }
 
 // ➕ ADD PRODUCT (NO IMAGE TEST)
-document.addEventListener("DOMContentLoaded", function(){
-
-let form = document.getElementById("productForm");
-
-if(form){
-
-form.addEventListener("submit", async function(e){
+document.getElementById("productForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
 
-// 🔥 simple JSON भेज रहे हैं (no file)
-let data = {
-name: form.name.value,
-price: form.price.value,
-category: form.category.value,
-description: form.description.value,
-images: form.images.value
-};
+let formData = new FormData();
+
+// 🔥 manual data add
+formData.append("name", this.name.value);
+formData.append("price", this.price.value);
+formData.append("category", this.category.value);
+formData.append("description", this.description.value);
+formData.append("images", this.images.value);
+
+// 🔥 image only if selected
+let imageFile = this.image.files[0];
+if(imageFile){
+formData.append("image", imageFile);
+}
 
 try{
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body: JSON.stringify(data)
+body: formData
 });
 
-let result = await res.json();
+let data = await res.json();
 
-console.log(result);
+console.log(data);
 
-alert("Product Added ✅");
-
-form.reset();
-
-}catch(err){
-
-console.log(err);
-alert("❌ Backend issue");
-
+if(res.ok){
+alert("✅ Product Added");
+this.reset();
+}else{
+alert("❌ " + (data.message || "Backend error"));
 }
 
-});
-
+}catch(err){
+console.log(err);
+alert("❌ Server crash");
 }
 
 });
