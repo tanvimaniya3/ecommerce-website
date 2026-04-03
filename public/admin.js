@@ -32,7 +32,7 @@ function showDashboard(){
 document.getElementById("loginBox").style.display = "none";
 document.getElementById("dashboard").style.display = "block";
 loadOrders();
-loadAdminProducts(); // 🔥 NEW
+loadAdminProducts();
 }
 
 // 📦 LOAD ORDERS
@@ -185,12 +185,42 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
-// ➕ ADD PRODUCT
+// ================= PRODUCT SECTION =================
+
+// ➕ ADD / UPDATE PRODUCT
 document.getElementById("productForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
 
-let formData = new FormData(this);
+let form = this;
+
+// 🔥 EDIT MODE CHECK
+if(form.dataset.editId){
+
+let data = {
+name: form.name.value,
+price: form.price.value,
+category: form.category.value,
+description: form.description.value,
+images: form.images.value
+};
+
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
+method:"PUT",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify(data)
+});
+
+alert("Updated ✅");
+
+delete form.dataset.editId;
+
+}else{
+
+// ➕ ADD MODE
+let formData = new FormData(form);
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
@@ -201,12 +231,14 @@ let data = await res.json();
 
 alert(data.message || "Product Added ✅");
 
-this.reset();
+}
+
+form.reset();
 loadAdminProducts();
 
 });
 
-// 🔥 LOAD PRODUCTS ADMIN
+// 🔥 LOAD PRODUCTS
 async function loadAdminProducts(){
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products");
@@ -262,32 +294,9 @@ form.category.value = p.category;
 form.description.value = p.description || "";
 form.images.value = p.images ? p.images.join(",") : "";
 
-// 🔥 update mode
-form.onsubmit = async function(e){
+// 🔥 EDIT MODE SET
+form.dataset.editId = p._id;
 
-e.preventDefault();
-
-let data = {
-name: form.name.value,
-price: form.price.value,
-category: form.category.value,
-description: form.description.value,
-images: form.images.value
-};
-
-await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + p._id,{
-method:"PUT",
-headers:{
-"Content-Type":"application/json"
-},
-body: JSON.stringify(data)
-});
-
-alert("Updated ✅");
-
-form.reset();
-loadAdminProducts();
-
-};
+window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
 
 }
