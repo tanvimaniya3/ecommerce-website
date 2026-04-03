@@ -92,7 +92,10 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
       category: req.body.category,
       image: imagePath, // अब crash नहीं होगा
       images: req.body.images ? req.body.images.split(",") : [],
-      description: req.body.description
+      description: req.body.description,
+      offerPrice: req.body.offerPrice || "",
+      stock: true,
+      visible: true
     });
 
     await newProduct.save();
