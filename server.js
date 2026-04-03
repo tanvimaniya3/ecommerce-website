@@ -110,12 +110,22 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
 // ================= ORDERS =================
 
 // 👉 Save order
-app.post("/api/orders", async (req, res) => {
-  let order = new Order(req.body);
-  await order.save();
-  res.json({ message: "Order Saved ✅" });
-});
+app.put("/api/products/:id", async (req, res) => {
 
+  try{
+
+    await Product.findByIdAndUpdate(req.params.id, req.body);
+
+    res.json({ message: "Updated ✅" });
+
+  }catch(err){
+
+    console.log(err);
+    res.status(500).json({ message: "Update Error ❌" });
+
+  }
+
+});
 // 👉 Get all orders
 app.get("/api/orders", async (req, res) => {
   let orders = await Order.find();
