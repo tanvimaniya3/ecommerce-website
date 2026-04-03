@@ -1,6 +1,7 @@
 let allOrders = [];
 let currentFilter = "All";
 let allProducts = [];
+let currentCategory = "All";
 
 // 🔁 PAGE LOAD
 window.onload = function(){
@@ -76,7 +77,7 @@ document.getElementById("deliveredCount").innerText = delivered;
 showFilteredOrders(orders.reverse());
 }
 
-// 🔍 SEARCH
+// 🔍 SEARCH ORDERS
 function searchOrders(){
 
 let input = document.getElementById("searchInput").value.toLowerCase();
@@ -100,7 +101,7 @@ filtered = filtered.filter(o => o.status === currentFilter);
 showFilteredOrders(filtered);
 }
 
-// 🔘 FILTER
+// 🔘 FILTER ORDERS
 function filterStatus(status){
 
 currentFilter = status;
@@ -114,7 +115,7 @@ filtered = allOrders.filter(o => o.status === status);
 showFilteredOrders(filtered);
 }
 
-// 🔥 SHOW UI
+// 🔥 SHOW ORDERS UI
 function showFilteredOrders(orders){
 
 let box = document.getElementById("ordersBox");
@@ -195,7 +196,6 @@ e.preventDefault();
 
 let form = this;
 
-// 🔥 EDIT MODE CHECK
 if(form.dataset.editId){
 
 let data = {
@@ -215,12 +215,10 @@ body: JSON.stringify(data)
 });
 
 alert("Updated ✅");
-
 delete form.dataset.editId;
 
 }else{
 
-// ➕ ADD MODE
 let formData = new FormData(form);
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
@@ -231,10 +229,10 @@ body: formData
 let data = await res.json();
 
 alert(data.message || "Product Added ✅");
-
 }
 
 form.reset();
+document.getElementById("preview").style.display = "none";
 loadAdminProducts();
 
 });
@@ -244,7 +242,15 @@ async function loadAdminProducts(){
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products");
 let products = await res.json();
-allProducts = products;  
+
+allProducts = products;
+
+showProducts(products);
+
+}
+
+// 🔥 SHOW PRODUCTS (COMMON FUNCTION)
+function showProducts(products){
 
 let box = document.getElementById("adminProducts");
 box.innerHTML = "";
@@ -258,6 +264,7 @@ box.innerHTML += `
 
 <h3>${p.name}</h3>
 <p>₹${p.price}</p>
+<p>📂 ${p.category}</p>
 
 <button onclick="deleteProduct('${p._id}')">❌ Delete</button>
 <button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
@@ -296,12 +303,13 @@ form.category.value = p.category;
 form.description.value = p.description || "";
 form.images.value = p.images ? p.images.join(",") : "";
 
-// 🔥 EDIT MODE SET
 form.dataset.editId = p._id;
 
 window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
 
 }
+
+// 🔍 PRODUCT SEARCH
 function searchProducts(){
 
 let input = document.getElementById("productSearch").value.toLowerCase();
@@ -310,25 +318,46 @@ let filtered = allProducts.filter(p =>
 p.name.toLowerCase().includes(input)
 );
 
-let box = document.getElementById("adminProducts");
-box.innerHTML = "";
+if(currentCategory !== "All"){
+filtered = filtered.filter(p => p.category === currentCategory);
+}
 
-filtered.forEach(p => {
-
-box.innerHTML += `
-<div class="order">
-
-<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="80">
-
-<h3>${p.name}</h3>
-<p>₹${p.price}</p>
-
-<button onclick="deleteProduct('${p._id}')">❌ Delete</button>
-<button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
-
-</div>
-`;
-
-});
+showProducts(filtered);
 
 }
+
+// 📂 CATEGORY FILTER
+function filterProducts(category){
+
+currentCategory = category;
+
+let filtered = allProducts;
+
+if(category !== "All"){
+filtered = allProducts.filter(p => p.category === category);
+}
+
+showProducts(filtered);
+
+}
+
+// 🖼 IMAGE PREVIEW
+document.querySelector("input[name='image']").addEventListener("change", function(){
+
+let file = this.files[0];
+
+if(file){
+
+let reader = new FileReader();
+
+reader.onload = function(e){
+let img = document.getElementById("preview");
+img.src = e.target.result;
+img.style.display = "block";
+};
+
+reader.readAsDataURL(file);
+
+}
+
+});
