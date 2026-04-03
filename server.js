@@ -74,14 +74,13 @@ app.get("/api/products/:id", async (req, res) => {
   res.json(data);
 });
 
-// 👉 Add product (FIXED)
+// 👉 Add product
 app.post("/api/products", upload.single("image"), async (req, res) => {
 
   try{
 
     let imagePath = "";
 
-    // 🔥 safe check (IMPORTANT FIX)
     if(req.file){
       imagePath = "/uploads/" + req.file.filename;
     }
@@ -90,9 +89,10 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
       name: req.body.name,
       price: req.body.price,
       category: req.body.category,
-      image: imagePath, // अब crash नहीं होगा
+      image: imagePath,
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
+
       offerPrice: req.body.offerPrice || "",
       stock: true,
       visible: true
@@ -111,25 +111,52 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
 
 });
 
-// ================= ORDERS =================
-
-// 👉 Save order
+// 👉 UPDATE PRODUCT (FINAL FIX)
 app.put("/api/products/:id", async (req, res) => {
 
   try{
 
-    await Product.findByIdAndUpdate(req.params.id, req.body);
+    await Product.findByIdAndUpdate(req.params.id, {
+      name: req.body.name,
+      price: req.body.price,
+      category: req.body.category,
+      description: req.body.description,
+      images: req.body.images ? req.body.images.split(",") : [],
 
-    res.json({ message: "Updated ✅" });
+      // 🔥 IMPORTANT FIX
+      offerPrice: req.body.offerPrice || "",
+      stock: req.body.stock !== undefined ? req.body.stock : true,
+      visible: req.body.visible !== undefined ? req.body.visible : true
+    });
+
+    res.json({ message: "Product Updated ✅" });
 
   }catch(err){
-
     console.log(err);
     res.status(500).json({ message: "Update Error ❌" });
-
   }
 
 });
+
+// 👉 DELETE PRODUCT
+app.delete("/api/products/:id", async (req, res) => {
+  try{
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({ message: "Product Deleted ✅" });
+  }catch(err){
+    res.status(500).json({ message: "Delete Error ❌" });
+  }
+});
+
+// ================= ORDERS =================
+
+// 👉 Save order
+app.post("/api/orders", async (req, res) => {
+  let order = new Order(req.body);
+  await order.save();
+  res.json({ message: "Order Saved ✅" });
+});
+
 // 👉 Get all orders
 app.get("/api/orders", async (req, res) => {
   let orders = await Order.find();
@@ -144,34 +171,5 @@ app.put("/api/orders/:id", async (req, res) => {
 
 // 🔥 Server
 app.listen(PORT, () => {
-  console.log("Server running");
-});
-
-// 👉 DELETE PRODUCT
-app.delete("/api/products/:id", async (req, res) => {
-  try{
-    await Product.findByIdAndDelete(req.params.id);
-    res.json({ message: "Product Deleted ✅" });
-  }catch(err){
-    res.status(500).json({ message: "Delete Error ❌" });
-  }
-});
-
-// 👉 UPDATE PRODUCT
-app.put("/api/products/:id", async (req, res) => {
-  try{
-
-    await Product.findByIdAndUpdate(req.params.id, {
-      name: req.body.name,
-      price: req.body.price,
-      category: req.body.category,
-      description: req.body.description,
-      images: req.body.images ? req.body.images.split(",") : []
-    });
-
-    res.json({ message: "Product Updated ✅" });
-
-  }catch(err){
-    res.status(500).json({ message: "Update Error ❌" });
-  }
+  console.log("Server running 🚀");
 });
