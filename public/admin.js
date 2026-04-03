@@ -32,6 +32,7 @@ function showDashboard(){
 document.getElementById("loginBox").style.display = "none";
 document.getElementById("dashboard").style.display = "block";
 loadOrders();
+loadAdminProducts(); // 🔥 NEW
 }
 
 // 📦 LOAD ORDERS
@@ -184,27 +185,12 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
-// ➕ ADD PRODUCT (NO IMAGE TEST)
+// ➕ ADD PRODUCT
 document.getElementById("productForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
 
-let formData = new FormData();
-
-// 🔥 manual data add
-formData.append("name", this.name.value);
-formData.append("price", this.price.value);
-formData.append("category", this.category.value);
-formData.append("description", this.description.value);
-formData.append("images", this.images.value);
-
-// 🔥 image only if selected
-let imageFile = this.image.files[0];
-if(imageFile){
-formData.append("image", imageFile);
-}
-
-try{
+let formData = new FormData(this);
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
@@ -213,18 +199,93 @@ body: formData
 
 let data = await res.json();
 
-console.log(data);
+alert(data.message || "Product Added ✅");
 
-if(res.ok){
-alert("✅ Product Added");
 this.reset();
-}else{
-alert("❌ " + (data.message || "Backend error"));
-}
-
-}catch(err){
-console.log(err);
-alert("❌ Server crash");
-}
+loadAdminProducts();
 
 });
+
+// 🔥 LOAD PRODUCTS ADMIN
+async function loadAdminProducts(){
+
+let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products");
+let products = await res.json();
+
+let box = document.getElementById("adminProducts");
+box.innerHTML = "";
+
+products.forEach(p => {
+
+box.innerHTML += `
+<div class="order">
+
+<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="80">
+
+<h3>${p.name}</h3>
+<p>₹${p.price}</p>
+
+<button onclick="deleteProduct('${p._id}')">❌ Delete</button>
+<button onclick="editProduct('${p._id}','${p.name}','${p.price}','${p.category}','${p.description}')">✏️ Edit</button>
+
+</div>
+`;
+
+});
+
+}
+
+// ❌ DELETE
+async function deleteProduct(id){
+
+if(confirm("Delete this product?")){
+
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
+method:"DELETE"
+});
+
+alert("Deleted ✅");
+loadAdminProducts();
+
+}
+
+}
+
+// ✏️ EDIT
+function editProduct(id, name, price, category, description){
+
+let form = document.getElementById("productForm");
+
+form.name.value = name;
+form.price.value = price;
+form.category.value = category;
+form.description.value = description;
+
+form.onsubmit = async function(e){
+
+e.preventDefault();
+
+let data = {
+name: form.name.value,
+price: form.price.value,
+category: form.category.value,
+description: form.description.value,
+images: form.images.value
+};
+
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
+method:"PUT",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify(data)
+});
+
+alert("Updated ✅");
+
+form.reset();
+loadAdminProducts();
+
+};
+
+}
