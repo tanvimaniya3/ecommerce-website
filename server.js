@@ -39,6 +39,7 @@ const upload = multer({ storage });
 const Product = mongoose.model("Product", {
   stock: { type: Boolean, default: true },
   visible: { type: Boolean, default: true },
+  offerPrice: Number,
   name: String,
   price: Number,
   category: String,
