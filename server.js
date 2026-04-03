@@ -37,6 +37,8 @@ const upload = multer({ storage });
 
 // 🔥 Product Schema
 const Product = mongoose.model("Product", {
+  stock: { type: Boolean, default: true },
+  visible: { type: Boolean, default: true },
   name: String,
   price: Number,
   category: String,
