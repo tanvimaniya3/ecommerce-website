@@ -37,6 +37,8 @@ loadOrders();
 loadAdminProducts();
 }
 
+// ================= ORDERS =================
+
 // 📦 LOAD ORDERS
 async function loadOrders(){
 
@@ -101,7 +103,7 @@ filtered = filtered.filter(o => o.status === currentFilter);
 showFilteredOrders(filtered);
 }
 
-// 🔘 FILTER ORDERS
+// 🔘 FILTER
 function filterStatus(status){
 
 currentFilter = status;
@@ -115,7 +117,7 @@ filtered = allOrders.filter(o => o.status === status);
 showFilteredOrders(filtered);
 }
 
-// 🔥 SHOW ORDERS UI
+// 🔥 SHOW ORDERS
 function showFilteredOrders(orders){
 
 let box = document.getElementById("ordersBox");
@@ -133,33 +135,13 @@ if(order.status === "Delivered") color = "green";
 box.innerHTML += `
 <div class="order">
 
-<h3>🆔 ${orderId}</h3>
-
-<h3>👤 ${order.name}</h3>
-<p>📞 ${order.phone}</p>
-<p>📍 ${order.address}, ${order.state} - ${order.pincode}</p>
-
-<h4>🛒 Items:</h4>
-
-${order.items.map(p => `
-<div style="display:flex; gap:10px; align-items:center;">
-<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="60">
-<div>
-${p.name}<br>
-₹${p.price} x ${p.qty}
-</div>
-</div>
-`).join("")}
-
-<br>
+<h3>${orderId}</h3>
+<h3>${order.name}</h3>
+<p>${order.phone}</p>
 
 <p><b>Total:</b> ₹${order.calculatedTotal}</p>
 
-<p><b>Status:</b> 
-<span style="color:${color}; font-weight:bold;">
-${order.status}
-</span>
-</p>
+<p><b>Status:</b> <span style="color:${color}">${order.status}</span></p>
 
 <select onchange="updateStatus('${order._id}', this.value)">
 <option value="Pending" ${order.status==="Pending"?"selected":""}>Pending</option>
@@ -177,9 +159,7 @@ async function updateStatus(id, status){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders/" + id,{
 method:"PUT",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{ "Content-Type":"application/json" },
 body: JSON.stringify({status})
 });
 
@@ -187,15 +167,15 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
-// ================= PRODUCT SECTION =================
+// ================= PRODUCTS =================
 
-// ➕ ADD / UPDATE PRODUCT
+// ➕ ADD / UPDATE
 document.getElementById("productForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
-
 let form = this;
 
+// EDIT MODE
 if(form.dataset.editId){
 
 let data = {
@@ -204,14 +184,14 @@ price: form.price.value,
 category: form.category.value,
 description: form.description.value,
 images: form.images.value,
-offerPrice: form.offerPrice.value  
+offerPrice: form.offerPrice.value || "",
+stock: true,
+visible: true
 };
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
 method:"PUT",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{ "Content-Type":"application/json" },
 body: JSON.stringify(data)
 });
 
@@ -221,7 +201,7 @@ delete form.dataset.editId;
 }else{
 
 let formData = new FormData(form);
-formData.append("offerPrice", form.offerPrice.value);  
+formData.append("offerPrice", form.offerPrice.value || "");
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
@@ -229,7 +209,6 @@ body: formData
 });
 
 let data = await res.json();
-
 alert(data.message || "Product Added ✅");
 }
 
@@ -239,19 +218,18 @@ loadAdminProducts();
 
 });
 
-// 🔥 LOAD PRODUCTS
+// 📦 LOAD PRODUCTS
 async function loadAdminProducts(){
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products");
 let products = await res.json();
 
 allProducts = products;
-
 showProducts(products);
 
 }
 
-// 🔥 SHOW PRODUCTS (COMMON FUNCTION)
+// 🖥 SHOW PRODUCTS
 function showProducts(products){
 
 let box = document.getElementById("adminProducts");
@@ -265,32 +243,30 @@ box.innerHTML += `
 <img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="80">
 
 <h3>${p.name}</h3>
+
 ${p.offerPrice ? `
 <p>
-<span style="text-decoration:line-through; color:gray;">₹${p.price}</span>
+<span style="text-decoration:line-through;">₹${p.price}</span>
 <b style="color:green;"> ₹${p.offerPrice}</b>
 </p>
-<p style="color:red;">🔥 SALE</p>
-` : `
-<p>₹${p.price}</p>
-`}
-<p>📦 Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
-<p>👁️ Visible: ${p.visible ? "Yes" : "No"}</p>
-<p>📂 ${p.category}</p>
+` : `<p>₹${p.price}</p>`}
 
-<button onclick="deleteProduct('${p._id}')">❌ Delete</button>
-<button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
+<p>Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
+<p>Visible: ${p.visible ? "Yes" : "No"}</p>
+
+<button onclick="deleteProduct('${p._id}')">Delete</button>
+<button onclick='editProduct(${JSON.stringify(p)})'>Edit</button>
+
 <button onclick="toggleStock('${p._id}', ${p.stock})">
-${p.stock ? "❌ Out of Stock" : "✅ In Stock"}
+${p.stock ? "Out of Stock" : "In Stock"}
 </button>
 
 <button onclick="toggleVisibility('${p._id}', ${p.visible})">
-${p.visible ? "🙈 Hide" : "👁️ Show"}
+${p.visible ? "Hide" : "Show"}
 </button>
 
 </div>
 `;
-
 });
 
 }
@@ -308,7 +284,6 @@ alert("Deleted ✅");
 loadAdminProducts();
 
 }
-
 }
 
 // ✏️ EDIT
@@ -321,16 +296,14 @@ form.price.value = p.price;
 form.category.value = p.category;
 form.description.value = p.description || "";
 form.images.value = p.images ? p.images.join(",") : "";
-form.offerPrice.value = p.offerPrice || "";  
-  
+form.offerPrice.value = p.offerPrice || "";
 
 form.dataset.editId = p._id;
 
 window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
-
 }
 
-// 🔍 PRODUCT SEARCH
+// 🔍 SEARCH PRODUCTS
 function searchProducts(){
 
 let input = document.getElementById("productSearch").value.toLowerCase();
@@ -339,27 +312,7 @@ let filtered = allProducts.filter(p =>
 p.name.toLowerCase().includes(input)
 );
 
-if(currentCategory !== "All"){
-filtered = filtered.filter(p => p.category === currentCategory);
-}
-
 showProducts(filtered);
-
-}
-
-// 📂 CATEGORY FILTER
-function filterProducts(category){
-
-currentCategory = category;
-
-let filtered = allProducts;
-
-if(category !== "All"){
-filtered = allProducts.filter(p => p.category === category);
-}
-
-showProducts(filtered);
-
 }
 
 // 🖼 IMAGE PREVIEW
@@ -368,49 +321,37 @@ document.querySelector("input[name='image']").addEventListener("change", functio
 let file = this.files[0];
 
 if(file){
-
 let reader = new FileReader();
-
 reader.onload = function(e){
 let img = document.getElementById("preview");
 img.src = e.target.result;
 img.style.display = "block";
 };
-
 reader.readAsDataURL(file);
-
 }
 
 });
 
-// 🔄 STOCK TOGGLE
+// 🔄 STOCK
 async function toggleStock(id, current){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
 method:"PUT",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{ "Content-Type":"application/json" },
 body: JSON.stringify({ stock: !current })
 });
 
-alert("Stock Updated ✅");
 loadAdminProducts();
-
 }
 
-// 👁️ VISIBILITY TOGGLE
+// 👁 VISIBILITY
 async function toggleVisibility(id, current){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
 method:"PUT",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{ "Content-Type":"application/json" },
 body: JSON.stringify({ visible: !current })
 });
 
-alert("Visibility Updated ✅");
 loadAdminProducts();
-
 }
