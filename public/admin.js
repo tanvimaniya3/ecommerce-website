@@ -264,10 +264,19 @@ box.innerHTML += `
 
 <h3>${p.name}</h3>
 <p>₹${p.price}</p>
+<p>📦 Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
+<p>👁️ Visible: ${p.visible ? "Yes" : "No"}</p>
 <p>📂 ${p.category}</p>
 
 <button onclick="deleteProduct('${p._id}')">❌ Delete</button>
 <button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
+<button onclick="toggleStock('${p._id}', ${p.stock})">
+${p.stock ? "❌ Out of Stock" : "✅ In Stock"}
+</button>
+
+<button onclick="toggleVisibility('${p._id}', ${p.visible})">
+${p.visible ? "🙈 Hide" : "👁️ Show"}
+</button>
 
 </div>
 `;
@@ -361,3 +370,35 @@ reader.readAsDataURL(file);
 }
 
 });
+
+// 🔄 STOCK TOGGLE
+async function toggleStock(id, current){
+
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
+method:"PUT",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify({ stock: !current })
+});
+
+alert("Stock Updated ✅");
+loadAdminProducts();
+
+}
+
+// 👁️ VISIBILITY TOGGLE
+async function toggleVisibility(id, current){
+
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
+method:"PUT",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify({ visible: !current })
+});
+
+alert("Visibility Updated ✅");
+loadAdminProducts();
+
+}
