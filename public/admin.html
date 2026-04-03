@@ -148,6 +148,7 @@ style="padding:10px; width:300px; margin-bottom:20px;">
 </select>
 
 <input type="file" name="image">
+<img id="preview" width="100" style="display:none; margin-top:10px;">  
 
 <textarea name="description" placeholder="Description"></textarea>
 
@@ -170,6 +171,18 @@ onkeyup="searchProducts()"
 style="padding:10px; width:300px; margin-bottom:20px;">
 
 <div id="adminProducts"></div>
+
+<h3>🔍 Search Product</h3>
+<input type="text" id="productSearch" placeholder="Search product..." onkeyup="searchProducts()" style="padding:10px; width:300px;">
+
+<h3>📂 Filter Category</h3>
+<select onchange="filterProducts(this.value)" style="padding:10px;">
+<option value="All">All</option>
+<option value="cookware">Cookware</option>
+<option value="appliances">Appliances</option>
+<option value="storage">Storage</option>
+<option value="dining">Dining</option>
+</select>  
 
 </div>
 
