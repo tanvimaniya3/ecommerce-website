@@ -1,5 +1,6 @@
 let allOrders = [];
 let currentFilter = "All";
+let allProducts = [];
 
 // 🔁 PAGE LOAD
 window.onload = function(){
@@ -243,6 +244,7 @@ async function loadAdminProducts(){
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products");
 let products = await res.json();
+allProducts = products;  
 
 let box = document.getElementById("adminProducts");
 box.innerHTML = "";
@@ -298,5 +300,35 @@ form.images.value = p.images ? p.images.join(",") : "";
 form.dataset.editId = p._id;
 
 window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
+
+}
+function searchProducts(){
+
+let input = document.getElementById("productSearch").value.toLowerCase();
+
+let filtered = allProducts.filter(p =>
+p.name.toLowerCase().includes(input)
+);
+
+let box = document.getElementById("adminProducts");
+box.innerHTML = "";
+
+filtered.forEach(p => {
+
+box.innerHTML += `
+<div class="order">
+
+<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="80">
+
+<h3>${p.name}</h3>
+<p>₹${p.price}</p>
+
+<button onclick="deleteProduct('${p._id}')">❌ Delete</button>
+<button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
+
+</div>
+`;
+
+});
 
 }
