@@ -252,15 +252,17 @@ loadAdminProducts();
 }
 
 // ✏️ EDIT
-function editProduct(id, name, price, category, description){
+function editProduct(p){
 
 let form = document.getElementById("productForm");
 
-form.name.value = name;
-form.price.value = price;
-form.category.value = category;
-form.description.value = description;
+form.name.value = p.name;
+form.price.value = p.price;
+form.category.value = p.category;
+form.description.value = p.description || "";
+form.images.value = p.images ? p.images.join(",") : "";
 
+// 🔥 update mode
 form.onsubmit = async function(e){
 
 e.preventDefault();
@@ -273,7 +275,7 @@ description: form.description.value,
 images: form.images.value
 };
 
-await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + p._id,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json"
