@@ -130,3 +130,32 @@ app.put("/api/orders/:id", async (req, res) => {
 app.listen(PORT, () => {
   console.log("Server running");
 });
+
+// 👉 DELETE PRODUCT
+app.delete("/api/products/:id", async (req, res) => {
+  try{
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({ message: "Product Deleted ✅" });
+  }catch(err){
+    res.status(500).json({ message: "Delete Error ❌" });
+  }
+});
+
+// 👉 UPDATE PRODUCT
+app.put("/api/products/:id", async (req, res) => {
+  try{
+
+    await Product.findByIdAndUpdate(req.params.id, {
+      name: req.body.name,
+      price: req.body.price,
+      category: req.body.category,
+      description: req.body.description,
+      images: req.body.images ? req.body.images.split(",") : []
+    });
+
+    res.json({ message: "Product Updated ✅" });
+
+  }catch(err){
+    res.status(500).json({ message: "Update Error ❌" });
+  }
+});
