@@ -226,7 +226,7 @@ box.innerHTML += `
 <p>₹${p.price}</p>
 
 <button onclick="deleteProduct('${p._id}')">❌ Delete</button>
-<button onclick="editProduct('${p._id}','${p.name}','${p.price}','${p.category}','${p.description}')">✏️ Edit</button>
+<button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
 
 </div>
 `;
