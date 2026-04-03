@@ -203,7 +203,8 @@ name: form.name.value,
 price: form.price.value,
 category: form.category.value,
 description: form.description.value,
-images: form.images.value
+images: form.images.value,
+offerPrice: form.offerPrice.value  
 };
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
@@ -220,6 +221,7 @@ delete form.dataset.editId;
 }else{
 
 let formData = new FormData(form);
+formData.append("offerPrice", form.offerPrice.value);  
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
@@ -263,7 +265,15 @@ box.innerHTML += `
 <img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="80">
 
 <h3>${p.name}</h3>
+${p.offerPrice ? `
+<p>
+<span style="text-decoration:line-through; color:gray;">₹${p.price}</span>
+<b style="color:green;"> ₹${p.offerPrice}</b>
+</p>
+<p style="color:red;">🔥 SALE</p>
+` : `
 <p>₹${p.price}</p>
+`}
 <p>📦 Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
 <p>👁️ Visible: ${p.visible ? "Yes" : "No"}</p>
 <p>📂 ${p.category}</p>
@@ -311,6 +321,8 @@ form.price.value = p.price;
 form.category.value = p.category;
 form.description.value = p.description || "";
 form.images.value = p.images ? p.images.join(",") : "";
+form.offerPrice.value = p.offerPrice || "";  
+  
 
 form.dataset.editId = p._id;
 
