@@ -77,7 +77,9 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
     let newProduct = new Product({
       name: req.body.name,
       price: Number(req.body.price),
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null, // 🔥 FIX
+     offerPrice: (!req.body.offerPrice || req.body.offerPrice.trim() === "")
+      ? null
+      : Number(req.body.offerPrice),
       category: req.body.category,
       image: imagePath,
       images: req.body.images ? req.body.images.split(",") : [],
