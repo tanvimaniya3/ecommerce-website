@@ -2,18 +2,18 @@ const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const cors = require("cors");
-
 const fs = require("fs");
 const path = require("path");
 
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// uploads folder
 const uploadPath = path.join(__dirname, "public/uploads");
 
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
-
-const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.static("public"));
@@ -31,13 +31,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// ✅ FIXED PRODUCT SCHEMA
+// 🔥 Product Schema (FIXED)
 const Product = mongoose.model("Product", {
   stock: { type: Boolean, default: true },
   visible: { type: Boolean, default: true },
   name: String,
   price: Number,
-  offerPrice: Number,   // 🔥 IMPORTANT FIX
+  offerPrice: Number,
   category: String,
   image: String,
   images: Array,
@@ -64,7 +64,7 @@ app.get("/api/products", async (req, res) => {
   res.json(data);
 });
 
-// 🔥 ADD PRODUCT (FIXED)
+// ADD (🔥 FULL FIX)
 app.post("/api/products", upload.single("image"), async (req, res) => {
   try{
 
@@ -96,13 +96,13 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
   }
 });
 
-// 🔥 UPDATE PRODUCT (FIXED)
+// UPDATE
 app.put("/api/products/:id", async (req, res) => {
   try{
 
     await Product.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
-      price: req.body.price,
+      price: Number(req.body.price),
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null, // 🔥 FIX
       category: req.body.category,
       description: req.body.description,
@@ -114,6 +114,7 @@ app.put("/api/products/:id", async (req, res) => {
     res.json({ message: "Product Updated ✅" });
 
   }catch(err){
+    console.log(err);
     res.status(500).json({ message: "Update Error ❌" });
   }
 });
