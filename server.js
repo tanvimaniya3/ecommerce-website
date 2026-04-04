@@ -6,7 +6,7 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
-// 📁 uploads folder auto create
+// 🔥 uploads folder auto create
 const uploadPath = path.join(__dirname, "public/uploads");
 
 if (!fs.existsSync(uploadPath)) {
@@ -16,24 +16,26 @@ if (!fs.existsSync(uploadPath)) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 🌐 Middlewares
+// 🔥 CORS
 app.use(cors());
-app.use(express.static("public"));
-app.use(express.json());
 
-// 🔗 MongoDB
+// 🔥 MongoDB
 mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.mongodb.net/shopDB?retryWrites=true&w=majority")
 .then(()=> console.log("MongoDB Connected ✅"))
 .catch(err => console.log(err));
 
-// 📸 Multer setup
+// 🔥 Middlewares
+app.use(express.static("public"));
+app.use(express.json());
+
+// 📸 Upload Setup
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadPath),
   filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
 });
 const upload = multer({ storage });
 
-// 📦 Product Schema
+// 🔥 Product Schema
 const Product = mongoose.model("Product", {
   name: String,
   price: Number,
@@ -46,7 +48,7 @@ const Product = mongoose.model("Product", {
   visible: { type: Boolean, default: true }
 });
 
-// 📦 Order Schema
+// 🔥 Order Schema
 const Order = mongoose.model("Order", {
   name: String,
   phone: String,
@@ -63,11 +65,11 @@ const Order = mongoose.model("Order", {
 
 // 👉 GET ALL PRODUCTS
 app.get("/api/products", async (req, res) => {
-  const data = await Product.find();
+  let data = await Product.find();
   res.json(data);
 });
 
-// 👉 ADD PRODUCT ✅ (MOST IMPORTANT FIX)
+// 👉 ADD PRODUCT (🔥 MAIN FIX)
 app.post("/api/products", upload.single("image"), async (req, res) => {
 
   try{
@@ -78,7 +80,7 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
       imagePath = "/uploads/" + req.file.filename;
     }
 
-    const newProduct = new Product({
+    let newProduct = new Product({
       name: req.body.name,
       price: Number(req.body.price),
       category: req.body.category,
@@ -86,7 +88,7 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
 
-      // ✅ SAFE FIX
+      // ✅ OFFER FIX
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
 
       stock: true,
@@ -98,8 +100,10 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
     res.json({ message: "Product Added ✅" });
 
   }catch(err){
+
     console.log("ERROR:", err);
     res.status(500).json({ message: "Server Error ❌" });
+
   }
 
 });
@@ -111,22 +115,23 @@ app.put("/api/products/:id", async (req, res) => {
 
     await Product.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
-      price: Number(req.body.price),
+      price: req.body.price,
       category: req.body.category,
       description: req.body.description,
       images: req.body.images ? req.body.images.split(",") : [],
 
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
-
+      offerPrice: req.body.offerPrice || null,
       stock: req.body.stock !== undefined ? req.body.stock : true,
       visible: req.body.visible !== undefined ? req.body.visible : true
     });
 
-    res.json({ message: "Product Updated ✅" });
+    res.json({ message: "Updated ✅" });
 
   }catch(err){
+
     console.log(err);
     res.status(500).json({ message: "Update Error ❌" });
+
   }
 
 });
@@ -135,7 +140,7 @@ app.put("/api/products/:id", async (req, res) => {
 app.delete("/api/products/:id", async (req, res) => {
   try{
     await Product.findByIdAndDelete(req.params.id);
-    res.json({ message: "Product Deleted ✅" });
+    res.json({ message: "Deleted ✅" });
   }catch(err){
     res.status(500).json({ message: "Delete Error ❌" });
   }
@@ -146,14 +151,14 @@ app.delete("/api/products/:id", async (req, res) => {
 
 // 👉 SAVE ORDER
 app.post("/api/orders", async (req, res) => {
-  const order = new Order(req.body);
+  let order = new Order(req.body);
   await order.save();
   res.json({ message: "Order Saved ✅" });
 });
 
 // 👉 GET ORDERS
 app.get("/api/orders", async (req, res) => {
-  const orders = await Order.find();
+  let orders = await Order.find();
   res.json(orders);
 });
 
@@ -164,7 +169,7 @@ app.put("/api/orders/:id", async (req, res) => {
 });
 
 
-// 🚀 SERVER START
+// 🔥 SERVER START
 app.listen(PORT, () => {
   console.log("Server running 🚀");
 });
