@@ -6,6 +6,7 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
+// uploads folder
 const uploadPath = path.join(__dirname, "public/uploads");
 
 if (!fs.existsSync(uploadPath)) {
@@ -19,32 +20,31 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 
-// 🔥 MongoDB
-mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.mongodb.net/shopDB")
+// MongoDB
+mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.mongodb.net/shopDB?retryWrites=true&w=majority")
 .then(()=> console.log("MongoDB Connected ✅"))
 .catch(err => console.log(err));
 
-// 📸 Upload
+// Upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadPath),
   filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
 });
 const upload = multer({ storage });
 
-// 🔥 Product Schema
+// Product Schema
 const Product = mongoose.model("Product", {
+  stock: { type: Boolean, default: true },
+  visible: { type: Boolean, default: true },
   name: String,
   price: Number,
   category: String,
   image: String,
   images: Array,
-  description: String,
-  offerPrice: Number,
-  stock: { type: Boolean, default: true },
-  visible: { type: Boolean, default: true }
+  description: String
 });
 
-// 🔥 Order Schema
+// Order Schema
 const Order = mongoose.model("Order", {
   name: String,
   phone: String,
@@ -56,19 +56,20 @@ const Order = mongoose.model("Order", {
   status: String
 });
 
-// ================= PRODUCTS =================
+// ===== PRODUCTS =====
 
-// 👉 GET
+// GET
 app.get("/api/products", async (req, res) => {
   let data = await Product.find();
   res.json(data);
 });
 
-// 👉 ADD PRODUCT
+// ADD
 app.post("/api/products", upload.single("image"), async (req, res) => {
   try{
 
     let imagePath = "";
+
     if(req.file){
       imagePath = "/uploads/" + req.file.filename;
     }
@@ -80,12 +81,12 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
       image: imagePath,
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
       stock: true,
       visible: true
     });
 
     await newProduct.save();
+
     res.json({ message: "Product Added ✅" });
 
   }catch(err){
@@ -94,7 +95,7 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
   }
 });
 
-// 👉 UPDATE PRODUCT
+// UPDATE
 app.put("/api/products/:id", async (req, res) => {
   try{
 
@@ -104,29 +105,38 @@ app.put("/api/products/:id", async (req, res) => {
       category: req.body.category,
       description: req.body.description,
       images: req.body.images ? req.body.images.split(",") : [],
-      offerPrice: req.body.offerPrice || null,
       stock: req.body.stock !== undefined ? req.body.stock : true,
       visible: req.body.visible !== undefined ? req.body.visible : true
     });
 
-    res.json({ message: "Updated ✅" });
+    res.json({ message: "Product Updated ✅" });
 
   }catch(err){
     res.status(500).json({ message: "Update Error ❌" });
   }
 });
 
-// 👉 DELETE
+// DELETE
 app.delete("/api/products/:id", async (req, res) => {
-  await Product.findByIdAndDelete(req.params.id);
-  res.json({ message: "Deleted ✅" });
+  try{
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({ message: "Deleted ✅" });
+  }catch(err){
+    res.status(500).json({ message: "Delete Error ❌" });
+  }
 });
 
-// ================= ORDERS =================
+// ===== ORDERS =====
+
+app.post("/api/orders", async (req, res) => {
+  let order = new Order(req.body);
+  await order.save();
+  res.json({ message: "Order Saved ✅" });
+});
 
 app.get("/api/orders", async (req, res) => {
-  let data = await Order.find();
-  res.json(data);
+  let orders = await Order.find();
+  res.json(orders);
 });
 
 app.put("/api/orders/:id", async (req, res) => {
@@ -134,7 +144,4 @@ app.put("/api/orders/:id", async (req, res) => {
   res.json({ message: "Order Updated ✅" });
 });
 
-// 🔥 SERVER
-app.listen(PORT, () => {
-  console.log("Server running 🚀");
-});
+app.listen(PORT, () => console.log("Server running 🚀"));
