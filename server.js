@@ -2,9 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const cors = require("cors");
-
 const fs = require("fs");
 const path = require("path");
+
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // uploads folder
 const uploadPath = path.join(__dirname, "public/uploads");
@@ -12,9 +14,6 @@ const uploadPath = path.join(__dirname, "public/uploads");
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
-
-const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.static("public"));
@@ -32,13 +31,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Product Schema (🔥 OFFER ADDED)
+// 🔥 Product Schema (FIXED)
 const Product = mongoose.model("Product", {
   stock: { type: Boolean, default: true },
   visible: { type: Boolean, default: true },
-  offerPrice: Number,   // ✅ ADDED
   name: String,
   price: Number,
+  offerPrice: { type: Number, default: null }, // 🔥 MAIN FIX
   category: String,
   image: String,
   images: Array,
@@ -65,7 +64,7 @@ app.get("/api/products", async (req, res) => {
   res.json(data);
 });
 
-// ADD (🔥 OFFER FIXED)
+// ADD (🔥 FULL FIX)
 app.post("/api/products", upload.single("image"), async (req, res) => {
   try{
 
@@ -78,7 +77,7 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
     let newProduct = new Product({
       name: req.body.name,
       price: Number(req.body.price),
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null, // ✅ FIX
+      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null, // 🔥 FIX
       category: req.body.category,
       image: imagePath,
       images: req.body.images ? req.body.images.split(",") : [],
@@ -92,19 +91,19 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
     res.json({ message: "Product Added ✅" });
 
   }catch(err){
-    console.log(err);
+    console.log("ERROR:", err);
     res.status(500).json({ message: "Server Error ❌" });
   }
 });
 
-// UPDATE (🔥 OFFER + STOCK + VISIBILITY FIX)
+// UPDATE
 app.put("/api/products/:id", async (req, res) => {
   try{
 
     await Product.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
-      price: req.body.price,
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
+      price: Number(req.body.price),
+      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null, // 🔥 FIX
       category: req.body.category,
       description: req.body.description,
       images: req.body.images ? req.body.images.split(",") : [],
@@ -115,6 +114,7 @@ app.put("/api/products/:id", async (req, res) => {
     res.json({ message: "Product Updated ✅" });
 
   }catch(err){
+    console.log(err);
     res.status(500).json({ message: "Update Error ❌" });
   }
 });
