@@ -249,7 +249,10 @@ showProducts(products);
 
 }
 
-// 🔥 SHOW PRODUCTS (COMMON FUNCTION)
+// (same code upar ka – main skip kar raha hu repeat avoid karne ke liye)
+
+// 👇 SIRF CHANGE PART
+
 function showProducts(products){
 
 let box = document.getElementById("adminProducts");
@@ -266,8 +269,19 @@ box.innerHTML += `
 <p>₹${p.price}</p>
 <p>📂 ${p.category}</p>
 
+<p>📦 Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
+<p>👁️ Visible: ${p.visible ? "Yes" : "No"}</p>
+
 <button onclick="deleteProduct('${p._id}')">❌ Delete</button>
 <button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
+
+<button onclick="toggleStock('${p._id}', ${p.stock})">
+${p.stock ? "❌ Out of Stock" : "✅ In Stock"}
+</button>
+
+<button onclick="toggleVisibility('${p._id}', ${p.visible})">
+${p.visible ? "🙈 Hide" : "👁️ Show"}
+</button>
 
 </div>
 `;
@@ -276,6 +290,31 @@ box.innerHTML += `
 
 }
 
+// STOCK
+async function toggleStock(id, current){
+
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
+method:"PUT",
+headers:{ "Content-Type":"application/json" },
+body: JSON.stringify({ stock: !current })
+});
+
+alert("Stock Updated ✅");
+loadAdminProducts();
+}
+
+// VISIBILITY
+async function toggleVisibility(id, current){
+
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
+method:"PUT",
+headers:{ "Content-Type":"application/json" },
+body: JSON.stringify({ visible: !current })
+});
+
+alert("Visibility Updated ✅");
+loadAdminProducts();
+}
 // ❌ DELETE
 async function deleteProduct(id){
 
