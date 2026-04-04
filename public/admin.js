@@ -220,10 +220,7 @@ delete form.dataset.editId;
 }else{
 
 let formData = new FormData(form);
-// ✅ ADD THIS
-if(form.offerPrice.value){
-  formData.append("offerPrice", form.offerPrice.value);
-}
+formData.append("offerPrice", form.offerPrice.value || "");
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
 body: formData
