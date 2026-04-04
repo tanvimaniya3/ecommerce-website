@@ -74,34 +74,25 @@ app.get("/api/products/:id", async (req, res) => {
   res.json(data);
 });
 
-// 👉 Add product
+// 👉 Add product (FIXED)
 app.post("/api/products", upload.single("image"), async (req, res) => {
 
   try{
 
     let imagePath = "";
 
+    // 🔥 safe check (IMPORTANT FIX)
     if(req.file){
       imagePath = "/uploads/" + req.file.filename;
     }
 
     let newProduct = new Product({
       name: req.body.name,
-
-      // ✅ FIX: number convert
-      price: Number(req.body.price),
-
+      price: req.body.price,
       category: req.body.category,
-      image: imagePath,
-
+      image: imagePath, // अब crash नहीं होगा
       images: req.body.images ? req.body.images.split(",") : [],
-      description: req.body.description,
-
-      // ✅ FIX: offer price properly handle
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
-
-      stock: true,
-      visible: true
+      description: req.body.description
     });
 
     await newProduct.save();
@@ -117,31 +108,40 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
 
 });
 
-// 👉 UPDATE PRODUCT (FINAL FIX)
+// ================= ORDERS =================
+
+// 👉 Save order
 app.put("/api/products/:id", async (req, res) => {
 
   try{
 
-    await Product.findByIdAndUpdate(req.params.id, {
-      name: req.body.name,
-      price: req.body.price,
-      category: req.body.category,
-      description: req.body.description,
-      images: req.body.images ? req.body.images.split(",") : [],
+    await Product.findByIdAndUpdate(req.params.id, req.body);
 
-      // 🔥 IMPORTANT FIX
-      offerPrice: req.body.offerPrice || "",
-      stock: req.body.stock !== undefined ? req.body.stock : true,
-      visible: req.body.visible !== undefined ? req.body.visible : true
-    });
-
-    res.json({ message: "Product Updated ✅" });
+    res.json({ message: "Updated ✅" });
 
   }catch(err){
+
     console.log(err);
     res.status(500).json({ message: "Update Error ❌" });
+
   }
 
+});
+// 👉 Get all orders
+app.get("/api/orders", async (req, res) => {
+  let orders = await Order.find();
+  res.json(orders);
+});
+
+// 👉 Update order
+app.put("/api/orders/:id", async (req, res) => {
+  await Order.findByIdAndUpdate(req.params.id, { status: req.body.status });
+  res.json({ message: "Order Updated ✅" });
+});
+
+// 🔥 Server
+app.listen(PORT, () => {
+  console.log("Server running");
 });
 
 // 👉 DELETE PRODUCT
@@ -154,42 +154,21 @@ app.delete("/api/products/:id", async (req, res) => {
   }
 });
 
-// ================= ORDERS =================
-
-// 👉 Save order
+// 👉 UPDATE PRODUCT
 app.put("/api/products/:id", async (req, res) => {
-
   try{
 
     await Product.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
-      price: Number(req.body.price),
+      price: req.body.price,
       category: req.body.category,
       description: req.body.description,
-      images: req.body.images ? req.body.images.split(",") : [],
-
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
-
-      stock: req.body.stock !== undefined ? req.body.stock : true,
-      visible: req.body.visible !== undefined ? req.body.visible : true
+      images: req.body.images ? req.body.images.split(",") : []
     });
 
     res.json({ message: "Product Updated ✅" });
 
   }catch(err){
-    console.log(err);
     res.status(500).json({ message: "Update Error ❌" });
   }
-
-});
-
-// 👉 Update order
-app.put("/api/orders/:id", async (req, res) => {
-  await Order.findByIdAndUpdate(req.params.id, { status: req.body.status });
-  res.json({ message: "Order Updated ✅" });
-});
-
-// 🔥 Server
-app.listen(PORT, () => {
-  console.log("Server running 🚀");
 });
