@@ -219,24 +219,12 @@ delete form.dataset.editId;
 
 }else{
 
-// 🔥 ADD PRODUCT (NO FormData)
-let data = {
-name: form.name.value,
-price: Number(form.price.value),
-category: form.category.value,
-description: form.description.value,
-images: form.images.value,
-offerPrice: form.offerPrice.value ? Number(form.offerPrice.value) : null
-};
-
+let formData = new FormData(form);
+formData.append("offerPrice", form.offerPrice.value || "");
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
-headers:{ "Content-Type":"application/json" },
-body: JSON.stringify(data)
+body: formData
 });
-
-let result = await res.json();
-alert(result.message);
 
 let data = await res.json();
 
