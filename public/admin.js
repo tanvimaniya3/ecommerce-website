@@ -101,7 +101,7 @@ filtered = filtered.filter(o => o.status === currentFilter);
 showFilteredOrders(filtered);
 }
 
-// 🔘 FILTER ORDERS
+// 🔘 FILTER
 function filterStatus(status){
 
 currentFilter = status;
@@ -115,7 +115,7 @@ filtered = allOrders.filter(o => o.status === status);
 showFilteredOrders(filtered);
 }
 
-// 🔥 SHOW ORDERS UI
+// 🔥 SHOW ORDERS
 function showFilteredOrders(orders){
 
 let box = document.getElementById("ordersBox");
@@ -125,66 +125,15 @@ orders.forEach(order => {
 
 let orderId = "ORD" + order._id.slice(-5);
 
-let color = "black";
-if(order.status === "Pending") color = "orange";
-if(order.status === "Shipped") color = "blue";
-if(order.status === "Delivered") color = "green";
-
 box.innerHTML += `
 <div class="order">
-
-<h3>🆔 ${orderId}</h3>
-
-<h3>👤 ${order.name}</h3>
-<p>📞 ${order.phone}</p>
-<p>📍 ${order.address}, ${order.state} - ${order.pincode}</p>
-
-<h4>🛒 Items:</h4>
-
-${order.items.map(p => `
-<div style="display:flex; gap:10px; align-items:center;">
-<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="60">
-<div>
-${p.name}<br>
-₹${p.price} x ${p.qty}
-</div>
-</div>
-`).join("")}
-
-<br>
-
-<p><b>Total:</b> ₹${order.calculatedTotal}</p>
-
-<p><b>Status:</b> 
-<span style="color:${color}; font-weight:bold;">
-${order.status}
-</span>
-</p>
-
-<select onchange="updateStatus('${order._id}', this.value)">
-<option value="Pending" ${order.status==="Pending"?"selected":""}>Pending</option>
-<option value="Shipped" ${order.status==="Shipped"?"selected":""}>Shipped</option>
-<option value="Delivered" ${order.status==="Delivered"?"selected":""}>Delivered</option>
-</select>
-
+<h3>${orderId}</h3>
+<h3>${order.name}</h3>
+<p>${order.phone}</p>
+<p>Total: ₹${order.calculatedTotal}</p>
 </div>
 `;
 });
-}
-
-// 🔄 UPDATE STATUS
-async function updateStatus(id, status){
-
-await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders/" + id,{
-method:"PUT",
-headers:{
-"Content-Type":"application/json"
-},
-body: JSON.stringify({status})
-});
-
-alert("Status Updated ✅");
-loadOrders();
 }
 
 // ================= PRODUCT SECTION =================
@@ -193,24 +142,28 @@ loadOrders();
 document.getElementById("productForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
-
 let form = this;
 
-if(form.dataset.editId){
+try{
 
+// 🔥 SAFE DATA
 let data = {
 name: form.name.value,
-price: form.price.value,
+price: Number(form.price.value),
 category: form.category.value,
 description: form.description.value,
-images: form.images.value
+images: form.images.value ? form.images.value.split(",") : [],
+offerPrice: form.offerPrice.value ? Number(form.offerPrice.value) : null,
+stock: true,
+visible: true
 };
+
+// 🔄 EDIT
+if(form.dataset.editId){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
 method:"PUT",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{ "Content-Type":"application/json" },
 body: JSON.stringify(data)
 });
 
@@ -219,40 +172,51 @@ delete form.dataset.editId;
 
 }else{
 
+// 🔥 ADD (FormData + offerPrice fix)
 let formData = new FormData(form);
-formData.append("offerPrice", form.offerPrice.value || "");
+
+if(data.offerPrice){
+formData.append("offerPrice", data.offerPrice);
+}
+
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
 body: formData
 });
 
-let data = await res.json();
+let result = await res.json();
 
-alert(data.message || "Product Added ✅");
+if(res.ok){
+alert("Product Added ✅");
+}else{
+alert(result.message || "Error ❌");
+}
+
 }
 
 form.reset();
 document.getElementById("preview").style.display = "none";
 loadAdminProducts();
 
+}catch(err){
+console.log(err);
+alert("Something went wrong ❌");
+}
+
 });
 
-// 🔥 LOAD PRODUCTS
+// 📦 LOAD PRODUCTS
 async function loadAdminProducts(){
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products");
 let products = await res.json();
 
 allProducts = products;
-
 showProducts(products);
 
 }
 
-// (same code upar ka – main skip kar raha hu repeat avoid karne ke liye)
-
-// 👇 SIRF CHANGE PART
-
+// 🖥 SHOW PRODUCTS
 function showProducts(products){
 
 let box = document.getElementById("adminProducts");
@@ -282,29 +246,27 @@ ${p.offerPrice ? `
 ${discount}
 ` : `<p>₹${p.price}</p>`}
 
-<p>📂 ${p.category}</p>
+<p>Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
+<p>Visible: ${p.visible ? "Yes" : "No"}</p>
 
-<p>📦 Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
-<p>👁️ Visible: ${p.visible ? "Yes" : "No"}</p>
-
-<button onclick="deleteProduct('${p._id}')">❌ Delete</button>
-<button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
+<button onclick="deleteProduct('${p._id}')">Delete</button>
+<button onclick='editProduct(${JSON.stringify(p)})'>Edit</button>
 
 <button onclick="toggleStock('${p._id}', ${p.stock})">
-${p.stock ? "❌ Out of Stock" : "✅ In Stock"}
+${p.stock ? "Out of Stock" : "In Stock"}
 </button>
 
 <button onclick="toggleVisibility('${p._id}', ${p.visible})">
-${p.visible ? "🙈 Hide" : "👁️ Show"}
+${p.visible ? "Hide" : "Show"}
 </button>
 
 </div>
 `;
-
 });
 
 }
-// STOCK
+
+// 🔄 STOCK
 async function toggleStock(id, current){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
@@ -317,7 +279,7 @@ alert("Stock Updated ✅");
 loadAdminProducts();
 }
 
-// VISIBILITY
+// 👁 VISIBILITY
 async function toggleVisibility(id, current){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
@@ -329,6 +291,7 @@ body: JSON.stringify({ visible: !current })
 alert("Visibility Updated ✅");
 loadAdminProducts();
 }
+
 // ❌ DELETE
 async function deleteProduct(id){
 
@@ -342,7 +305,6 @@ alert("Deleted ✅");
 loadAdminProducts();
 
 }
-
 }
 
 // ✏️ EDIT
@@ -355,14 +317,14 @@ form.price.value = p.price;
 form.category.value = p.category;
 form.description.value = p.description || "";
 form.images.value = p.images ? p.images.join(",") : "";
+form.offerPrice.value = p.offerPrice || "";
 
 form.dataset.editId = p._id;
 
 window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
-
 }
 
-// 🔍 PRODUCT SEARCH
+// 🔍 SEARCH
 function searchProducts(){
 
 let input = document.getElementById("productSearch").value.toLowerCase();
@@ -371,27 +333,7 @@ let filtered = allProducts.filter(p =>
 p.name.toLowerCase().includes(input)
 );
 
-if(currentCategory !== "All"){
-filtered = filtered.filter(p => p.category === currentCategory);
-}
-
 showProducts(filtered);
-
-}
-
-// 📂 CATEGORY FILTER
-function filterProducts(category){
-
-currentCategory = category;
-
-let filtered = allProducts;
-
-if(category !== "All"){
-filtered = allProducts.filter(p => p.category === category);
-}
-
-showProducts(filtered);
-
 }
 
 // 🖼 IMAGE PREVIEW
@@ -400,17 +342,13 @@ document.querySelector("input[name='image']").addEventListener("change", functio
 let file = this.files[0];
 
 if(file){
-
 let reader = new FileReader();
-
 reader.onload = function(e){
 let img = document.getElementById("preview");
 img.src = e.target.result;
 img.style.display = "block";
 };
-
 reader.readAsDataURL(file);
-
 }
 
 });
