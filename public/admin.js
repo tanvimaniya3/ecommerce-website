@@ -169,28 +169,25 @@ loadOrders();
 
 // ================= PRODUCTS =================
 
-// ➕ ADD / UPDATE PRODUCT
+// ➕ ADD / UPDATE
 document.getElementById("productForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
 let form = this;
 
-try{
+// EDIT MODE
+if(form.dataset.editId){
 
-// 🔥 FIXED DATA
 let data = {
 name: form.name.value,
-price: Number(form.price.value),
+price: form.price.value,
 category: form.category.value,
 description: form.description.value,
-images: form.images.value ? form.images.value.split(",") : [],
-offerPrice: form.offerPrice.value ? Number(form.offerPrice.value) : null,
+images: form.images.value,
+offerPrice: form.offerPrice.value || "",
 stock: true,
 visible: true
 };
-
-// 🔥 EDIT
-if(form.dataset.editId){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
 method:"PUT",
@@ -203,33 +200,21 @@ delete form.dataset.editId;
 
 }else{
 
-// 🔥 ADD
 let formData = new FormData(form);
-formData.append("offerPrice", data.offerPrice || "");
+formData.append("offerPrice", form.offerPrice.value || "");
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
 body: formData
 });
 
-let result = await res.json();
-
-if(res.ok){
-alert("Product Added ✅");
-}else{
-alert(result.message || "Error ❌");
-}
-
+let data = await res.json();
+alert(data.message || "Product Added ✅");
 }
 
 form.reset();
 document.getElementById("preview").style.display = "none";
 loadAdminProducts();
-
-}catch(err){
-console.log(err);
-alert("Something went wrong ❌");
-}
 
 });
 
@@ -264,7 +249,6 @@ ${p.offerPrice ? `
 <span style="text-decoration:line-through;">₹${p.price}</span>
 <b style="color:green;"> ₹${p.offerPrice}</b>
 </p>
-<p style="color:red;">🔥 SALE</p>
 ` : `<p>₹${p.price}</p>`}
 
 <p>Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
@@ -370,12 +354,4 @@ body: JSON.stringify({ visible: !current })
 });
 
 loadAdminProducts();
-}
-
-// 🔄 RESET FORM
-function resetForm(){
-let form = document.getElementById("productForm");
-form.reset();
-delete form.dataset.editId;
-document.getElementById("preview").style.display = "none";
 }
