@@ -36,12 +36,16 @@ const upload = multer({ storage });
 const Product = mongoose.model("Product", {
   stock: { type: Boolean, default: true },
   visible: { type: Boolean, default: true },
+
   name: String,
   price: Number,
   category: String,
   image: String,
   images: Array,
-  description: String
+  description: String,
+
+  // ✅ ADD THIS
+  offerPrice: { type: Number, default: null }
 });
 
 // Order Schema
@@ -74,16 +78,20 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
       imagePath = "/uploads/" + req.file.filename;
     }
 
-    let newProduct = new Product({
-      name: req.body.name,
-      price: Number(req.body.price),
-      category: req.body.category,
-      image: imagePath,
-      images: req.body.images ? req.body.images.split(",") : [],
-      description: req.body.description,
-      stock: true,
-      visible: true
-    });
+   let newProduct = new Product({
+  name: req.body.name,
+  price: Number(req.body.price),
+  category: req.body.category,
+  image: imagePath,
+  images: req.body.images ? req.body.images.split(",") : [],
+  description: req.body.description,
+
+  // ✅ ADD THIS (IMPORTANT)
+  offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
+
+  stock: true,
+  visible: true
+});
 
     await newProduct.save();
 
@@ -99,15 +107,19 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
 app.put("/api/products/:id", async (req, res) => {
   try{
 
-    await Product.findByIdAndUpdate(req.params.id, {
-      name: req.body.name,
-      price: req.body.price,
-      category: req.body.category,
-      description: req.body.description,
-      images: req.body.images ? req.body.images.split(",") : [],
-      stock: req.body.stock !== undefined ? req.body.stock : true,
-      visible: req.body.visible !== undefined ? req.body.visible : true
-    });
+await Product.findByIdAndUpdate(req.params.id, {
+  name: req.body.name,
+  price: req.body.price,
+  category: req.body.category,
+  description: req.body.description,
+  images: req.body.images ? req.body.images.split(",") : [],
+
+  // ✅ ADD THIS
+  offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
+
+  stock: req.body.stock !== undefined ? req.body.stock : true,
+  visible: req.body.visible !== undefined ? req.body.visible : true
+});
 
     res.json({ message: "Product Updated ✅" });
 
