@@ -59,16 +59,28 @@ const Order = mongoose.model("Order", {
 // ===== PRODUCTS =====
 
 // GET
-app.post("/api/products", async (req, res) => {
+app.get("/api/products", async (req, res) => {
+  let data = await Product.find();
+  res.json(data);
+});
+
+// ADD
+app.post("/api/products", upload.single("image"), async (req, res) => {
   try{
+
+    let imagePath = "";
+
+    if(req.file){
+      imagePath = "/uploads/" + req.file.filename;
+    }
 
     let newProduct = new Product({
       name: req.body.name,
-      price: req.body.price,
+      price: Number(req.body.price),
       category: req.body.category,
-      description: req.body.description,
+      image: imagePath,
       images: req.body.images ? req.body.images.split(",") : [],
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
+      description: req.body.description,
       stock: true,
       visible: true
     });
