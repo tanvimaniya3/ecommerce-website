@@ -87,13 +87,19 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
 
     let newProduct = new Product({
       name: req.body.name,
-      price: req.body.price,
+
+      // ✅ FIX: number convert
+      price: Number(req.body.price),
+
       category: req.body.category,
       image: imagePath,
+
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
 
-      offerPrice: req.body.offerPrice || "",
+      // ✅ FIX: offer price properly handle
+      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
+
       stock: true,
       visible: true
     });
