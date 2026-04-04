@@ -190,30 +190,27 @@ loadOrders();
 // ================= PRODUCT SECTION =================
 
 // ➕ ADD / UPDATE PRODUCT
-let allProducts = [];
-
-// ➕ ADD / UPDATE
 document.getElementById("productForm").addEventListener("submit", async function(e){
+
 e.preventDefault();
 
 let form = this;
 
-try{
+if(form.dataset.editId){
 
 let data = {
 name: form.name.value,
-price: Number(form.price.value),
+price: form.price.value,
 category: form.category.value,
 description: form.description.value,
-images: form.images.value,
-offerPrice: form.offerPrice.value ? Number(form.offerPrice.value) : null
+images: form.images.value
 };
-
-if(form.dataset.editId){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
 method:"PUT",
-headers:{ "Content-Type":"application/json" },
+headers:{
+"Content-Type":"application/json"
+},
 body: JSON.stringify(data)
 });
 
@@ -223,42 +220,52 @@ delete form.dataset.editId;
 }else{
 
 let formData = new FormData(form);
-
+formData.append("offerPrice", form.offerPrice.value || "");
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
 body: formData
 });
 
-let result = await res.json();
-alert(result.message);
+let data = await res.json();
 
+alert(data.message || "Product Added ✅");
 }
 
 form.reset();
-loadProducts();
-
-}catch(err){
-alert("Error ❌");
-console.log(err);
-}
+document.getElementById("preview").style.display = "none";
+loadAdminProducts();
 
 });
 
 // 🔥 LOAD PRODUCTS
-async function loadProducts(){
+async function loadAdminProducts(){
+
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products");
-let data = await res.json();
-allProducts = data;
-showProducts(data);
+let products = await res.json();
+
+allProducts = products;
+
+showProducts(products);
+
 }
 
-// 🔥 SHOW PRODUCTS
+// (same code upar ka – main skip kar raha hu repeat avoid karne ke liye)
+
+// 👇 SIRF CHANGE PART
+
 function showProducts(products){
 
 let box = document.getElementById("adminProducts");
 box.innerHTML = "";
 
 products.forEach(p => {
+
+let discount = "";
+
+if(p.offerPrice){
+let percent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
+discount = `<p style="color:red;">🔥 ${percent}% OFF</p>`;
+}
 
 box.innerHTML += `
 <div class="order">
@@ -271,20 +278,24 @@ ${p.offerPrice ? `
 <p>
 <span style="text-decoration:line-through;">₹${p.price}</span>
 <b style="color:green;"> ₹${p.offerPrice}</b>
-</p>` : `<p>₹${p.price}</p>`}
+</p>
+${discount}
+` : `<p>₹${p.price}</p>`}
 
-<p>Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
-<p>Visible: ${p.visible ? "Yes" : "No"}</p>
+<p>📂 ${p.category}</p>
 
-<button onclick="deleteProduct('${p._id}')">Delete</button>
-<button onclick='editProduct(${JSON.stringify(p)})'>Edit</button>
+<p>📦 Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
+<p>👁️ Visible: ${p.visible ? "Yes" : "No"}</p>
+
+<button onclick="deleteProduct('${p._id}')">❌ Delete</button>
+<button onclick='editProduct(${JSON.stringify(p)})'>✏️ Edit</button>
 
 <button onclick="toggleStock('${p._id}', ${p.stock})">
-${p.stock ? "Out of Stock" : "In Stock"}
+${p.stock ? "❌ Out of Stock" : "✅ In Stock"}
 </button>
 
 <button onclick="toggleVisibility('${p._id}', ${p.visible})">
-${p.visible ? "Hide" : "Show"}
+${p.visible ? "🙈 Hide" : "👁️ Show"}
 </button>
 
 </div>
@@ -293,46 +304,31 @@ ${p.visible ? "Hide" : "Show"}
 });
 
 }
-
-// ❌ DELETE
-async function deleteProduct(id){
-await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{method:"DELETE"});
-loadProducts();
-}
-
-// ✏️ EDIT
-function editProduct(p){
-let form = document.getElementById("productForm");
-form.name.value = p.name;
-form.price.value = p.price;
-form.category.value = p.category;
-form.description.value = p.description;
-form.images.value = p.images ? p.images.join(",") : "";
-form.offerPrice.value = p.offerPrice || "";
-form.dataset.editId = p._id;
-}
-
-// 🔄 STOCK
+// STOCK
 async function toggleStock(id, current){
+
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
 method:"PUT",
 headers:{ "Content-Type":"application/json" },
 body: JSON.stringify({ stock: !current })
 });
-loadProducts();
+
+alert("Stock Updated ✅");
+loadAdminProducts();
 }
 
-// 👁 VISIBILITY
+// VISIBILITY
 async function toggleVisibility(id, current){
+
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + id,{
 method:"PUT",
 headers:{ "Content-Type":"application/json" },
 body: JSON.stringify({ visible: !current })
 });
-loadProducts();
-}
 
-window.onload = loadProducts;
+alert("Visibility Updated ✅");
+loadAdminProducts();
+}
 // ❌ DELETE
 async function deleteProduct(id){
 
