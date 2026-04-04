@@ -157,16 +157,30 @@ app.delete("/api/products/:id", async (req, res) => {
 // ================= ORDERS =================
 
 // 👉 Save order
-app.post("/api/orders", async (req, res) => {
-  let order = new Order(req.body);
-  await order.save();
-  res.json({ message: "Order Saved ✅" });
-});
+app.put("/api/products/:id", async (req, res) => {
 
-// 👉 Get all orders
-app.get("/api/orders", async (req, res) => {
-  let orders = await Order.find();
-  res.json(orders);
+  try{
+
+    await Product.findByIdAndUpdate(req.params.id, {
+      name: req.body.name,
+      price: Number(req.body.price),
+      category: req.body.category,
+      description: req.body.description,
+      images: req.body.images ? req.body.images.split(",") : [],
+
+      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
+
+      stock: req.body.stock !== undefined ? req.body.stock : true,
+      visible: req.body.visible !== undefined ? req.body.visible : true
+    });
+
+    res.json({ message: "Product Updated ✅" });
+
+  }catch(err){
+    console.log(err);
+    res.status(500).json({ message: "Update Error ❌" });
+  }
+
 });
 
 // 👉 Update order
