@@ -220,7 +220,10 @@ delete form.dataset.editId;
 }else{
 
 let formData = new FormData(form);
-
+// ✅ ADD THIS
+if(form.offerPrice.value){
+  formData.append("offerPrice", form.offerPrice.value);
+}
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
 body: formData
@@ -260,13 +263,28 @@ box.innerHTML = "";
 
 products.forEach(p => {
 
+let discount = "";
+
+if(p.offerPrice){
+let percent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
+discount = `<p style="color:red;">🔥 ${percent}% OFF</p>`;
+}
+
 box.innerHTML += `
 <div class="order">
 
 <img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="80">
 
 <h3>${p.name}</h3>
-<p>₹${p.price}</p>
+
+${p.offerPrice ? `
+<p>
+<span style="text-decoration:line-through;">₹${p.price}</span>
+<b style="color:green;"> ₹${p.offerPrice}</b>
+</p>
+${discount}
+` : `<p>₹${p.price}</p>`}
+
 <p>📂 ${p.category}</p>
 
 <p>📦 Stock: ${p.stock ? "In Stock" : "Out of Stock"}</p>
@@ -289,7 +307,6 @@ ${p.visible ? "🙈 Hide" : "👁️ Show"}
 });
 
 }
-
 // STOCK
 async function toggleStock(id, current){
 
