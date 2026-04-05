@@ -335,8 +335,25 @@ let input = document.getElementById("productSearch").value.toLowerCase();
 let filtered = allProducts.filter(p =>
 p.name.toLowerCase().includes(input)
 );
+if(currentCategory !== "All"){
+filtered = filtered.filter(p => p.category === currentCategory);
+}
+showProducts(filtered);
+}
+
+// 📂 CATEGORY FILTER
+function filterProducts(category){
+
+currentCategory = category;
+
+let filtered = allProducts;
+
+if(category !== "All"){
+filtered = allProducts.filter(p => p.category === category);
+}
 
 showProducts(filtered);
+
 }
 
 // 🖼 IMAGE PREVIEW
