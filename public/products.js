@@ -21,7 +21,7 @@ applyFilters();
 });
 
 
-// 🔥 SHOW PRODUCTS (UPDATED WITH OFFER)
+// 🔥 SHOW PRODUCTS
 function showProducts(products){
 
 let box = document.getElementById("productContainer");
@@ -36,11 +36,33 @@ return;
 
 products.forEach(p => {
 
-let discount = "";
+/* 🔥 HIDE LOGIC */
+if(p.visible === false) return;
+
+/* 🔥 PRICE LOGIC */
+let priceHTML = "";
 
 if(p.offerPrice){
 let percent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
-discount = `<span style="color:green;">(${percent}% OFF)</span>`;
+
+priceHTML = `
+<p>
+<span style="text-decoration:line-through;">₹${p.price}</span>
+<b style="color:green;"> ₹${p.offerPrice}</b>
+</p>
+<p style="color:red;">🔥 ${percent}% OFF</p>
+`;
+}else{
+priceHTML = `<p>₹${p.price}</p>`;
+}
+
+/* 🔥 STOCK LOGIC */
+let stockHTML = "";
+
+if(p.stock === false){
+stockHTML = `<p style="color:red;">Out of Stock ❌</p>`;
+}else{
+stockHTML = `<button onclick="addToCart('${p._id}')">Add to Cart</button>`;
 }
 
 box.innerHTML += `
@@ -51,15 +73,9 @@ box.innerHTML += `
 <h3>${p.name}</h3>
 </a>
 
-${p.offerPrice ? `
-<p>
-<span style="text-decoration:line-through; color:gray;">₹${p.price}</span>
-<b style="color:red;"> ₹${p.offerPrice}</b>
-${discount}
-</p>
-` 
-: 
-`<p>₹${p.price}</p>`}
+${priceHTML}
+
+${stockHTML}
 
 </div>
 `;
@@ -69,7 +85,7 @@ ${discount}
 }
 
 
-// 🔥 ALL FILTERS + SEARCH + SORT
+// 🔥 FILTERS
 function applyFilters(){
 
 let search = document.getElementById("searchInput").value.toLowerCase();
@@ -79,14 +95,12 @@ let sort = document.getElementById("sortFilter")?.value || "";
 
 let suggestionBox = document.getElementById("suggestions");
 
-// 🔍 FILTER LOGIC
 let filtered = allProducts.filter(p => {
 
-let matchSearch = p.name.toLowerCase().includes(search);
+if(p.visible === false) return false;
 
-// 🔥 FIXED CATEGORY MATCH
-let matchCategory = category === "" || 
-(p.category && p.category.toLowerCase().trim() === category.toLowerCase().trim());
+let matchSearch = p.name.toLowerCase().includes(search);
+let matchCategory = category === "" || p.category === category;
 
 let matchPrice = true;
 
@@ -114,7 +128,6 @@ else if(sort === "high"){
 filtered.sort((a,b)=> (b.offerPrice || b.price) - (a.offerPrice || a.price));
 }
 
-// show products
 showProducts(filtered);
 
 
@@ -143,4 +156,31 @@ ${p.name}
 // 🔥 CLICK SUGGESTION
 function goToProduct(id){
 window.location.href = "product.html?id=" + id;
+}
+
+
+// 🔥 ADD TO CART
+function addToCart(id){
+
+fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
+.then(res => res.json())
+.then(data => {
+
+let product = data.find(p => p._id == id);
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let existing = cart.find(p => p._id == id);
+
+if(existing){
+existing.qty += 1;
+}else{
+product.qty = 1;
+cart.push(product);
+}
+
+localStorage.setItem("cart", JSON.stringify(cart));
+alert("Added to Cart ✅");
+
+});
+
 }
