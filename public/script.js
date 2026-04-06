@@ -12,11 +12,30 @@ box.innerHTML = "";
 
 products.forEach(p => {
 
-let discount = "";
+/* 🔥 PRICE */
+let priceHTML = "";
 
 if(p.offerPrice){
 let percent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
-discount = `<span style="color:green;">(${percent}% OFF)</span>`;
+
+priceHTML = `
+<p>
+<span style="text-decoration:line-through;">₹${p.price}</span>
+<b style="color:green;"> ₹${p.offerPrice}</b>
+</p>
+<p style="color:red;">🔥 ${percent}% OFF</p>
+`;
+}else{
+priceHTML = `<p>₹${p.price}</p>`;
+}
+
+/* 🔥 STOCK */
+let stockHTML = "";
+
+if(p.stock === false){
+stockHTML = `<p style="color:red;">Out of Stock ❌</p>`;
+}else{
+stockHTML = `<button onclick="addToCart('${p._id}')">Add to Cart</button>`;
 }
 
 box.innerHTML += `
@@ -26,17 +45,8 @@ box.innerHTML += `
 <h3>${p.name}</h3>
 </a>
 
-${p.offerPrice ? `
-<p>
-<span style="text-decoration:line-through; color:gray;">₹${p.price}</span>
-<b style="color:red;"> ₹${p.offerPrice}</b>
-${discount}
-</p>
-`
-:
-`<p>₹${p.price}</p>`}
-
-<button onclick="addToCart('${p._id}')">Add to Cart</button>
+${priceHTML}
+${stockHTML}
 
 </div>
 `;
