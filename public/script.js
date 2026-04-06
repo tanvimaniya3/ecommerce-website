@@ -1,7 +1,11 @@
 fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
-showProducts(data);
+
+  let visibleProducts = data.filter(p => p.visible !== false);
+
+  showProducts(visibleProducts);
+
 });
 
 function showProducts(products){
