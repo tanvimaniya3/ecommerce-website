@@ -21,7 +21,7 @@ applyFilters();
 });
 
 
-// 🔥 SHOW PRODUCTS
+// 🔥 SHOW PRODUCTS (UPDATED WITH OFFER)
 function showProducts(products){
 
 let box = document.getElementById("productContainer");
@@ -36,6 +36,13 @@ return;
 
 products.forEach(p => {
 
+let discount = "";
+
+if(p.offerPrice){
+let percent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
+discount = `<span style="color:green;">(${percent}% OFF)</span>`;
+}
+
 box.innerHTML += `
 <div class="product">
 
@@ -44,7 +51,15 @@ box.innerHTML += `
 <h3>${p.name}</h3>
 </a>
 
-<p>₹${p.price}</p>
+${p.offerPrice ? `
+<p>
+<span style="text-decoration:line-through; color:gray;">₹${p.price}</span>
+<b style="color:red;"> ₹${p.offerPrice}</b>
+${discount}
+</p>
+` 
+: 
+`<p>₹${p.price}</p>`}
 
 </div>
 `;
@@ -69,18 +84,22 @@ let filtered = allProducts.filter(p => {
 
 let matchSearch = p.name.toLowerCase().includes(search);
 
-let matchCategory = category === "" || p.category === category;
+// 🔥 FIXED CATEGORY MATCH
+let matchCategory = category === "" || 
+(p.category && p.category.toLowerCase().trim() === category.toLowerCase().trim());
 
 let matchPrice = true;
 
+let finalPrice = p.offerPrice || p.price;
+
 if(price === "low"){
-matchPrice = p.price < 500;
+matchPrice = finalPrice < 500;
 }
 else if(price === "mid"){
-matchPrice = p.price >= 500 && p.price <= 2000;
+matchPrice = finalPrice >= 500 && finalPrice <= 2000;
 }
 else if(price === "high"){
-matchPrice = p.price > 2000;
+matchPrice = finalPrice > 2000;
 }
 
 return matchSearch && matchCategory && matchPrice;
@@ -89,10 +108,10 @@ return matchSearch && matchCategory && matchPrice;
 
 // 🔃 SORT
 if(sort === "low"){
-filtered.sort((a,b)=> a.price - b.price);
+filtered.sort((a,b)=> (a.offerPrice || a.price) - (b.offerPrice || b.price));
 }
 else if(sort === "high"){
-filtered.sort((a,b)=> b.price - a.price);
+filtered.sort((a,b)=> (b.offerPrice || b.price) - (a.offerPrice || a.price));
 }
 
 // show products
