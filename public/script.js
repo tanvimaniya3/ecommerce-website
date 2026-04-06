@@ -11,14 +11,33 @@ if(!box) return;
 box.innerHTML = "";
 
 products.forEach(p => {
+
+let discount = "";
+
+if(p.offerPrice){
+let percent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
+discount = `<span style="color:green;">(${percent}% OFF)</span>`;
+}
+
 box.innerHTML += `
 <div class="product">
 <a href="product.html?id=${p._id}">
 <img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="200">
 <h3>${p.name}</h3>
 </a>
-<p>₹${p.price}</p>
+
+${p.offerPrice ? `
+<p>
+<span style="text-decoration:line-through; color:gray;">₹${p.price}</span>
+<b style="color:red;"> ₹${p.offerPrice}</b>
+${discount}
+</p>
+`
+:
+`<p>₹${p.price}</p>`}
+
 <button onclick="addToCart('${p._id}')">Add to Cart</button>
+
 </div>
 `;
 });
@@ -59,7 +78,6 @@ let cartBox = document.getElementById("cartCount");
 if(cartBox) cartBox.innerText = count;
 }
 
-// 🔥 FINAL SEARCH FIX (ONLY THIS USED)
 document.addEventListener("DOMContentLoaded", function(){
 
 let btn = document.getElementById("searchBtn");
