@@ -104,26 +104,47 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
 app.put("/api/products/:id", async (req, res) => {
   try{
 
-    await Product.findByIdAndUpdate(req.params.id, {
+    let updateData = {};
 
-      name: req.body.name,
-      price: req.body.price,
+    if(req.body.name !== undefined){
+      updateData.name = req.body.name;
+    }
 
-      // 🔥 FIX
-      offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
+    if(req.body.price !== undefined){
+      updateData.price = req.body.price;
+    }
 
-      category: req.body.category,
-      description: req.body.description,
-      images: req.body.images ? req.body.images.split(",") : [],
-      stock: req.body.stock !== undefined ? req.body.stock : true,
-      visible: req.body.visible !== undefined ? req.body.visible : true
+    if(req.body.category !== undefined){
+      updateData.category = req.body.category;
+    }
 
-    });
+    if(req.body.description !== undefined){
+      updateData.description = req.body.description;
+    }
+
+    if(req.body.images !== undefined){
+      updateData.images = req.body.images.split(",");
+    }
+
+    // 🔥 IMPORTANT FIX (offer delete nahi hoga)
+    if(req.body.offerPrice !== undefined){
+      updateData.offerPrice = req.body.offerPrice;
+    }
+
+    if(req.body.stock !== undefined){
+      updateData.stock = req.body.stock;
+    }
+
+    if(req.body.visible !== undefined){
+      updateData.visible = req.body.visible;
+    }
+
+    await Product.findByIdAndUpdate(req.params.id, updateData);
 
     res.json({ message: "Product Updated ✅" });
 
   }catch(err){
-    console.log("UPDATE ERROR:", err); // 👈 IMPORTANT
+    console.log(err);
     res.status(500).json({ message: "Update Error ❌" });
   }
 });
