@@ -68,6 +68,7 @@ app.get("/api/products", async (req, res) => {
 
 // ADD PRODUCT ✅ FIXED
 app.post("/api/products", upload.single("image"), async (req, res) => {
+  console.log("FILE DATA:", req.file);
   try{
 
    let imagePath = "";
