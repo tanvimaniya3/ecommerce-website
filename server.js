@@ -70,11 +70,11 @@ app.get("/api/products", async (req, res) => {
 app.post("/api/products", upload.single("image"), async (req, res) => {
   try{
 
-    let imagePath = "";
+   let imagePath = "";
 
-    if(req.file){
-      imagePath = "/uploads/" + req.file.filename;
-    }
+if(req.file){
+  imagePath = req.file.path; // ✅ Cloudinary URL
+}
 
     let newProduct = new Product({
       name: req.body.name,
