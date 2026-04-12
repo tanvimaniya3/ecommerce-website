@@ -74,7 +74,7 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
    let imagePath = "";
 
 if(req.file){
-  imagePath = req.file.path; // ✅ Cloudinary URL
+  imagePath = "https://ecommerce-website-1-psvr.onrender.com/uploads/" + req.file.filename;
 }
 
     let newProduct = new Product({
