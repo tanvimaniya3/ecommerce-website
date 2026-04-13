@@ -84,7 +84,7 @@ app.post("/api/products", async (req, res) => {
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
 
       category: req.body.category,
-      image: imagePath,
+      image: req.body.image,
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
       stock: true,
