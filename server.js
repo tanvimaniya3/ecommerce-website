@@ -64,25 +64,20 @@ app.get("/api/products", async (req, res) => {
 
 // 🔥 ADD PRODUCT (FINAL)
 app.post("/api/products", upload.single("image"), async (req, res) => {
-
   try {
 
     let imageUrl = "";
 
-    // 🔥 Upload to Cloudinary
     if (req.file) {
-      const uploadResult = await new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          { folder: "ecommerce-products" },
-          (error, result) => {
-            if (error) return reject(error);
-            resolve(result);
-          }
-        );
-        stream.end(req.file.buffer);
-      });
+      // 🔥 SIMPLE upload (NO STREAM ISSUE)
+      const result = await cloudinary.uploader.upload(
+        `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+        {
+          folder: "ecommerce-products"
+        }
+      );
 
-      imageUrl = uploadResult.secure_url;
+      imageUrl = result.secure_url;
     }
 
     let newProduct = new Product({
@@ -101,12 +96,10 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
     res.json({ message: "Product Added ✅" });
 
   } catch (err) {
-    console.log("ERROR 👉", err);
-    res.status(500).json({ message: "Server Error ❌" });
+    console.log("ERROR 👉", err.message);
+    res.status(500).json({ message: err.message });
   }
-
 });
-
 
 // UPDATE PRODUCT
 app.put("/api/products/:id", async (req, res) => {
