@@ -241,6 +241,21 @@ loadAdminProducts();
 console.log(err);
 alert("Something went wrong ❌");
 }
+  const image = document.getElementById("image").value;
+
+fetch("/api/products", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name,
+    price,
+    category,
+    image,   // 🔥 URL भेज रहे हैं
+    description
+  })
+});
 
 });
 
