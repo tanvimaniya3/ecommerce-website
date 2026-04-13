@@ -103,10 +103,13 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
 
     res.json({ message: "Product Added ✅" });
 
-  }catch(err){
-    console.log("FULL ERROR:", JSON.stringify(err, null, 2));
-    res.status(500).json({ message: "Server Error ❌" });
-  }
+  }catch (err) {
+  console.log("FULL ERROR 👉", err); // basic
+  console.log("STACK 👉", err.stack); // 🔥 IMPORTANT
+  console.log("MESSAGE 👉", err.message); // 🔥 MOST IMPORTANT
+
+  res.status(500).json({ message: err.message });
+}
 });
 
 
