@@ -2,6 +2,7 @@ let allOrders = [];
 let currentFilter = "All";
 let allProducts = [];
 let currentCategory = "All";
+alert("js connrct")
 
 // 🔁 PAGE LOAD
 window.onload = function(){
