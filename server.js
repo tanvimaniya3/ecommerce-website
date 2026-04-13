@@ -85,7 +85,7 @@ if(req.file){
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
 
       category: req.body.category,
-      image: imagePath,
+      image: req.file ? req.file.path : "",
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
       stock: true,
