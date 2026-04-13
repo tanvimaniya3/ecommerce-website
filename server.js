@@ -104,7 +104,7 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
     res.json({ message: "Product Added ✅" });
 
   }catch(err){
-    console.log("ADD ERROR:", err);
+    console.log("FULL ERROR:", JSON.stringify(err, null, 2));
     res.status(500).json({ message: "Server Error ❌" });
   }
 });
