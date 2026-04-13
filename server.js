@@ -175,7 +175,3 @@ app.put("/api/orders/:id", async (req, res) => {
 
 app.listen(PORT, () => console.log("Server running 🚀"));
 
-catch(err){
-  console.log("FULL ERROR:", err); // 🔥 add this
-  res.status(500).json({ message: "Server Error ❌" });
-}
