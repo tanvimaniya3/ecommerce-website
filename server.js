@@ -2,38 +2,28 @@ const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const cors = require("cors");
-
-const path = require("path");
-const fs = require("fs");
+const cloudinary = require("cloudinary").v2;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
-
-// 🔥 uploads folder auto create
-const uploadPath = path.join(__dirname, "public/uploads");
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
-}
 
 // 🔥 MongoDB
 mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.mongodb.net/shopDB?retryWrites=true&w=majority")
 .then(()=> console.log("MongoDB Connected ✅"))
 .catch(err => console.log(err));
 
-// 🔥 LOCAL STORAGE (NO CLOUDINARY)
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
+// 🔥 Cloudinary CONFIG (IMPORTANT)
+cloudinary.config({
+  cloud_name: "dneycnrh3",
+  api_key: "438169669799823",
+  api_secret: "ju0qxvJIc-vAB8bS5bgkytU32zk"
 });
 
+// 🔥 Multer (memory)
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // ✅ Product Schema
@@ -71,17 +61,27 @@ app.get("/api/products", async (req, res) => {
   res.json(data);
 });
 
-// 🔥 ADD PRODUCT (FINAL WORKING)
+// 🔥 ADD PRODUCT (FINAL)
 app.post("/api/products", upload.single("image"), async (req, res) => {
-
-  console.log("FILE DATA:", req.file);
 
   try {
 
-    let imagePath = "";
+    let imageUrl = "";
 
+    // 🔥 Upload to Cloudinary
     if (req.file) {
-      imagePath = "/uploads/" + req.file.filename;
+      const uploadResult = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "ecommerce-products" },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          }
+        );
+        stream.end(req.file.buffer);
+      });
+
+      imageUrl = uploadResult.secure_url;
     }
 
     let newProduct = new Product({
@@ -89,8 +89,7 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
       price: Number(req.body.price),
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
       category: req.body.category,
-      image: imagePath,
-      images: req.body.images ? req.body.images.split(",") : [],
+      image: imageUrl,
       description: req.body.description,
       stock: true,
       visible: true
@@ -104,20 +103,19 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
     console.log("ERROR 👉", err);
     res.status(500).json({ message: "Server Error ❌" });
   }
+
 });
 
 
 // UPDATE PRODUCT
 app.put("/api/products/:id", async (req, res) => {
   try {
-
     let updateData = {};
 
     if(req.body.name !== undefined) updateData.name = req.body.name;
     if(req.body.price !== undefined) updateData.price = req.body.price;
     if(req.body.category !== undefined) updateData.category = req.body.category;
     if(req.body.description !== undefined) updateData.description = req.body.description;
-    if(req.body.images !== undefined) updateData.images = req.body.images.split(",");
     if(req.body.offerPrice !== undefined) updateData.offerPrice = req.body.offerPrice;
     if(req.body.stock !== undefined) updateData.stock = req.body.stock;
     if(req.body.visible !== undefined) updateData.visible = req.body.visible;
@@ -132,21 +130,11 @@ app.put("/api/products/:id", async (req, res) => {
   }
 });
 
-// DELETE
+// DELETE PRODUCT
 app.delete("/api/products/:id", async (req, res) => {
   try{
     await Product.findByIdAndDelete(req.params.id);
     res.json({ message: "Deleted ✅" });
-  }catch(err){
-    res.status(500).json({ message: "Delete Error ❌" });
-  }
-});
-
-// DELETE ORDER
-app.delete("/api/orders/:id", async (req, res) => {
-  try{
-    await Order.findByIdAndDelete(req.params.id);
-    res.json({ message: "Order Deleted ✅" });
   }catch(err){
     res.status(500).json({ message: "Delete Error ❌" });
   }
