@@ -3,44 +3,38 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const cors = require("cors");
 
-// 🔥 CLOUDINARY
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const path = require("path");
+const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-
-// 🔥 STATIC (optional)
 app.use(express.static("public"));
+
+// 🔥 uploads folder auto create
+const uploadPath = path.join(__dirname, "public/uploads");
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
 // 🔥 MongoDB
 mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.mongodb.net/shopDB?retryWrites=true&w=majority")
 .then(()=> console.log("MongoDB Connected ✅"))
 .catch(err => console.log(err));
 
-
-// 🔥 CLOUDINARY CONFIG
-cloudinary.config({
-  cloud_name: "dneycnrh3",
-  api_key: "438169669799823",
-  api_secret: "ju0qxvJIc-vAB8bS5bgkytU32zk"
-});
-
-// 🔥 STORAGE (Cloudinary)
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "ecommerce-products",
-    resource_type: "image"
+// 🔥 LOCAL STORAGE (NO CLOUDINARY)
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
   }
 });
 
-// 🔥 MULTER
 const upload = multer({ storage });
-
 
 // ✅ Product Schema
 const Product = mongoose.model("Product", {
@@ -77,22 +71,25 @@ app.get("/api/products", async (req, res) => {
   res.json(data);
 });
 
-// 🔥 ADD PRODUCT (FINAL FIX)
+// 🔥 ADD PRODUCT (FINAL WORKING)
 app.post("/api/products", upload.single("image"), async (req, res) => {
 
   console.log("FILE DATA:", req.file);
 
-  try{
+  try {
+
+    let imagePath = "";
+
+    if (req.file) {
+      imagePath = "/uploads/" + req.file.filename;
+    }
 
     let newProduct = new Product({
       name: req.body.name,
       price: Number(req.body.price),
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
       category: req.body.category,
-
-      // 🔥 FINAL (Cloudinary URL save hoga)
-      image: req.file ? req.file.path : "",
-
+      image: imagePath,
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
       stock: true,
@@ -103,19 +100,16 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
 
     res.json({ message: "Product Added ✅" });
 
-  }catch (err) {
-  console.log("FULL ERROR 👉", err); // basic
-  console.log("STACK 👉", err.stack); // 🔥 IMPORTANT
-  console.log("MESSAGE 👉", err.message); // 🔥 MOST IMPORTANT
-
-  res.status(500).json({ message: err.message });
-}
+  } catch (err) {
+    console.log("ERROR 👉", err);
+    res.status(500).json({ message: "Server Error ❌" });
+  }
 });
 
 
 // UPDATE PRODUCT
 app.put("/api/products/:id", async (req, res) => {
-  try{
+  try {
 
     let updateData = {};
 
@@ -132,7 +126,7 @@ app.put("/api/products/:id", async (req, res) => {
 
     res.json({ message: "Product Updated ✅" });
 
-  }catch(err){
+  } catch(err){
     console.log(err);
     res.status(500).json({ message: "Update Error ❌" });
   }
@@ -177,4 +171,3 @@ app.put("/api/orders/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log("Server running 🚀"));
-
