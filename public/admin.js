@@ -3,7 +3,6 @@ let currentFilter = "All";
 let allProducts = [];
 let currentCategory = "All";
 
-
 // 🔁 PAGE LOAD
 window.onload = function(){
 if(localStorage.getItem("adminLogin") === "true"){
@@ -177,40 +176,71 @@ ${order.status}
 
 // ➕ ADD / UPDATE PRODUCT
 document.getElementById("productForm").addEventListener("submit", async function(e){
-  e.preventDefault();
 
-  console.log("FORM SUBMIT CLICKED ✅"); // 🔥 check
+e.preventDefault();
+let form = this;
 
-  const name = document.getElementById("name").value;
-  const price = document.getElementById("price").value;
-  const category = document.getElementById("category").value;
-  const image = document.getElementById("image").value;
-  const description = document.getElementById("description").value;
+try{
 
-  try {
-    const res = await fetch("/api/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name,
-        price,
-        category,
-        image,
-        description
-      })
-    });
+// 🔥 SAFE DATA
+let data = {
+name: form.name.value,
+price: Number(form.price.value),
+category: form.category.value,
+description: form.description.value,
+images: form.images.value ? form.images.value.split(",") : [],
+offerPrice: form.offerPrice.value || "",
+stock: true,
+visible: true
+};
 
-    const data = await res.json();
+// 🔄 EDIT
+if(form.dataset.editId){
 
-    alert(data.message);
-
-  } catch (err) {
-    console.log("ERROR:", err);
-    alert("Something went wrong ❌");
-  }
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
+method:"PUT",
+headers:{ "Content-Type":"application/json" },
+body: JSON.stringify(data)
 });
+
+alert("Updated ✅");
+delete form.dataset.editId;
+
+}else{
+
+// 🔥 ADD (FormData + offerPrice fix)
+let formData = new FormData(form);
+
+
+if(form.offerPrice.value){
+formData.set("offerPrice", form.offerPrice.value);
+}else{
+formData.set("offerPrice", "");
+}
+
+let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
+method:"POST",
+body: formData
+});
+
+let result = await res.json();
+
+if(res.ok){
+alert("Product Added ✅");
+}else{
+alert(result.message || "Error ❌");
+}
+
+}
+
+form.reset();
+document.getElementById("preview").style.display = "none";
+loadAdminProducts();
+
+}catch(err){
+console.log(err);
+alert("Something went wrong ❌");
+}
 
 });
 
@@ -401,4 +431,3 @@ form.removeAttribute("data-edit-id");
 let preview = document.getElementById("preview");
 if(preview) preview.style.display = "none";
 }
-
