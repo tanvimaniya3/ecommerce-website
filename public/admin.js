@@ -176,71 +176,37 @@ ${order.status}
 
 // ➕ ADD / UPDATE PRODUCT
 document.getElementById("productForm").addEventListener("submit", async function(e){
+  e.preventDefault();
 
-e.preventDefault();
-let form = this;
+  const name = document.getElementById("name").value;
+  const price = document.getElementById("price").value;
+  const category = document.getElementById("category").value;
+  const image = document.getElementById("image").value;
+  const description = document.getElementById("description").value;
 
-try{
-
-// 🔥 SAFE DATA
-let data = {
-name: form.name.value,
-price: Number(form.price.value),
-category: form.category.value,
-description: form.description.value,
-images: form.images.value ? form.images.value.split(",") : [],
-offerPrice: form.offerPrice.value || "",
-stock: true,
-visible: true
-};
-
-// 🔄 EDIT
-if(form.dataset.editId){
-
-await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
-method:"PUT",
-headers:{ "Content-Type":"application/json" },
-body: JSON.stringify(data)
-});
-
-alert("Updated ✅");
-delete form.dataset.editId;
-
-}else{
-
-// 🔥 ADD (FormData + offerPrice fix)
-let formData = new FormData(form);
-
-
-if(form.offerPrice.value){
-formData.set("offerPrice", form.offerPrice.value);
-}else{
-formData.set("offerPrice", "");
-}
-
-let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
-method:"POST",
-body: formData
-});
-
-let result = await res.json();
-
-if(res.ok){
-alert("Product Added ✅");
-}else{
-alert(result.message || "Error ❌");
-}
-
-}
-
-form.reset();
-document.getElementById("preview").style.display = "none";
-loadAdminProducts();
-
-}catch(err){
-console.log(err);
-alert("Something went wrong ❌");
-}
+  // 🔥 👉 यही तुम्हारा code यहाँ आएगा
+  fetch("/api/products", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name,
+      price,
+      category,
+      image,
+      description
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+    document.getElementById("productForm").reset();
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Something went wrong ❌");
+  });
 
 });
 
@@ -431,3 +397,4 @@ form.removeAttribute("data-edit-id");
 let preview = document.getElementById("preview");
 if(preview) preview.style.display = "none";
 }
+
