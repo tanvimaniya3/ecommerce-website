@@ -67,7 +67,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 // ADD PRODUCT ✅ FIXED
-app.post("/api/products", upload.single("image"), async (req, res) => {
+app.post("/api/products", async (req, res) => {
   try{
 
     let imagePath = "";
