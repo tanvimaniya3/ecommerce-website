@@ -241,6 +241,7 @@ loadAdminProducts();
 console.log(err);
 alert("Something went wrong ❌");
 }
+
 });
 
 // 📦 LOAD PRODUCTS
