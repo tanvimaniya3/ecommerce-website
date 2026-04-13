@@ -3,40 +3,50 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const cors = require("cors");
 
-const fs = require("fs");
-const path = require("path");
-
-// uploads folder
-const uploadPath = path.join(__dirname, "public/uploads");
-
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
-}
+// 🔥 CLOUDINARY
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.static("public"));
 app.use(express.json());
 
-// MongoDB
+// 🔥 STATIC (optional)
+app.use(express.static("public"));
+
+// 🔥 MongoDB
 mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.mongodb.net/shopDB?retryWrites=true&w=majority")
 .then(()=> console.log("MongoDB Connected ✅"))
 .catch(err => console.log(err));
 
-// Upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadPath),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
+
+// 🔥 CLOUDINARY CONFIG
+cloudinary.config({
+  cloud_name: "dneycnrh3",
+  api_key: "438169669799823",
+  api_secret: "ju0qxvJIc-vAB8bS5bgkytU32zk"
 });
+
+// 🔥 STORAGE (Cloudinary)
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "ecommerce-products",
+    allowed_formats: ["jpg", "png", "jpeg"]
+  }
+});
+
+// 🔥 MULTER
 const upload = multer({ storage });
 
-// ✅ Product Schema (FIXED)
+
+// ✅ Product Schema
 const Product = mongoose.model("Product", {
   stock: { type: Boolean, default: true },
   visible: { type: Boolean, default: true },
-  offerPrice: { type: Number, default: null },   // 🔥 FIX
+  offerPrice: { type: Number, default: null },
   name: String,
   price: Number,
   category: String,
@@ -58,6 +68,7 @@ const Order = mongoose.model("Order", {
   featured: { type: Boolean, default: false }
 });
 
+
 // ===== PRODUCTS =====
 
 // GET
@@ -66,26 +77,22 @@ app.get("/api/products", async (req, res) => {
   res.json(data);
 });
 
-// ADD PRODUCT ✅ FIXED
+// 🔥 ADD PRODUCT (FINAL FIX)
 app.post("/api/products", upload.single("image"), async (req, res) => {
+
   console.log("FILE DATA:", req.file);
+
   try{
-
-   let imagePath = "";
-
-if(req.file){
-  imagePath = "https://ecommerce-website-1-psvr.onrender.com/uploads/" + req.file.filename;
-}
 
     let newProduct = new Product({
       name: req.body.name,
       price: Number(req.body.price),
-
-      // 🔥 FIX (MOST IMPORTANT)
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
-
       category: req.body.category,
+
+      // 🔥 FINAL (Cloudinary URL save hoga)
       image: req.file ? req.file.path : "",
+
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
       stock: true,
@@ -97,49 +104,26 @@ if(req.file){
     res.json({ message: "Product Added ✅" });
 
   }catch(err){
-    console.log("ADD ERROR:", err);   // 👈 IMPORTANT
+    console.log("ADD ERROR:", err);
     res.status(500).json({ message: "Server Error ❌" });
   }
 });
 
-// UPDATE PRODUCT ✅ FIXED
+
+// UPDATE PRODUCT
 app.put("/api/products/:id", async (req, res) => {
   try{
 
     let updateData = {};
 
-    if(req.body.name !== undefined){
-      updateData.name = req.body.name;
-    }
-
-    if(req.body.price !== undefined){
-      updateData.price = req.body.price;
-    }
-
-    if(req.body.category !== undefined){
-      updateData.category = req.body.category;
-    }
-
-    if(req.body.description !== undefined){
-      updateData.description = req.body.description;
-    }
-
-    if(req.body.images !== undefined){
-      updateData.images = req.body.images.split(",");
-    }
-
-    // 🔥 IMPORTANT FIX (offer delete nahi hoga)
-    if(req.body.offerPrice !== undefined){
-      updateData.offerPrice = req.body.offerPrice;
-    }
-
-    if(req.body.stock !== undefined){
-      updateData.stock = req.body.stock;
-    }
-
-    if(req.body.visible !== undefined){
-      updateData.visible = req.body.visible;
-    }
+    if(req.body.name !== undefined) updateData.name = req.body.name;
+    if(req.body.price !== undefined) updateData.price = req.body.price;
+    if(req.body.category !== undefined) updateData.category = req.body.category;
+    if(req.body.description !== undefined) updateData.description = req.body.description;
+    if(req.body.images !== undefined) updateData.images = req.body.images.split(",");
+    if(req.body.offerPrice !== undefined) updateData.offerPrice = req.body.offerPrice;
+    if(req.body.stock !== undefined) updateData.stock = req.body.stock;
+    if(req.body.visible !== undefined) updateData.visible = req.body.visible;
 
     await Product.findByIdAndUpdate(req.params.id, updateData);
 
@@ -161,15 +145,14 @@ app.delete("/api/products/:id", async (req, res) => {
   }
 });
 
-// delete order
-
+// DELETE ORDER
 app.delete("/api/orders/:id", async (req, res) => {
-try{
-await Order.findByIdAndDelete(req.params.id);
-res.json({ message: "Order Deleted ✅" });
-}catch(err){
-res.status(500).json({ message: "Delete Error ❌" });
-}
+  try{
+    await Order.findByIdAndDelete(req.params.id);
+    res.json({ message: "Order Deleted ✅" });
+  }catch(err){
+    res.status(500).json({ message: "Delete Error ❌" });
+  }
 });
 
 // ===== ORDERS =====
