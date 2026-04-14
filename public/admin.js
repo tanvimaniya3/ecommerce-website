@@ -211,6 +211,11 @@ delete form.dataset.editId;
 // 🔥 ADD (FormData + offerPrice fix)
 let formData = new FormData(form);
 
+  // 🔥 FIX (image file ensure ho)
+if(form.image.files.length === 0){
+  alert("Please select image ❌");
+  return;
+}
 
 if(form.offerPrice.value){
 formData.set("offerPrice", form.offerPrice.value);
