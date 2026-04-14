@@ -67,14 +67,16 @@ app.get("/api/products", async (req, res) => {
 });
 
 // ADD PRODUCT ✅ FIXED
-app.post("/api/products", async (req, res) => {
+app.post("/api/products", upload.single("image"), async (req, res) => {
   try{
 
-    let imagePath = "";
+   let imagePath = "";
 
-    if(req.file){
-      imagePath = "/uploads/" + req.file.filename;
-    }
+if(req.file){
+  imagePath = "/uploads/" + req.file.filename;
+}else{
+  return res.status(400).json({ message: "Image required ❌" });
+}
 
     let newProduct = new Product({
       name: req.body.name,
@@ -84,7 +86,7 @@ app.post("/api/products", async (req, res) => {
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
 
       category: req.body.category,
-      image: req.body.image,
+      image: imagePath,
       images: req.body.images ? req.body.images.split(",") : [],
       description: req.body.description,
       stock: true,
