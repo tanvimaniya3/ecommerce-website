@@ -79,9 +79,7 @@ app.post("/api/products", async (req, res) => {
       category: req.body.category,
       image: req.body.image,
      images: req.body.images 
-  ? (Array.isArray(req.body.images) 
-      ? req.body.images 
-      : req.body.images.split(","))
+  ? req.body.images.split(",").map(img => img.trim())
   : [],
       description: req.body.description,
       stock: true,
