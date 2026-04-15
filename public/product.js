@@ -20,6 +20,28 @@ let img = product.image
 
 document.getElementById("pImage").src = img;
 
+// 🔥 EXTRA IMAGES SHOW
+let extraBox = document.getElementById("extraImages");
+extraBox.innerHTML = "";
+
+if(product.images && product.images.length > 0){
+
+product.images.forEach(img => {
+
+let finalImg = img.startsWith("http") 
+? img 
+: "https://ecommerce-website-1-psvr.onrender.com" + img;
+
+extraBox.innerHTML += `
+<img src="${finalImg}" width="70" style="cursor:pointer; border:1px solid #ccc; padding:5px;"
+onclick="changeImage('${finalImg}')">
+`;
+
+});
+
+}    
+    
+
 // NAME
 document.getElementById("pName").innerText = product.name;
 
