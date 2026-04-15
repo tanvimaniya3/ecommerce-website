@@ -1,17 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const multer = require("multer");
+// const multer = require("multer");
 const cors = require("cors");
 
-const fs = require("fs");
-const path = require("path");
+// const fs = require("fs");
+// const path = require("path");
 
 // uploads folder
-const uploadPath = path.join(__dirname, "public/uploads");
+// const uploadPath = path.join(__dirname, "public/uploads");
 
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
-}
+// if (!fs.existsSync(uploadPath)) {
+//   fs.mkdirSync(uploadPath, { recursive: true });
+// }
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,11 +26,11 @@ mongoose.connect("mongodb+srv://maniyatanvi3_db_user:tanu1234@cluster0.hkwj6vf.m
 .catch(err => console.log(err));
 
 // Upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadPath),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
-});
-const upload = multer({ storage });
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => cb(null, uploadPath),
+//   filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
+// });
+// const upload = multer({ storage });
 
 // ✅ Product Schema (FIXED)
 const Product = mongoose.model("Product", {
@@ -70,15 +70,15 @@ app.get("/api/products", async (req, res) => {
 app.post("/api/products", async (req, res) => {
   try{
 
-    let imagePath = req.body.image;   // 🔥 URL आएगा
+    // let imagePath = req.body.image;   // 🔥 URL आएगा
 
     let newProduct = new Product({
       name: req.body.name,
       price: Number(req.body.price),
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
       category: req.body.category,
-      image: imagePath,
-      images: req.body.images ? req.body.images.split(",") : [],
+      image: req.body.image,
+      images: req.body.images || [],
       description: req.body.description,
       stock: true,
       visible: true
