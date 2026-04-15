@@ -196,6 +196,7 @@ visible: true
 };
 
 // 🔄 EDIT
+// 🔄 EDIT
 if(form.dataset.editId){
 
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products/" + form.dataset.editId,{
@@ -209,19 +210,25 @@ delete form.dataset.editId;
 
 }else{
 
-// 🔥 ADD (FormData + offerPrice fix)
-let formData = new FormData(form);
-formData.set("image", form.image.value);   // 🔥 URL भेज रहे हैं
+// 🔥 FINAL ADD (JSON + URL)
+let data = {
+name: form.name.value,
+price: Number(form.price.value),
+category: form.category.value,
+description: form.description.value,
 
-if(form.offerPrice.value){
-formData.set("offerPrice", form.offerPrice.value);
-}else{
-formData.set("offerPrice", "");
-}
+image: form.image.value,   // 🔥 URL
+
+images: form.images.value ? form.images.value.split(",") : [],
+offerPrice: form.offerPrice.value || "",
+stock: true,
+visible: true
+};
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
 method:"POST",
-body: formData
+headers:{ "Content-Type":"application/json" },
+body: JSON.stringify(data)
 });
 
 let result = await res.json();
