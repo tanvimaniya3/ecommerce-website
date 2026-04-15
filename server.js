@@ -67,22 +67,15 @@ app.get("/api/products", async (req, res) => {
 });
 
 // ADD PRODUCT ✅ FIXED
-app.post("/api/products", upload.single("image"), async (req, res) => {
+app.post("/api/products", async (req, res) => {
   try{
 
-    let imagePath = "";
-
-    if(req.file){
-      imagePath = "/uploads/" + req.file.filename;
-    }
+    let imagePath = req.body.image;   // 🔥 URL आएगा
 
     let newProduct = new Product({
       name: req.body.name,
       price: Number(req.body.price),
-
-      // 🔥 FIX (MOST IMPORTANT)
       offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null,
-
       category: req.body.category,
       image: imagePath,
       images: req.body.images ? req.body.images.split(",") : [],
@@ -96,7 +89,7 @@ app.post("/api/products", upload.single("image"), async (req, res) => {
     res.json({ message: "Product Added ✅" });
 
   }catch(err){
-    console.log("ADD ERROR:", err);   // 👈 IMPORTANT
+    console.log("ADD ERROR:", err);
     res.status(500).json({ message: "Server Error ❌" });
   }
 });
