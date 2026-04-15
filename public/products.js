@@ -69,7 +69,7 @@ box.innerHTML += `
 <div class="product">
 
 <a href="product.html?id=${p._id}">
-<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="200">
+<img src="${p.image}" width="80">
 <h3>${p.name}</h3>
 </a>
 
