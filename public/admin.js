@@ -143,7 +143,7 @@ box.innerHTML += `
 
 ${order.items.map(p => `
 <div style="display:flex; gap:10px; align-items:center;">
-<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="60">
+<img src="${p.image}" width="80">
 <div>
 ${p.name}<br>
 ₹${p.price} x ${p.qty}
