@@ -280,7 +280,7 @@ discount = `<p style="color:red;">🔥 ${percent}% OFF</p>`;
 box.innerHTML += `
 <div class="order">
 
-<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}" width="80">
+<img src="${p.image}" width="80">
 
 <h3>${p.name}</h3>
 
