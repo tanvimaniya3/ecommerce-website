@@ -13,7 +13,9 @@ productData = product;
 
 // IMAGE
 let img = product.image 
-? "https://ecommerce-website-1-psvr.onrender.com" + product.image
+? (product.image.startsWith("http") 
+    ? product.image 
+    : "https://ecommerce-website-1-psvr.onrender.com" + product.image)
 : "https://via.placeholder.com/400";
 
 document.getElementById("pImage").src = img;
