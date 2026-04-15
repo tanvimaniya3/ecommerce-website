@@ -188,6 +188,7 @@ name: form.name.value,
 price: Number(form.price.value),
 category: form.category.value,
 description: form.description.value,
+image: form.image.value,
 images: form.images.value ? form.images.value.split(",") : [],
 offerPrice: form.offerPrice.value || "",
 stock: true,
@@ -210,7 +211,7 @@ delete form.dataset.editId;
 
 // 🔥 ADD (FormData + offerPrice fix)
 let formData = new FormData(form);
-
+formData.set("image", form.image.value);   // 🔥 URL भेज रहे हैं
 
 if(form.offerPrice.value){
 formData.set("offerPrice", form.offerPrice.value);
@@ -243,7 +244,6 @@ alert("Something went wrong ❌");
 }
 
 });
-
 // 📦 LOAD PRODUCTS
 async function loadAdminProducts(){
 
