@@ -24,27 +24,39 @@ document.getElementById("pImage").src = img;
 let extraBox = document.getElementById("extraImages");
 extraBox.innerHTML = "";
 
-if(product.images && product.images.length > 0){
+// main image first add
+let allImages = [];
 
-  product.images.forEach(img => {
-
-    let finalImg = img;
-
-    // 🔥 FIX (space aur http check)
-    if(!img.startsWith("http")){
-      finalImg = "https://ecommerce-website-1-psvr.onrender.com/" + img;
-    }
-
-    extraBox.innerHTML += `
-      <img src="${finalImg}" width="70"
-      style="cursor:pointer; border:1px solid #ccc; padding:5px;"
-      onclick="changeImage('${finalImg}')">
-    `;
-  });
-
+if(product.image){
+  allImages.push(product.image);
 }
-    
 
+// extra images add
+if(product.images && product.images.length > 0){
+  product.images.forEach(img => {
+    if(img && img.trim() !== ""){
+      allImages.push(img.trim());
+    }
+  });
+}
+
+// duplicate remove
+allImages = [...new Set(allImages)];
+
+allImages.forEach(img => {
+
+  let finalImg = img;
+
+  if(!finalImg.startsWith("http")){
+    finalImg = "https://ecommerce-website-1-psvr.onrender.com" + finalImg;
+  }
+
+  extraBox.innerHTML += `
+    <img src="${finalImg}" width="70"
+    style="cursor:pointer; border:1px solid #ccc; padding:5px;"
+    onclick="changeImage('${finalImg}')">
+  `;
+});
 // NAME
 document.getElementById("pName").innerText = product.name;
 
