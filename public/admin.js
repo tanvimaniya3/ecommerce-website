@@ -189,7 +189,9 @@ price: Number(form.price.value),
 category: form.category.value,
 description: form.description.value,
 image: form.image.value,
-images: form.images.value ? form.images.value.split(",") : [],
+images: form.images.value 
+  ? form.images.value.split(",").map(i => i.trim())
+  : [],
 offerPrice: form.offerPrice.value || "",
 stock: true,
 visible: true
