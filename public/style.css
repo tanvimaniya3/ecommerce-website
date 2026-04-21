@@ -22,7 +22,12 @@ align-items:center;
 padding:20px 60px;
 background:rgba(0,0,0,0.2);  
 z-index:1000;
+}
 
+nav a{
+margin:0 15px;
+text-decoration:none;
+color:rgb(255, 255, 255);
 }
 
 /* LOGO */
