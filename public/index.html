@@ -145,5 +145,32 @@ window.location.href = "products.html?search=" + box.value;
 
 });
 </script>
+    <script>
+
+/* search open */
+document.getElementById("searchBtn").addEventListener("click", function(e){
+e.stopPropagation();
+document.getElementById("searchBox").classList.toggle("active");
+document.getElementById("searchBox").focus();
+});
+
+/* input pe click karo to close na ho */
+document.getElementById("searchBox").addEventListener("click", function(e){
+e.stopPropagation();
+});
+
+/* page me kahi bhi click = close */
+document.addEventListener("click", function(){
+document.getElementById("searchBox").classList.remove("active");
+});
+
+/* enter search */
+document.getElementById("searchBox").addEventListener("keyup", function(e){
+if(e.key === "Enter"){
+window.location.href="products.html?search=" + this.value;
+}
+});
+
+</script>
 </body>
 </html>
