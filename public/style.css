@@ -475,7 +475,7 @@ margin:5px 0;
 .icons{
 display:flex;
 align-items:center;
-gap:8px;   /* pehle zyada tha */
+gap:2px;   /* pehle zyada tha */
 }
 
 /* SEARCH ICON */
@@ -503,7 +503,7 @@ border-radius:30px;
 background:white;
 color:black;
 transition:0.3s;
-margin-right:4px;
+margin-right:3px;
 }
 
 .search-input.active{
