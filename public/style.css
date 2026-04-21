@@ -542,6 +542,8 @@ cursor:not-allowed;
 /* ================= HOME PAGE PREMIUM CSS ================= */
 
 /* NAVBAR */
+/* ===== NEXT LEVEL SHOPIFY NAVBAR ===== */
+
 .navbar{
 position:fixed;
 top:0;
@@ -550,31 +552,139 @@ width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 60px;
-background:rgba(255,255,255,0.88);
-backdrop-filter:blur(10px);
-z-index:999;
-box-shadow:0 2px 15px rgba(0,0,0,0.08);
+padding:18px 55px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(12px);
+z-index:1000;
+transition:0.3s;
+border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-.logo a{
-font-size:28px;
-font-weight:700;
-text-decoration:none;
+/* scroll pe white navbar */
+.navbar.scrolled{
+background:white;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+.navbar.scrolled .logo a,
+.navbar.scrolled nav a,
+.navbar.scrolled .icons a,
+.navbar.scrolled .search-icon{
 color:#111;
-letter-spacing:1px;
 }
 
-nav a{
-margin:0 16px;
+/* LOGO */
+.logo a{
+font-size:30px;
+font-weight:800;
+color:white;
 text-decoration:none;
-color:#222;
-font-weight:500;
+letter-spacing:1px;
 transition:0.3s;
 }
 
-nav a:hover{
-color:#c79a63;
+/* MENU */
+nav{
+display:flex;
+align-items:center;
+gap:28px;
+}
+
+nav a{
+text-decoration:none;
+color:white;
+font-size:16px;
+font-weight:600;
+position:relative;
+transition:0.3s;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-6px;
+width:0%;
+height:2px;
+background:#d9b07a;
+transition:0.3s;
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+/* ICONS */
+.icons{
+display:flex;
+align-items:center;
+gap:16px;
+}
+
+.icons a,
+.search-icon{
+font-size:20px;
+color:white;
+cursor:pointer;
+text-decoration:none;
+transition:0.3s;
+}
+
+.icons a:hover,
+.search-icon:hover{
+transform:scale(1.1);
+}
+
+/* SEARCH */
+.search-input{
+width:0;
+opacity:0;
+padding:9px 12px;
+border:none;
+outline:none;
+border-radius:30px;
+background:white;
+color:black;
+transition:0.3s;
+}
+
+.search-input.active{
+width:190px;
+opacity:1;
+}
+
+/* CART COUNT */
+#cartCount{
+color:#d9b07a;
+font-weight:800;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.navbar{
+padding:15px 18px;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.logo{
+width:100%;
+text-align:center;
+}
+
+nav{
+width:100%;
+justify-content:center;
+flex-wrap:wrap;
+gap:14px;
+}
+
+.icons{
+width:100%;
+justify-content:center;
+}
+
 }
 
 /* HERO */
