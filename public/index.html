@@ -24,20 +24,21 @@
         <a href="contact.html">Contact</a>
         <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
     </nav>
-    <div class="icons">
+   <!-- SEARCH POPUP -->
+<div class="search-popup" id="searchPopup">
 
-<!-- 🔍 SEARCH ICON -->
-<span class="search-icon" id="searchBtn">🔍</span>
+<div class="search-popup-box">
 
-<!-- 🔍 HIDDEN SEARCH BOX -->
 <input 
-type="text" 
-id="searchBox" 
-placeholder="Search products..." 
-class="search-input" 
-onkeyup="searchFromHome(event)">
+type="text"
+id="popupSearchInput"
+placeholder="Search products...">
 
-<a href="cart.html" style="margin-right: 10px; font-size: 17px;">🛒</a>
+<button onclick="goSearch()">Search</button>
+
+<span class="close-search" onclick="closeSearch()">✕</span>
+
+</div>
 
 </div>
 </header>
@@ -121,27 +122,30 @@ onkeyup="searchFromHome(event)">
 </footer>
 <!-- 🔥 FINAL SEARCH FIX (INLINE JS) -->
 <script>
-document.addEventListener("DOMContentLoaded", function(){
 
-let btn = document.getElementById("searchBtn");
-let box = document.getElementById("searchBox");
-
-if(btn && box){
-
-btn.addEventListener("click", function(){
-box.classList.toggle("active");
-box.focus();
+document.getElementById("searchBtn").addEventListener("click", function(){
+document.getElementById("searchPopup").classList.add("active");
+document.getElementById("popupSearchInput").focus();
 });
 
-box.addEventListener("keyup", function(e){
-if(e.key === "Enter" && box.value.length > 2){
-window.location.href = "products.html?search=" + box.value;
+function closeSearch(){
+document.getElementById("searchPopup").classList.remove("active");
+}
+
+function goSearch(){
+let value = document.getElementById("popupSearchInput").value;
+
+if(value.trim() !== ""){
+window.location.href = "products.html?search=" + value;
+}
+}
+
+document.getElementById("popupSearchInput").addEventListener("keyup", function(e){
+if(e.key === "Enter"){
+goSearch();
 }
 });
 
-}
-
-});
 </script>
 </body>
 </html>
