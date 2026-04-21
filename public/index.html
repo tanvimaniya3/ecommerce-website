@@ -123,52 +123,40 @@ onkeyup="searchFromHome(event)">
 </footer>
 <!-- 🔥 FINAL SEARCH FIX (INLINE JS) -->
 <script>
+
 document.addEventListener("DOMContentLoaded", function(){
 
 let btn = document.getElementById("searchBtn");
 let box = document.getElementById("searchBox");
 
-if(btn && box){
-
-btn.addEventListener("click", function(){
+/* icon click */
+btn.addEventListener("click", function(e){
+e.stopPropagation();
 box.classList.toggle("active");
+
+if(box.classList.contains("active")){
 box.focus();
-});
-
-box.addEventListener("keyup", function(e){
-if(e.key === "Enter" && box.value.length > 2){
-window.location.href = "products.html?search=" + box.value;
 }
 });
 
-}
-
-});
-</script>
-    <script>
-
-/* search open */
-document.getElementById("searchBtn").addEventListener("click", function(e){
-e.stopPropagation();
-document.getElementById("searchBox").classList.toggle("active");
-document.getElementById("searchBox").focus();
-});
-
-/* input pe click karo to close na ho */
-document.getElementById("searchBox").addEventListener("click", function(e){
+/* box pe click */
+box.addEventListener("click", function(e){
 e.stopPropagation();
 });
 
-/* page me kahi bhi click = close */
+/* outside click = close */
 document.addEventListener("click", function(){
-document.getElementById("searchBox").classList.remove("active");
+box.classList.remove("active");
 });
 
 /* enter search */
-document.getElementById("searchBox").addEventListener("keyup", function(e){
-if(e.key === "Enter"){
-window.location.href="products.html?search=" + this.value;
+box.addEventListener("keyup", function(e){
+if(e.key === "Enter" && box.value.trim() !== ""){
+window.location.href =
+"products.html?search=" + box.value;
 }
+});
+
 });
 
 </script>
