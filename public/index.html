@@ -119,6 +119,29 @@ onkeyup="searchFromHome(event)">
     <p>Smart Living Essentials</p>
     <p>© 2026 All Rights Reserved</p>
 </footer>
+<!-- 🔥 FINAL SEARCH FIX (INLINE JS) -->
+<script>
+document.addEventListener("DOMContentLoaded", function(){
 
+let btn = document.getElementById("searchBtn");
+let box = document.getElementById("searchBox");
+
+if(btn && box){
+
+btn.addEventListener("click", function(){
+box.classList.toggle("active");
+box.focus();
+});
+
+box.addEventListener("keyup", function(e){
+if(e.key === "Enter" && box.value.length > 2){
+window.location.href = "products.html?search=" + box.value;
+}
+});
+
+}
+
+});
+</script>
 </body>
 </html>
