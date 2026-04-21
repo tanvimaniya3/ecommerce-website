@@ -9,49 +9,7 @@ body{
 background:#eee3e3;
 
 }
-.navbar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 50px;
-background:rgba(255,255,255,0.12);
-backdrop-filter:blur(12px);
-z-index:1000;
-}
 
-/* logo */
-.logo{
-width:20%;
-}
-
-/* center nav */
-nav{
-width:60%;
-display:flex;
-justify-content:center;
-align-items:center;
-gap:40px;
-}
-
-nav a{
-text-decoration:none;
-color:white;
-font-size:16px;
-font-weight:600;
-}
-
-/* right icons */
-.icons{
-width:20%;
-display:flex;
-justify-content:flex-end;
-align-items:center;
-gap:5px;
-}
 /* SEARCH INPUT */
 
 .search-input{
