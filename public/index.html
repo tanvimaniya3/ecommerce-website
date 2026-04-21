@@ -1,7 +1,9 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ShopSphere</title>
 <link rel="stylesheet" href="style.css">
 <script defer src="script.js"></script>
@@ -10,152 +12,97 @@
 <body>
 
 <!-- NAVBAR -->
-
-<section>
 <header class="navbar">
+    <div class="logo">
+        <a href="index.html">ShopSphere</a>
+    </div>
 
-<div class="logo">
-<a href="index.html">ShopSphere</a>
-</div>
-
-<nav>
-
-<a href="index.html" style="margin: 40px;">Home</a>
-<a href="products.html" style="margin: 40px;">Products</a>
-<a href="about.html" style="margin: 40px;">About</a>
-<a href="blog.html" style="margin: 40px;">Blog</a>
-<a href="contact.html" style="margin: 40px;">Contact</a>
-<a href="cart.html"> Cart (<span id="cartCount">0</span>)</a>
-
-</nav>
-
-<div class="icons">
-
-<!-- 🔍 SEARCH ICON -->
-<span class="search-icon" id="searchBtn">🔍</span>
-
-<!-- 🔍 HIDDEN SEARCH BOX -->
-<input 
-type="text" 
-id="searchBox" 
-placeholder="Search products..." 
-class="search-input" 
-onkeyup="searchFromHome(event)">
-
-<a href="cart.html" style="margin-right: 10px; font-size: 17px;">🛒</a>
-
-</div>
-
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+    </nav>
 </header>
 
-<!-- HERO SECTION -->
-
+<!-- HERO -->
 <section class="hero">
+    <div class="hero-overlay"></div>
 
-<div class="hero-text">
+    <div class="hero-content">
+        <p class="tag">Premium Collection</p>
+        <h1>Smart Living Essentials</h1>
+        <p class="sub">
+            Premium quality products designed for your home, comfort, and everyday lifestyle.
+        </p>
 
-<h1>All You <span>Need</span></h1>
-<p>Premium quality products for your home, lifestyle, and everyday needs.</p>
-
-<button class="btn">Shop Now</button>
-
-</div>
-
-</section>
-
+        <div class="hero-btns">
+            <a href="products.html" class="btn">Shop Now</a>
+            <a href="products.html" class="btn light">Explore</a>
+        </div>
+    </div>
 </section>
 
 <!-- FEATURES -->
-
 <section class="features">
-
-    
-
-<div>🚚 Free Shipping</div>
-<div>🛡 Warranty</div>
-<div>👨‍🍳 Chef Approved</div>
-<div>⭐ Premium Quality</div>
-
+    <div class="feature-box">🚚 Free Shipping</div>
+    <div class="feature-box">💎 Premium Quality</div>
+    <div class="feature-box">🔒 Secure Checkout</div>
+    <div class="feature-box">⭐ Trusted Brand</div>
 </section>
 
-<!-- CATEGORIES -->
-
+<!-- CATEGORY -->
 <section class="categories">
+    <h2>Shop by Category</h2>
 
-<h2>Shop by Category</h2>
+    <div class="category-grid">
 
-<div class="category-grid">
+        <a href="category.html?cat=cookware" class="cat-card">
+            <img src="image/category1.jpg">
+            <span>Cookware</span>
+        </a>
 
-<a href="category.html?cat=cookware" class="card">
-<img src="image/category1.jpg">
-<h3>Cookware</h3>
-</a>
+        <a href="category.html?cat=appliances" class="cat-card">
+            <img src="image/category2.jpg">
+            <span>Appliances</span>
+        </a>
 
-<a href="category.html?cat=appliances" class="card">
-<img src="image/category2.jpg">
-<h3>Appliances</h3>
-</a>
+        <a href="category.html?cat=storage" class="cat-card">
+            <img src="image/category3.jpg">
+            <span>Storage</span>
+        </a>
 
-<a href="category.html?cat=storage" class="card">
-<img src="image/category3.jpg">
-<h3>Storage</h3>
-</a>
+        <a href="category.html?cat=dining" class="cat-card">
+            <img src="image/category4.jpg">
+            <span>Dining</span>
+        </a>
 
-<a href="category.html?cat=dining" class="card">
-<img src="image/category4.jpg">
-<h3>Dining</h3>
-</a>
-
-</div>
-
+    </div>
 </section>
 
 <!-- PRODUCTS -->
-
 <section class="products">
+    <h2>Featured Products</h2>
 
-<h2>Featured Products</h2>
+    <div class="product-grid" id="productContainer">
+        <!-- backend products -->
+    </div>
+</section>
 
-<div class="product-grid" id="productContainer">
-
-<!-- Products will load here -->
-
-</div>
-
+<!-- CTA -->
+<section class="cta">
+    <h2>Upgrade Your Home Today</h2>
+    <p>Modern products curated for stylish everyday living.</p>
+    <a href="products.html" class="btn">Shop Collection</a>
 </section>
 
 <!-- FOOTER -->
-
 <footer>
-
-<p>©️ 2026 ShopSphere</p>
-
+    <h3>ShopSphere</h3>
+    <p>Smart Living Essentials</p>
+    <p>© 2026 All Rights Reserved</p>
 </footer>
-
-<!-- 🔥 FINAL SEARCH FIX (INLINE JS) -->
-<script>
-document.addEventListener("DOMContentLoaded", function(){
-
-let btn = document.getElementById("searchBtn");
-let box = document.getElementById("searchBox");
-
-if(btn && box){
-
-btn.addEventListener("click", function(){
-box.classList.toggle("active");
-box.focus();
-});
-
-box.addEventListener("keyup", function(e){
-if(e.key === "Enter" && box.value.length > 2){
-window.location.href = "products.html?search=" + box.value;
-}
-});
-
-}
-
-});
-</script>
 
 </body>
 </html>
