@@ -170,6 +170,33 @@ background:#f7f2eb;
 padding-left:24px;
 color:#c79a63 !important;
 }
+/* WISHLIST BUTTON */
+
+.product{
+position:relative;
+}
+
+.wish-btn{
+position:absolute;
+top:14px;
+right:14px;
+background:white;
+width:38px;
+height:38px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+cursor:pointer;
+box-shadow:0 6px 15px rgba(0,0,0,0.12);
+transition:0.3s;
+z-index:5;
+}
+
+.wish-btn:hover{
+transform:scale(1.12);
+}
 
 /* SEARCH */
 .search-input{
