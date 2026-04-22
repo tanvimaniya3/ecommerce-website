@@ -14,6 +14,8 @@ products.forEach(p => {
 box.innerHTML += `
 <div class="product">
 
+<span class="wish-btn" onclick="addToWishlist('${p._id}')">❤️</span>
+
 <a href="product.html?id=${p._id}">
 <img src="${p.image}">
 <h3>${p.name}</h3>
@@ -26,6 +28,7 @@ p.offerPrice && p.offerPrice < p.price
 <span class="old">₹${p.price}</span>
 <span class="new">₹${p.offerPrice}</span>
 </p>
+
 <p class="off">
 🔥 ${Math.round(((p.price - p.offerPrice) / p.price) * 100)}% OFF
 </p>
@@ -79,6 +82,7 @@ let cartBox = document.getElementById("cartCount");
 if(cartBox) cartBox.innerText = count;
 }
 
+
 // 🔥 FINAL SEARCH FIX (ONLY THIS USED)
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -108,4 +112,21 @@ window.location.href = "products.html?search=" + box.value;
 
 });
 
+function addToWishlist(id){
+
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+let exists = wishlist.find(item => item == id);
+
+if(exists){
+alert("Already in Wishlist ❤️");
+return;
+}
+
+wishlist.push(id);
+
+localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+alert("Added to Wishlist ❤️");
+}
 updateCartCount();
