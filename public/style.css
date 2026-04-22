@@ -58,7 +58,9 @@ box-shadow:0 8px 25px rgba(0,0,0,0.08);
 font-size:30px;
 font-weight:800;
 color:white;
+text-decoration:none;
 letter-spacing:1px;
+transition:0.3s;
 }
 
 .navbar.scrolled .logo a{
@@ -69,12 +71,12 @@ color:#111;
 nav{
 display:flex;
 align-items:center;
-justify-content:center;
-gap:40px;
-flex:1;
+gap:28px;
 }
 
+
 nav a{
+text-decoration:none;
 color:white;
 font-size:16px;
 font-weight:600;
@@ -216,8 +218,10 @@ display:inline-block;
 padding:14px 28px;
 background:#c79a63;
 color:white;
+text-decoration:none;
 border-radius:8px;
 font-weight:600;
+transition:0.3s;
 }
 
 .btn:hover{
