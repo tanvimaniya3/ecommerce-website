@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+<div class="logo">
+<a href="index.html">ShopSphere</a>
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Shop</a>
+</nav>
+
+<div class="icons">
+<a href="cart.html">🛒</a>
+</div>
+</header>
+
+<section class="products" style="margin-top:110px; max-width:500px; margin-left:auto; margin-right:auto;">
+
+<h2>My Account 👤</h2>
+
+<div class="product-card">
+
+<input type="text" id="name" placeholder="Enter Name" style="width:100%;padding:12px;margin:10px 0;">
+
+<input type="email" id="email" placeholder="Enter Email" style="width:100%;padding:12px;margin:10px 0;">
+
+<button onclick="saveUser()">Login / Register</button>
+
+<button onclick="logoutUser()" style="background:#e53935;margin-top:10px;">Logout</button>
+
+<p id="userText" style="margin-top:15px;"></p>
+
+</div>
+
+</section>
+
+<script>
+
+function saveUser(){
+
+let name = document.getElementById("name").value;
+let email = document.getElementById("email").value;
+
+let user = {name,email};
+
+localStorage.setItem("user", JSON.stringify(user));
+
+showUser();
+
+}
+
+function showUser(){
+
+let user = JSON.parse(localStorage.getItem("user"));
+
+if(user){
+document.getElementById("userText").innerHTML =
+"Welcome " + user.name + " ❤️";
+}
+
+}
+
+function logoutUser(){
+
+localStorage.removeItem("user");
+
+location.reload();
+
+}
+
+showUser();
+
+</script>
+
+</body>
+</html>
