@@ -116,17 +116,16 @@ function addToWishlist(id){
 
 let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-let exists = wishlist.find(item => item == id);
-
-if(exists){
+if(wishlist.includes(id)){
 alert("Already in Wishlist ❤️");
 return;
 }
 
 wishlist.push(id);
 
-localStorage.setItem("wishlist", JSON.stringify(wishlist));
+localStorage.setItem("wishlist", JSON.stringify(wishlist"));
 
 alert("Added to Wishlist ❤️");
+
 }
 updateCartCount();
