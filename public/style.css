@@ -197,6 +197,15 @@ z-index:5;
 .wish-btn:hover{
 transform:scale(1.12);
 }
+.remove-btn{
+margin-top:10px;
+background:#e53935 !important;
+color:white;
+}
+
+.remove-btn:hover{
+background:#c62828 !important;
+}
 
 /* SEARCH */
 .search-input{
