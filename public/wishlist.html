@@ -33,6 +33,48 @@
 
 </div>
 </section>
+<script>
 
+let ids = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
+.then(res => res.json())
+.then(data => {
+
+let box = document.getElementById("wishlistBox");
+
+box.innerHTML = "";
+
+let items = data.filter(p => ids.includes(p._id));
+
+if(items.length == 0){
+box.innerHTML = "<p>No Wishlist Products ❤️</p>";
+return;
+}
+
+items.forEach(p => {
+
+box.innerHTML += `
+<div class="product">
+
+<a href="product.html?id=${p._id}">
+<img src="${p.image}">
+<h3>${p.name}</h3>
+</a>
+
+<p class="new">₹${p.offerPrice || p.price}</p>
+
+<button onclick="addToCart('${p._id}')">
+Add to Cart
+</button>
+
+</div>
+`;
+
+});
+
+});
+
+</script>
 </body>
 </html>
