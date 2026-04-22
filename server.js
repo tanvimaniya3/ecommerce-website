@@ -44,7 +44,14 @@ const Product = mongoose.model("Product", {
   images: Array,
   description: String
 });
-
+// user schema
+const User = mongoose.model("User", {
+  name: String,
+  email: { type: String, unique: true },
+  password: String,
+  createdAt: { type: Date, default: Date.now },
+  lastLogin: Date
+});
 // Order Schema
 const Order = mongoose.model("Order", {
   name: String,
@@ -185,5 +192,65 @@ app.put("/api/orders/:id", async (req, res) => {
   await Order.findByIdAndUpdate(req.params.id, { status: req.body.status });
   res.json({ message: "Order Updated ✅" });
 });
+/* REGISTER */
+app.post("/api/register", async (req, res) => {
 
+try{
+
+let exists = await User.findOne({ email: req.body.email });
+
+if(exists){
+return res.json({ message: "Email already registered ❌" });
+}
+
+let user = new User({
+name: req.body.name,
+email: req.body.email,
+password: req.body.password,
+lastLogin: new Date()
+});
+
+await user.save();
+
+res.json({ message: "Registered Successfully ✅" });
+
+}catch(err){
+res.status(500).json({ message: "Register Error ❌" });
+}
+
+});
+
+/* LOGIN */
+app.post("/api/login", async (req, res) => {
+
+let user = await User.findOne({
+email: req.body.email,
+password: req.body.password
+});
+
+if(!user){
+return res.json({ message: "Invalid Login ❌" });
+}
+
+user.lastLogin = new Date();
+await user.save();
+
+res.json({
+message: "Login Success ✅",
+user: {
+name: user.name,
+email: user.email
+}
+});
+
+});
+
+/* ADMIN USERS */
+app.get("/api/users", async (req, res) => {
+
+let users = await User.find().sort({ createdAt: -1 });
+
+res.json(users);
+
+});
 app.listen(PORT, () => console.log("Server running 🚀"));
