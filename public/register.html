@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | ShopSphere</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<section class="products" style="min-height:100vh; display:flex; justify-content:center; align-items:center;">
+
+<div class="product-card" style="max-width:420px; width:100%; padding:30px;">
+
+<h2 style="margin-bottom:20px;">Create Account 👤</h2>
+
+<input type="text" id="name" placeholder="Full Name"
+style="width:100%;padding:12px;margin:10px 0;">
+
+<input type="email" id="email" placeholder="Email Address"
+style="width:100%;padding:12px;margin:10px 0;">
+
+<input type="password" id="password" placeholder="Password"
+style="width:100%;padding:12px;margin:10px 0;">
+
+<button onclick="registerUser()">Register</button>
+
+<p style="margin-top:15px;">
+Already have account?
+<a href="login.html">Login</a>
+</p>
+
+<p id="msg" style="margin-top:10px;"></p>
+
+</div>
+
+</section>
+
+<script>
+
+function registerUser(){
+
+let name = document.getElementById("name").value.trim();
+let email = document.getElementById("email").value.trim();
+let password = document.getElementById("password").value.trim();
+
+fetch("https://ecommerce-website-1-psvr.onrender.com/api/register",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify({
+name:name,
+email:email,
+password:password
+})
+})
+.then(res => res.json())
+.then(data => {
+
+document.getElementById("msg").innerText = data.message;
+
+if(data.message.includes("Successfully")){
+setTimeout(()=>{
+window.location.href = "login.html";
+},1200);
+}
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
