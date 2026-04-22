@@ -68,12 +68,31 @@ box.innerHTML += `
 Add to Cart
 </button>
 
+<button onclick="removeWishlist('${p._id}')" class="remove-btn">
+Remove ❌
+</button>
+
 </div>
 `;
 
 });
 
 });
+
+</script>
+<script>
+
+function removeWishlist(id){
+
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+wishlist = wishlist.filter(item => item != id);
+
+localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+location.reload();
+
+}
 
 </script>
 </body>
