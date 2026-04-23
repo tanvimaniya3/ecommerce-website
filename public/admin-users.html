@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Users</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+<div class="logo">
+<a href="index.html">ShopSphere Admin</a>
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+</nav>
+</header>
+
+<section class="products" style="margin-top:110px;">
+
+<h2>Registered Users 👤</h2>
+
+<div style="overflow-x:auto; margin-top:30px;">
+
+<table style="width:100%; background:white; border-radius:12px; overflow:hidden;">
+
+<thead style="background:#111; color:white;">
+<tr>
+<th style="padding:15px;">Name</th>
+<th style="padding:15px;">Email</th>
+<th style="padding:15px;">Joined</th>
+<th style="padding:15px;">Last Login</th>
+</tr>
+</thead>
+
+<tbody id="userTable">
+<tr>
+<td colspan="4" style="padding:20px;">Loading...</td>
+</tr>
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<script>
+
+fetch("https://ecommerce-website-1-psvr.onrender.com/api/users")
+.then(res => res.json())
+.then(data => {
+
+let box = document.getElementById("userTable");
+
+box.innerHTML = "";
+
+if(data.length === 0){
+box.innerHTML = `
+<tr>
+<td colspan="4" style="padding:20px;">No Users Found</td>
+</tr>
+`;
+return;
+}
+
+data.forEach(u => {
+
+box.innerHTML += `
+<tr style="border-bottom:1px solid #eee; text-align:center;">
+
+<td style="padding:15px;">${u.name || "-"}</td>
+
+<td style="padding:15px;">${u.email || "-"}</td>
+
+<td style="padding:15px;">
+${new Date(u.createdAt).toLocaleDateString()}
+</td>
+
+<td style="padding:15px;">
+${u.lastLogin ? new Date(u.lastLogin).toLocaleString() : "-"}
+</td>
+
+</tr>
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
