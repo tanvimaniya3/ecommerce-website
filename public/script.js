@@ -129,4 +129,41 @@ localStorage.setItem("wishlist", JSON.stringify(wishlist));
 
 alert("Added to Wishlist ❤️");
 }
+function showUserStatus(){
+
+let user = JSON.parse(localStorage.getItem("user"));
+let area = document.getElementById("userArea");
+
+if(!area) return;
+
+if(user){
+
+area.innerHTML = `
+<span style="color:white;font-weight:600;">
+👤 Hi ${user.name}
+</span>
+
+<a href="#" onclick="logoutUser()" style="margin-left:10px;color:white;">
+Logout
+</a>
+`;
+
+}else{
+
+area.innerHTML = `
+<a href="login.html" style="color:white;text-decoration:none;">
+👤 Login
+</a>
+`;
+
+}
+
+}
+
+function logoutUser(){
+localStorage.removeItem("user");
+location.reload();
+}
+
+showUserStatus();
 updateCartCount();
