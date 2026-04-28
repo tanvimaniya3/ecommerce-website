@@ -138,6 +138,7 @@ ${order.status}
 <option value="Shipped" ${order.status==="Shipped"?"selected":""}>Shipped</option>
 <option value="Delivered" ${order.status==="Delivered"?"selected":""}>Delivered</option>
 </select>
+
 <br><br>
 
 <button onclick="deleteOrder('${order._id}')"
@@ -151,21 +152,7 @@ Delete Order ❌
 });
 
 }
-async function deleteOrder(id){
 
-let ok = confirm("Delete this order?");
-
-if(!ok) return;
-
-await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders/" + id,{
-method:"DELETE"
-});
-
-alert("Order Deleted ✅");
-
-loadOrders();
-
-}
 
 
 // 🔄 UPDATE STATUS
@@ -184,6 +171,20 @@ alert("Status Updated ✅");
 loadOrders();
 }
 
+async function deleteOrder(id){
 
+let ok = confirm("Delete this order?");
+
+if(!ok) return;
+
+await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders/" + id,{
+method:"DELETE"
+});
+
+alert("Order Deleted ✅");
+
+loadOrders();
+
+}
 // INIT
 loadOrders();
