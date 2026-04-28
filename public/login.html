@@ -58,9 +58,14 @@ if(data.message.includes("Success")){
 localStorage.setItem("user", JSON.stringify(data.user));
 
 setTimeout(()=>{
-window.location.href="index.html";
+
+let go = localStorage.getItem("redirectAfterLogin") || "index.html";
+
+localStorage.removeItem("redirectAfterLogin");
+
+window.location.href = go;
+
 },1000);
-}
 
 });
 }
