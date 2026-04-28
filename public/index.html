@@ -259,17 +259,23 @@ Login Now
 <script>
 
 let user = JSON.parse(localStorage.getItem("user"));
+let popupSeen = localStorage.getItem("popupSeen");
 
-if(!user){
+if(!user && !popupSeen){
 
 setTimeout(()=>{
+
 document.getElementById("loginPopup").style.display="flex";
-},3000);
+
+localStorage.setItem("popupSeen","yes");
+
+},8000);
 
 }
 
 function closeLoginPopup(){
 document.getElementById("loginPopup").style.display="none";
+localStorage.setItem("popupSeen","yes");
 }
 
 </script>
