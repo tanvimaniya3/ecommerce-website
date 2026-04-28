@@ -42,6 +42,20 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
 
 e.preventDefault();
 
+let user = JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+
+localStorage.setItem("redirectAfterLogin","checkout.html");
+
+alert("Please login first");
+
+window.location.href = "login.html";
+
+return;
+
+}
+
 let order = {
 name: document.getElementById("name").value,
 phone: document.getElementById("phone").value,
@@ -49,15 +63,13 @@ pincode: document.getElementById("pincode").value,
 state: document.getElementById("state").value,
 address: document.getElementById("address").value,
 items: cart,
-total: total, // 🔥 NEW ADD
+total: total,
 date: new Date().toLocaleString(),
 status: "Pending"
 };
 
-// save for confirm page
 localStorage.setItem("lastOrder", JSON.stringify(order));
 
-// send to backend
 await fetch("https://ecommerce-website-1-psvr.onrender.com/api/orders",{
 method:"POST",
 headers:{
@@ -68,10 +80,8 @@ body: JSON.stringify(order)
 
 alert("Order Placed Successfully ✅");
 
-// clear cart
 localStorage.removeItem("cart");
 
-// redirect
 window.location.href = "confirm.html";
 
 });
