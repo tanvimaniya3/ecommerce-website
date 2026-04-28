@@ -58,11 +58,7 @@ if(data.message.includes("Success")){
 localStorage.setItem("user", JSON.stringify(data.user));
 
 setTimeout(()=>{
-let go = localStorage.getItem("redirectAfterLogin") || "index.html";
-
-localStorage.removeItem("redirectAfterLogin");
-
-window.location.href = go;
+window.location.href="index.html";
 },1000);
 }
 
