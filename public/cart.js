@@ -70,3 +70,20 @@ loadCart();
 
 // पहली बार load
 loadCart();
+function goCheckout(){
+
+let user = JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+
+localStorage.setItem("redirectAfterLogin","checkout.html");
+
+window.location.href = "login.html";
+
+return;
+
+}
+
+window.location.href = "checkout.html";
+
+}
