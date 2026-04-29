@@ -170,6 +170,34 @@ background:#f7f2eb;
 padding-left:24px;
 color:#c79a63 !important;
 }
+.account-menu{
+position:relative;
+display:inline-block;
+}
+
+.account-dropdown{
+display:none;
+position:absolute;
+right:0;
+top:35px;
+background:white;
+min-width:170px;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+z-index:999;
+}
+
+.account-dropdown a{
+display:block;
+padding:12px 14px;
+color:#111 !important;
+text-decoration:none;
+}
+
+.account-dropdown a:hover{
+background:#f5f5f5;
+}
 /* WISHLIST BUTTON */
 
 .product{
@@ -230,6 +258,25 @@ margin-right:3px;
 
 .search-input::placeholder{
 color:#888;
+}
+/* loginpop */
+#loginPopup{
+opacity:0;
+transition:0.35s ease;
+}
+
+#loginPopup.show{
+display:flex !important;
+opacity:1;
+}
+
+#loginPopup > div{
+transform:translateY(30px) scale(0.95);
+transition:0.35s ease;
+}
+
+#loginPopup.show > div{
+transform:translateY(0) scale(1);
 }
 
 /* CART COUNT */
