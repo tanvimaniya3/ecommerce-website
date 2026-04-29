@@ -139,16 +139,42 @@ if(!area) return;
 if(user){
 
 area.innerHTML = `
-<div class="account-menu">
+<div style="position:relative; display:inline-block;">
 
-<a href="javascript:void(0)" onclick="toggleAccountMenu()" style="color:white;text-decoration:none;">
-👤 Hi ${user.name}
-</a>
+<button onclick="toggleUserMenu()" style="
+background:none;
+border:none;
+color:white;
+cursor:pointer;
+font-size:16px;
+font-weight:600;
+">
+👤 Hi ${user.name} ▾
+</button>
 
-<div id="accountDropdown" class="account-dropdown">
+<div id="userMenu" style="
+display:none;
+position:absolute;
+right:0;
+top:45px;
+background:white;
+min-width:190px;
+border-radius:14px;
+box-shadow:0 15px 35px rgba(0,0,0,0.18);
+overflow:hidden;
+z-index:999;
+opacity:0;
+transform:translateY(15px) scale(0.96);
+transition:0.35s ease;
+">
 
-<a href="orders.html">My Orders</a>
-<a href="#" onclick="logoutUser()">Logout</a>
+<a href="profile.html" style="display:block;padding:12px;color:black;text-decoration:none;">👤 My Profile</a>
+
+<a href="my-orders.html" style="display:block;padding:12px;color:black;text-decoration:none;">📦 My Orders</a>
+
+<a href="wishlist.html" style="display:block;padding:12px;color:black;text-decoration:none;">❤️ Wishlist</a>
+
+<a href="#" onclick="logoutUser()" style="display:block;padding:12px;color:red;text-decoration:none;">🚪 Logout</a>
 
 </div>
 
@@ -205,6 +231,48 @@ function logoutUser(){
 localStorage.removeItem("user");
 location.reload();
 }
+function toggleUserMenu(){
 
+let menu = document.getElementById("userMenu");
+
+if(menu.style.display === "block"){
+
+menu.style.opacity = "0";
+menu.style.transform = "translateY(15px) scale(0.96)";
+
+setTimeout(()=>{
+menu.style.display = "none";
+},300);
+
+}else{
+
+menu.style.display = "block";
+
+setTimeout(()=>{
+menu.style.opacity = "1";
+menu.style.transform = "translateY(0) scale(1)";
+},20);
+
+}
+
+}
+document.addEventListener("click", function(e){
+
+let menu = document.getElementById("userMenu");
+
+if(!menu) return;
+
+if(!e.target.closest("#userMenu") && !e.target.closest("button")){
+
+menu.style.opacity = "0";
+menu.style.transform = "translateY(15px) scale(0.96)";
+
+setTimeout(()=>{
+menu.style.display = "none";
+},300);
+
+}
+
+});
 showUserStatus();
 updateCartCount();
