@@ -232,7 +232,12 @@ cursor:pointer;
 font-weight:bold;
 ">✖</span>
 
-<h2 style="margin-bottom:15px;">Login 👤</h2>
+<h2>🎁 Get 10% OFF</h2>
+
+<p style="margin-bottom:18px;color:#555;">
+Use Code: <b>WELCOME10</b><br>
+Login to save coupon & faster checkout
+</p>
 
 <p style="margin-bottom:18px;color:#555;">
 Login for faster checkout & offers
@@ -265,19 +270,51 @@ if(!user && !popupSeen){
 
 setTimeout(()=>{
 
-document.getElementById("loginPopup").style.display="flex";
+let pop = document.getElementById("loginPopup");
 
-localStorage.setItem("popupSeen","yes");
+pop.style.display="flex";
+
+setTimeout(()=>{
+pop.classList.add("show");
+},20);
 
 },2000);
-
 }
 
 function closeLoginPopup(){
-document.getElementById("loginPopup").style.display="none";
+
+let pop = document.getElementById("loginPopup");
+
+pop.classList.remove("show");
+
+setTimeout(()=>{
+pop.style.display="none";
+},350);
+
+}
+document.addEventListener("mouseout", function(e){
+
+if(e.clientY <= 0){
+
+let user = JSON.parse(localStorage.getItem("user"));
+let popupSeen = localStorage.getItem("popupSeen");
+let pop = document.getElementById("loginPopup");
+
+if(!user && !popupSeen){
+
+pop.style.display="flex";
+
+setTimeout(()=>{
+pop.classList.add("show");
+},20);
+
 localStorage.setItem("popupSeen","yes");
+
 }
 
+}
+
+}); ye kaha me dalna hai
 </script>
 </body>
 </html>
