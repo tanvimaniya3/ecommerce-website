@@ -139,26 +139,67 @@ if(!area) return;
 if(user){
 
 area.innerHTML = `
-<span style="color:white;font-weight:600;">
-👤 Hi ${user.name}
-</span>
+<div class="account-menu">
 
-<a href="#" onclick="logoutUser()" style="margin-left:10px;color:white;">
-Logout
+<a href="javascript:void(0)" onclick="toggleAccountMenu()" style="color:white;text-decoration:none;">
+👤 Hi ${user.name}
 </a>
+
+<div id="accountDropdown" class="account-dropdown">
+
+<a href="orders.html">My Orders</a>
+<a href="#" onclick="logoutUser()">Logout</a>
+
+</div>
+
+</div>
 `;
 
 }else{
 
 area.innerHTML = `
-<a href="login.html" style="color:white;text-decoration:none;">
-👤 Login
+<div class="account-menu">
+
+<a href="javascript:void(0)" onclick="toggleAccountMenu()" style="color:white;text-decoration:none;">
+👤 Account
 </a>
+
+<div id="accountDropdown" class="account-dropdown">
+
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+
+</div>
+
+</div>
 `;
 
 }
 
 }
+function toggleAccountMenu(){
+
+let box = document.getElementById("accountDropdown");
+
+if(box.style.display=="block"){
+box.style.display="none";
+}else{
+box.style.display="block";
+}
+
+}
+
+document.addEventListener("click",function(e){
+
+if(!e.target.closest(".account-menu")){
+
+let box = document.getElementById("accountDropdown");
+
+if(box) box.style.display="none";
+
+}
+
+});
 
 function logoutUser(){
 localStorage.removeItem("user");
