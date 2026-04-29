@@ -168,13 +168,21 @@ transform:translateY(15px) scale(0.96);
 transition:0.35s ease;
 ">
 
-<a href="profile.html" style="display:block;padding:12px;color:black;text-decoration:none;">👤 My Profile</a>
+<a href="profile.html" style="display:block;padding:12px;color:black;text-decoration:none;transition:0.3s;"
+onmouseover="this.style.background='#f5f5f5'"
+onmouseout="this.style.background='white'">👤 My Profile</a>
 
-<a href="my-orders.html" style="display:block;padding:12px;color:black;text-decoration:none;">📦 My Orders</a>
+<a href="my-orders.html" style="display:block;padding:12px;color:black;text-decoration:none;transition:0.3s;"
+onmouseover="this.style.background='#f5f5f5'"
+onmouseout="this.style.background='white'">📦 My Orders</a>
 
-<a href="wishlist.html" style="display:block;padding:12px;color:black;text-decoration:none;">❤️ Wishlist</a>
+<a href="wishlist.html" style="display:block;padding:12px;color:black;text-decoration:none;transition:0.3s;"
+onmouseover="this.style.background='#f5f5f5'"
+onmouseout="this.style.background='white'">❤️ Wishlist</a>
 
-<a href="#" onclick="logoutUser()" style="display:block;padding:12px;color:red;text-decoration:none;">🚪 Logout</a>
+<a href="#" onclick="logoutUser()" style="display:block;padding:12px;color:red;text-decoration:none;transition:0.3s;"
+onmouseover="this.style.background='#fff0f0'"
+onmouseout="this.style.background='white'">🚪 Logout</a>
 
 </div>
 
