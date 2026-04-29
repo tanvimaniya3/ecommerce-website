@@ -272,13 +272,16 @@ setTimeout(()=>{
 
 let pop = document.getElementById("loginPopup");
 
-pop.style.display="flex";
+pop.style.display = "flex";
 
 setTimeout(()=>{
 pop.classList.add("show");
 },20);
 
+localStorage.setItem("popupSeen","yes");
+
 },2000);
+
 }
 
 function closeLoginPopup(){
@@ -288,10 +291,11 @@ let pop = document.getElementById("loginPopup");
 pop.classList.remove("show");
 
 setTimeout(()=>{
-pop.style.display="none";
+pop.style.display = "none";
 },350);
 
 }
+
 document.addEventListener("mouseout", function(e){
 
 if(e.clientY <= 0){
@@ -302,7 +306,7 @@ let pop = document.getElementById("loginPopup");
 
 if(!user && !popupSeen){
 
-pop.style.display="flex";
+pop.style.display = "flex";
 
 setTimeout(()=>{
 pop.classList.add("show");
@@ -314,7 +318,8 @@ localStorage.setItem("popupSeen","yes");
 
 }
 
-}); ye kaha me dalna hai
+});
+
 </script>
 </body>
 </html>
