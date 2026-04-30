@@ -2,6 +2,7 @@ fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
 showProducts(data);
+loadBestSellers(data);
 });
 
 function showProducts(products){
@@ -68,6 +69,37 @@ localStorage.setItem("cart", JSON.stringify(cart));
 alert("Added to Cart");
 updateCartCount();
 });
+}
+function loadBestSellers(products){
+
+  let box = document.getElementById("bestSellerContainer");
+  if(!box) return;
+
+  box.innerHTML = "";
+
+  // Top 4 products show
+  let best = products.slice(0,4);
+
+  best.forEach(p => {
+    box.innerHTML += `
+    <div class="product-card">
+
+      <img src="${p.image}">
+
+      <h3>${p.name}</h3>
+
+      <p class="price">
+        ₹${p.offerPrice ? p.offerPrice : p.price}
+      </p>
+
+      <button onclick="addToCart('${p._id}')">
+        Add to Cart
+      </button>
+
+    </div>
+    `;
+  });
+
 }
 
 function updateCartCount(){
