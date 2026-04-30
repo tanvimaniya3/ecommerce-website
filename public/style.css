@@ -395,21 +395,18 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 
 .cat-title {
-  font-size: 28px;
-  margin-bottom: 30px;
-  color: #3e2f1c;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .cat-title::before,
 .cat-title::after {
   content: "";
-  width: 60px;
+  flex: 1;   /* 🔥 full stretch line */
   height: 1px;
-  background: #cbb89d;
-  display: inline-block;
-  margin: 0 10px;
-  vertical-align: middle;
+  background: #d8cbb3;
 }
 
 .cat-row {
@@ -420,22 +417,20 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 
 .cat-item {
-  width: 140px;
+  width: 200px;
 }
 
 .cat-item img {
-  width: 920px;
-  height: 105px;
+  width: 150px;
+  height: 95px;
 
   object-fit: cover;
 
-  /* 🔥 MAIN MAGIC */
-  border-radius: 290px 290px 40px 40px;   /* half circle */
+  /* 🔥 PREMIUM OVAL LOOK */
+  border-radius: 60% 60% 10px 10px;
 
-  border: 4px solid #e9dfcf;  /* outer ring */
+  border: 6px solid #e9dfcf;
   background: #e9dfcf;
-
-  transition: 0.3s;
 }
 
 .cat-item img:hover {
