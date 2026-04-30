@@ -389,9 +389,27 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
    CATEGORIES
 =================================*/
 .premium-cat {
-  background: #f4efe9;
-  padding: 50px 20px;
+  background: #f5efe6;   /* same outer color */
+  padding: 60px 20px;
   text-align: center;
+}
+
+.cat-title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #3e2f1c;
+  position: relative;
+}
+
+.cat-title::before,
+.cat-title::after {
+  content: "";
+  width: 60px;
+  height: 1px;
+  background: #cbb89d;
+  display: inline-block;
+  margin: 0 10px;
+  vertical-align: middle;
 }
 
 .cat-row {
@@ -401,28 +419,33 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   flex-wrap: wrap;
 }
 
-.cat-circle {
-  text-decoration: none;
-  color: black;
+.cat-item {
+  width: 140px;
 }
 
-.cat-circle img {
-  width: 90px;
+.cat-item img {
+  width: 140px;
   height: 90px;
-  border-radius: 50%;
+
   object-fit: cover;
+
+  /* 🔥 MAIN MAGIC */
+  border-radius: 100px 100px 0 0;   /* half circle */
+
+  border: 6px solid #e9dfcf;  /* outer ring */
+  background: #e9dfcf;
+
   transition: 0.3s;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
-.cat-circle span {
-  display: block;
-  margin-top: 8px;
-  font-size: 14px;
+.cat-item img:hover {
+  transform: scale(1.05);
 }
 
-.cat-circle:hover img {
-  transform: scale(1.1);
+.cat-item p {
+  margin-top: 10px;
+  font-weight: 500;
+  color: #3e2f1c;
 }
 
 /* best seller */
