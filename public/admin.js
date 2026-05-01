@@ -194,7 +194,8 @@ images: form.images.value
   : [],
 offerPrice: form.offerPrice.value || "",
 stock: true,
-visible: true
+visible: true,
+bestSeller: document.getElementById("bestSeller").checked  
 };
 
 // 🔄 EDIT
@@ -224,7 +225,8 @@ image: form.image.value,   // 🔥 URL
 images: form.images.value ? form.images.value.split(",") : [],
 offerPrice: form.offerPrice.value || "",
 stock: true,
-visible: true
+visible: true,
+bestSeller: document.getElementById("bestSeller").checked  
 };
 
 let res = await fetch("https://ecommerce-website-1-psvr.onrender.com/api/products",{
