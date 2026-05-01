@@ -42,7 +42,11 @@ const Product = mongoose.model("Product", {
   category: String,
   image: String,
   images: Array,
-  description: String
+  description: String,
+  bestSeller: {
+  type: Boolean,
+  default: false
+}
 });
 // user schema
 const User = mongoose.model("User", {
