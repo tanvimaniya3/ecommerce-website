@@ -95,9 +95,10 @@ app.post("/api/products", async (req, res) => {
       : req.body.images.split(",").map(img => img.trim()).filter(img => img !== ""))
   : [],
       description: req.body.description,
-      stock: true,
-      visible: true,
-      bestSeller: req.body.bestSeller
+      // stock: true,
+      // visible: true,
+      // bestSeller: req.body.bestSeller
+      bestSeller: document.getElementById("bestSeller").checked
     });
 
     await newProduct.save();
