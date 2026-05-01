@@ -77,7 +77,10 @@ if(!box) return;
 
 box.innerHTML = "";
 
-products.forEach(p => {
+/* 🔥 ONLY BEST SELLER PRODUCTS */
+let best = products.filter(p => p.bestSeller === true);
+
+best.forEach(p => {
 
 box.innerHTML += `
 <div class="product-card" onclick="openProduct('${p._id}')">
@@ -96,7 +99,6 @@ box.innerHTML += `
 `;
 
 });
-
 }
 function slideLeft(){
 document.getElementById("bestSellerContainer").scrollLeft -= 300;
