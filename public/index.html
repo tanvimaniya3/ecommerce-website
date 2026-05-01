@@ -143,11 +143,19 @@ class="search-input">
     <!-- best seller -->
 
 <section class="best-sellers">
-  <h2>Best Sellers</h2>
+    <h2 class="section-title">
+        <span></span> Best Sellers <span></span>
+    </h2>
 
-  <div class="product-grid" id="bestSellerContainer">
-    <!-- JS se products aayenge -->
-  </div>
+    <div class="slider-wrapper">
+        <button class="slide-btn left" onclick="slideLeft()">‹</button>
+
+        <div class="product-slider" id="bestSellerContainer">
+            <!-- JS se products ayenge -->
+        </div>
+
+        <button class="slide-btn right" onclick="slideRight()">›</button>
+    </div>
 </section>
 
 <!-- PRODUCTS -->
