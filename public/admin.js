@@ -368,7 +368,7 @@ form.category.value = p.category;
 form.description.value = p.description || "";
 form.images.value = p.images ? p.images.join(",") : "";
 form.offerPrice.value = p.offerPrice || "";
-
+document.getElementById("bestSeller").checked = p.bestSeller || false;
 form.dataset.editId = p._id;
 
 window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
