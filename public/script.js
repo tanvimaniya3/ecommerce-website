@@ -2,7 +2,7 @@ fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
 .then(res => res.json())
 .then(data => {
 showProducts(data);
-loadBestSellers(data);
+showBestSellers(data);
 });
 
 function showProducts(products){
@@ -70,36 +70,44 @@ alert("Added to Cart");
 updateCartCount();
 });
 }
-function loadBestSellers(products){
+function showBestSellers(products){
 
-  let box = document.getElementById("bestSellerContainer");
-  if(!box) return;
+let box = document.getElementById("bestSellerContainer");
+if(!box) return;
 
-  box.innerHTML = "";
+box.innerHTML = "";
 
-  // Top 4 products show
-  let best = products.slice(0,4);
+products.forEach(p => {
 
-  best.forEach(p => {
-    box.innerHTML += `
-    <div class="product-card">
+box.innerHTML += `
+<div class="product-card" onclick="openProduct('${p._id}')">
 
-      <img src="${p.image}">
+<img src="${p.image}">
 
-      <h3>${p.name}</h3>
+<p class="price">
+₹${p.offerPrice ? p.offerPrice : p.price}
+</p>
 
-      <p class="price">
-        ₹${p.offerPrice ? p.offerPrice : p.price}
-      </p>
+<h3>${p.name}</h3>
 
-      <button onclick="addToCart('${p._id}')">
-        Add to Cart
-      </button>
+<div class="stars">⭐⭐⭐⭐☆</div>
 
-    </div>
-    `;
-  });
+</div>
+`;
 
+});
+
+}
+function slideLeft(){
+document.getElementById("bestSellerContainer").scrollLeft -= 300;
+}
+
+function slideRight(){
+document.getElementById("bestSellerContainer").scrollLeft += 300;
+}
+
+function openProduct(id){
+window.location.href = "product.html?id=" + id;
 }
 
 function updateCartCount(){
