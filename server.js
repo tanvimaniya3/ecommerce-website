@@ -96,7 +96,8 @@ app.post("/api/products", async (req, res) => {
   : [],
       description: req.body.description,
       stock: true,
-      visible: true
+      visible: true,
+      bestSeller: req.body.bestSeller
     });
 
     await newProduct.save();
@@ -146,6 +147,10 @@ app.put("/api/products/:id", async (req, res) => {
 
     if(req.body.visible !== undefined){
       updateData.visible = req.body.visible;
+    }
+
+    if(req.body.bestSeller !== undefined){
+      updateData.bestSeller = req.body.bestSeller;
     }
 
     await Product.findByIdAndUpdate(req.params.id, updateData);
