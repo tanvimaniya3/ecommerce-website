@@ -122,46 +122,17 @@ app.post("/api/products", async (req, res) => {
 app.put("/api/products/:id", async (req, res) => {
   try{
 
-    let updateData = {};
+    await Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...req.body,
 
-    if(req.body.name !== undefined){
-      updateData.name = req.body.name;
-    }
-
-    if(req.body.price !== undefined){
-      updateData.price = req.body.price;
-    }
-
-    if(req.body.category !== undefined){
-      updateData.category = req.body.category;
-    }
-
-    if(req.body.description !== undefined){
-      updateData.description = req.body.description;
-    }
-
-    if(req.body.images !== undefined){
-      updateData.images = req.body.images.split(",");
-    }
-
-    // 🔥 IMPORTANT FIX (offer delete nahi hoga)
-    if(req.body.offerPrice !== undefined){
-      updateData.offerPrice = req.body.offerPrice;
-    }
-
-    if(req.body.stock !== undefined){
-      updateData.stock = req.body.stock;
-    }
-
-    if(req.body.visible !== undefined){
-      updateData.visible = req.body.visible;
-    }
-
-    if(req.body.bestSeller !== undefined){
-      updateData.bestSeller = req.body.bestSeller;
-    }
-
-    await Product.findByIdAndUpdate(req.params.id, updateData);
+        // 🔥 number fix
+        price: Number(req.body.price),
+        offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null
+      },
+      { new: true }
+    );
 
     res.json({ message: "Product Updated ✅" });
 
