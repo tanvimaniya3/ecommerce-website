@@ -122,17 +122,72 @@ app.post("/api/products", async (req, res) => {
 app.put("/api/products/:id", async (req, res) => {
   try{
 
-    await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        ...req.body,
+    // 🔥 पहले पुराना product लाओ
+    let oldProduct = await Product.findById(req.params.id);
 
-        // 🔥 number fix
-        price: Number(req.body.price),
-        offerPrice: req.body.offerPrice ? Number(req.body.offerPrice) : null
-      },
-      { new: true }
-    );
+    let updateData = {};
+
+    if(req.body.name !== undefined){
+      updateData.name = req.body.name;
+    }
+
+    if(req.body.price !== undefined){
+      updateData.price = Number(req.body.price);
+    }
+
+    if(req.body.category !== undefined){
+      updateData.category = req.body.category;
+    }
+
+    if(req.body.description !== undefined){
+      updateData.description = req.body.description;
+    }
+
+    // 🔥 IMAGE FIX (सबसे important)
+    if(req.body.image !== undefined && req.body.image !== ""){
+      updateData.image = req.body.image;
+    } else {
+      updateData.image = oldProduct.image;
+    }
+
+    // 🔥 MULTIPLE IMAGES FIX
+    if(req.body.images !== undefined && req.body.images !== ""){
+      updateData.images = Array.isArray(req.body.images)
+        ? req.body.images
+        : req.body.images.split(",");
+    } else {
+      updateData.images = oldProduct.images;
+    }
+
+    // 🔥 OFFER FIX
+    if(req.body.offerPrice !== undefined && req.body.offerPrice !== ""){
+      updateData.offerPrice = Number(req.body.offerPrice);
+    } else {
+      updateData.offerPrice = oldProduct.offerPrice;
+    }
+
+    // 🔥 STOCK FIX
+    if(req.body.stock !== undefined){
+      updateData.stock = req.body.stock;
+    } else {
+      updateData.stock = oldProduct.stock;
+    }
+
+    // 🔥 VISIBILITY FIX
+    if(req.body.visible !== undefined){
+      updateData.visible = req.body.visible;
+    } else {
+      updateData.visible = oldProduct.visible;
+    }
+
+    // 🔥 BEST SELLER FIX
+    if(req.body.bestSeller !== undefined){
+      updateData.bestSeller = req.body.bestSeller;
+    } else {
+      updateData.bestSeller = oldProduct.bestSeller;
+    }
+
+    await Product.findByIdAndUpdate(req.params.id, updateData);
 
     res.json({ message: "Product Updated ✅" });
 
