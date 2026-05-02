@@ -452,15 +452,30 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 /* ===== BEST SELLER ===== */
 
 .best-sellers {
-    padding: 40px 20px;
-    background: #fff;
+    padding: 60px 40px;
+    background: #f5f1eb;
 }
 
+/* TITLE */
 .section-title {
     text-align: center;
     font-size: 28px;
-    margin-bottom: 25px;
-    font-weight: bold;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.section-title span {
+    width: 120px;
+    height: 1px;
+    background: #c8b7a6;
+}
+
+/* SLIDER */
+.slider-wrapper {
+    position: relative;
 }
 
 .product-slider {
@@ -468,23 +483,16 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
     gap: 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 10px;
-}
-
-.product-slider::-webkit-scrollbar {
-    display: none;
 }
 
 /* CARD */
 .product-card {
-    min-width: 200px;
-    background: #fff;
+    min-width: 250px;
+    background: white;
     border-radius: 12px;
-    padding: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 15px;
     cursor: pointer;
     transition: 0.3s;
-    text-align: center;
 }
 
 .product-card:hover {
@@ -494,54 +502,45 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 /* IMAGE */
 .product-card img {
     width: 100%;
-    height: 160px;
-    object-fit: cover;
     border-radius: 10px;
 }
 
-/* NAME */
-.product-card .name {
-    font-size: 15px;
-    margin: 8px 0;
-    font-weight: 500;
-}
-
 /* PRICE */
-.product-card .price {
-    color: green;
+.price {
     font-weight: bold;
+    margin-top: 10px;
+    color: #8b6f4e;
 }
 
-/* BADGE */
-.product-card .badge {
-    background: red;
-    color: white;
-    font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 6px;
-    display: inline-block;
-    margin-bottom: 5px;
+/* NAME */
+.name {
+    font-size: 15px;
+    margin-top: 5px;
 }
+
+/* STARS */
+.stars {
+    color: gold;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* BUTTONS */
 .slide-btn {
     position: absolute;
     top: 40%;
-    background: black;
+    transform: translateY(-50%);
+    background: #b89b7b;
     color: white;
     border: none;
     font-size: 25px;
-    padding: 10px 15px;
+    padding: 10px;
     cursor: pointer;
     border-radius: 50%;
-    z-index: 10;
 }
 
-.slide-btn.left {
-    left: 10px;
-}
-
-.slide-btn.right {
-    right: 10px;
-}
+.slide-btn.left { left: -10px; }
+.slide-btn.right { right: -10px; }
 /* ===============================
    PRODUCTS SECTION
 =================================*/
