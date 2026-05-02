@@ -78,7 +78,12 @@ if(!box) return;
 box.innerHTML = "";
 
 /* 🔥 ONLY BEST SELLER PRODUCTS */
-let best = products.filter(p => p.bestSeller === true);
+let best = products.filter(p => p.bestSeller);
+
+if(best.length === 0){
+  // fallback (agar old product me field na ho)
+  best = products.slice(0,4);
+}
 
 best.forEach(p => {
 
