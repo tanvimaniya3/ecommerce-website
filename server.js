@@ -74,6 +74,13 @@ const Order = mongoose.model("Order", {
 // GET
 app.get("/api/products", async (req, res) => {
   let data = await Product.find();
+
+  // 🔥 ensure every product has bestSeller
+  data = data.map(p => ({
+    ...p._doc,
+    bestSeller: p.bestSeller || false
+  }));
+
   res.json(data);
 });
 
@@ -97,7 +104,7 @@ app.post("/api/products", async (req, res) => {
       description: req.body.description,
       stock: true,
       visible: true,
-      bestSeller: req.body.bestSeller
+      bestSeller: req.body.bestSeller || false
       
     });
 
