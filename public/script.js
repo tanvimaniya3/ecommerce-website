@@ -78,33 +78,32 @@ if(!box) return;
 box.innerHTML = "";
 
 /* 🔥 ONLY BEST SELLER PRODUCTS */
-let best = products.filter(p => p.bestSeller);
-
-if(best.length === 0){
-  // fallback (agar old product me field na ho)
-  best = products.slice(0,4);
-}
+let best = products.filter(p => p.bestSeller === true);
 
 best.forEach(p => {
 
 box.innerHTML += `
 <div class="product-card" onclick="openProduct('${p._id}')">
 
-<img src="${p.image}">
+    <div class="badge">🔥 Best Seller</div>
 
-<p class="price">
-₹${p.offerPrice ? p.offerPrice : p.price}
-</p>
+    <img src="${p.image}">
 
-<h3>${p.name}</h3>
+    <h3 class="name">${p.name}</h3>
 
-<div class="stars">⭐⭐⭐⭐☆</div>
+    <p class="price">
+        ₹${p.offerPrice ? p.offerPrice : p.price}
+    </p>
+
+    <div class="stars">⭐⭐⭐⭐☆</div>
 
 </div>
 `;
 
 });
 }
+
+/* slider */
 function slideLeft(){
 document.getElementById("bestSellerContainer").scrollLeft -= 300;
 }
