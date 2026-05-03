@@ -454,13 +454,15 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 .best-sellers {
     padding: 60px 40px;
     background: #f5f1eb;
+    margin-bottom: 80px;
 }
 
 /* TITLE */
 .section-title {
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 30px;
+    font-size: 30px;
+    margin-bottom: 60px;
+    margin-top: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -468,9 +470,9 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 
 .section-title span {
-    width: 120px;
+    width: 230px;
     height: 1px;
-    background: #c8b7a6;
+    background: #cbb89d;
 }
 
 /* SLIDER */
