@@ -85,25 +85,21 @@ best.forEach(p => {
 box.innerHTML += `
 <div class="product-card" onclick="openProduct('${p._id}')">
 
-    <div class="badge">🔥 Best Seller</div>
+<img src="${p.image}">
 
-    <img src="${p.image}">
+<p class="price">
+₹${p.offerPrice ? p.offerPrice : p.price}
+</p>
 
-    <h3 class="name">${p.name}</h3>
+<h3>${p.name}</h3>
 
-    <p class="price">
-        ₹${p.offerPrice ? p.offerPrice : p.price}
-    </p>
-
-    <div class="stars">⭐⭐⭐⭐☆</div>
+<div class="stars">⭐⭐⭐⭐☆</div>
 
 </div>
 `;
 
 });
 }
-
-/* slider */
 function slideLeft(){
 document.getElementById("bestSellerContainer").scrollLeft -= 300;
 }
