@@ -499,10 +499,10 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
     scrollbar-width: none;
     margin-bottom:40px;
 }
-.product-slider::after {
+/* .product-slider::after {
     content: "";
     flex: 0 0 80px;   /* 🔥 right side space */
-}
+} */
 
 .product-slider::-webkit-scrollbar {
     display: none;   /* 🔥 grey line remove */
