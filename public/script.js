@@ -94,10 +94,12 @@ box.innerHTML = "";
 /* 🔥 slice 4 items */
 let visible = bestProducts.slice(currentIndex, currentIndex + 4);
 
-visible.forEach(p => {
+visible.forEach((p, index) => {   // 👈 बस ये add किया
 
 box.innerHTML += `
-<div class="product-card" onclick="openProduct('${p._id}')">
+<div class="product-card" 
+style="${index === visible.length - 1 ? 'margin-right:0px;' : ''}"
+onclick="openProduct('${p._id}')">
 
 <img src="${p.image}">
 
