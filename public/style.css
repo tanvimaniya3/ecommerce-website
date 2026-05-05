@@ -470,9 +470,11 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 .product-card img {
     width: 100%;
-    height: 200px;          /* 🔥 fix height */
-    object-fit: cover;      /* 🔥 image crop nicely */
+    height: 220px;          /* 🔥 fix height */
+    object-fit: contain;     /* 🔥 image crop nicely */
     border-radius: 10px;
+   background: #fff; 
+
 }
 
 .section-title span {
@@ -550,6 +552,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
     color: gold;
     font-size: 14px;
     margin-top: 5px;
+    margin-bottom:100px;
 }
 
 /* BUTTONS */
@@ -566,8 +569,8 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
     border-radius: 50%;
 }
 
-.slide-btn.left { left: -10px; }
-.slide-btn.right { right: -10px; }
+.slide-btn.left { left: -15px; }
+.slide-btn.right { right: -15px; }
 /* ===============================
    PRODUCTS SECTION
 =================================*/
