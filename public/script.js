@@ -137,29 +137,63 @@ renderBestSellers();
 }
 
 // 🔥 NEW ARRIVALS
+let newProducts = [];
+let newIndex = 0;
+
 function showNewArrivals(products){
+
+newProducts = products.slice(-12).reverse(); // latest
+
+renderNewArrivals();
+}
+
+function renderNewArrivals(){
+
 let box = document.getElementById("newContainer");
 if(!box) return;
 
 box.innerHTML = "";
 
-/* latest 8 products */
-let latest = products.slice(-8).reverse();
+let visible = newProducts.slice(newIndex, newIndex + 4);
 
-latest.forEach(p => {
+visible.forEach(p => {
+
 box.innerHTML += `
-<div class="product">
+<div class="product-card" onclick="openProduct('${p._id}')">
 
-<a href="product.html?id=${p._id}">
 <img src="${p.image}">
-<h3>${p.name}</h3>
-</a>
 
-<p class="new">₹${p.offerPrice ? p.offerPrice : p.price}</p>
+<p class="price">
+₹${p.offerPrice ? p.offerPrice : p.price}
+</p>
+
+<h3>${p.name}</h3>
+
+<div class="stars">⭐⭐⭐⭐☆</div>
 
 </div>
 `;
+
 });
+}
+
+/* 🔥 SLIDER */
+function slideNewRight(){
+
+if(newIndex + 4 < newProducts.length){
+newIndex += 4;
+renderNewArrivals();
+}
+
+}
+
+function slideNewLeft(){
+
+if(newIndex - 4 >= 0){
+newIndex -= 4;
+renderNewArrivals();
+}
+
 }
 
 // 🔥 SALE PRODUCTS
