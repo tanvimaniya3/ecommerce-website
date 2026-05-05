@@ -3,6 +3,8 @@ fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
 .then(data => {
 showProducts(data);
 showBestSellers(data);
+showNewArrivals(data);
+showSaleProducts(data);
 });
 
 function showProducts(products){
@@ -132,6 +134,70 @@ currentIndex -= 4;
 renderBestSellers();
 }
 
+}
+
+// 🔥 NEW ARRIVALS
+function showNewArrivals(products){
+let box = document.getElementById("newContainer");
+if(!box) return;
+
+box.innerHTML = "";
+
+/* latest 8 products */
+let latest = products.slice(-8).reverse();
+
+latest.forEach(p => {
+box.innerHTML += `
+<div class="product">
+
+<a href="product.html?id=${p._id}">
+<img src="${p.image}">
+<h3>${p.name}</h3>
+</a>
+
+<p class="new">₹${p.offerPrice ? p.offerPrice : p.price}</p>
+
+</div>
+`;
+});
+}
+
+// 🔥 SALE PRODUCTS
+function showSaleProducts(products){
+let box = document.getElementById("saleContainer");
+if(!box) return;
+
+box.innerHTML = "";
+
+/* only discounted */
+let sale = products.filter(p => p.offerPrice && p.offerPrice < p.price);
+
+sale.forEach(p => {
+box.innerHTML += `
+<div class="product">
+
+<a href="product.html?id=${p._id}">
+<img src="${p.image}">
+<h3>${p.name}</h3>
+</a>
+
+<p>
+<span class="old">₹${p.price}</span>
+<span class="new">₹${p.offerPrice}</span>
+</p>
+
+<p class="off">
+🔥 ${Math.round(((p.price - p.offerPrice) / p.price) * 100)}% OFF
+</p>
+
+</div>
+`;
+});
+}
+
+// 🔥 OFFER BUTTON CLICK
+function goToSale(){
+window.location.href = "products.html?sale=true";
 }
 
 function openProduct(id){
