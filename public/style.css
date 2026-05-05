@@ -571,6 +571,47 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 
 .slide-btn.left { left: -15px; }
 .slide-btn.right { right: -15px; }
+
+----------------------------offer section-----------------
+----------------------------------------------------------
+
+/* OFFER BANNER */
+.offer-banner {
+    background: linear-gradient(135deg, #b89b7b, #8b6f4e);
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    margin: 50px 0;
+    border-radius: 10px;
+}
+
+.offer-banner h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.offer-banner p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.offer-banner a {
+    display: inline-block;
+    background: white;
+    color: black;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.offer-banner a:hover {
+    background: black;
+    color: white;
+}
+
 /* ===============================
    PRODUCTS SECTION
 =================================*/
