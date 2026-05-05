@@ -159,9 +159,22 @@ class="search-input">
 </section>
 
     <!-- 🆕 NEW ARRIVALS -->
-<section class="products">
-    <h2>🆕 New Arrivals</h2>
-    <div class="product-grid" id="newContainer"></div>
+<section class="best-sellers">
+
+    <h2 class="section-title">
+        <span></span> New Arrivals <span></span>
+    </h2>
+
+    <div class="slider-wrapper">
+
+        <button class="slide-btn left" onclick="slideNewLeft()">‹</button>
+
+        <div class="product-slider" id="newContainer"></div>
+
+        <button class="slide-btn right" onclick="slideNewRight()">›</button>
+
+    </div>
+
 </section>
 
 <!-- 💸 SALE PRODUCTS -->
