@@ -70,17 +70,31 @@ alert("Added to Cart");
 updateCartCount();
 });
 }
+let bestProducts = [];
+let currentIndex = 0;
+
 function showBestSellers(products){
 
 let box = document.getElementById("bestSellerContainer");
 if(!box) return;
 
+/* 🔥 filter best seller */
+bestProducts = products.filter(p => p.bestSeller === true);
+
+/* 🔥 first render */
+renderBestSellers();
+}
+
+/* 🔥 ONLY 4 SHOW */
+function renderBestSellers(){
+
+let box = document.getElementById("bestSellerContainer");
 box.innerHTML = "";
 
-/* 🔥 ONLY BEST SELLER PRODUCTS */
-let best = products.filter(p => p.bestSeller === true);
+/* 🔥 slice 4 items */
+let visible = bestProducts.slice(currentIndex, currentIndex + 4);
 
-best.forEach(p => {
+visible.forEach(p => {
 
 box.innerHTML += `
 <div class="product-card" onclick="openProduct('${p._id}')">
@@ -100,12 +114,22 @@ box.innerHTML += `
 
 });
 }
-function slideLeft(){
-document.getElementById("bestSellerContainer").scrollLeft -= 300;
+function slideRight(){
+
+if(currentIndex + 4 < bestProducts.length){
+currentIndex += 4;
+renderBestSellers();
 }
 
-function slideRight(){
-document.getElementById("bestSellerContainer").scrollLeft += 300;
+}
+
+function slideLeft(){
+
+if(currentIndex - 4 >= 0){
+currentIndex -= 4;
+renderBestSellers();
+}
+
 }
 
 function openProduct(id){
