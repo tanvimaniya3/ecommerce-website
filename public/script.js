@@ -137,39 +137,39 @@ renderBestSellers();
 }
 
 // 🔥 NEW ARRIVALS
-let newProducts = [];
-let newIndex = 0;
+let naProducts = [];
+let naIndex = 0;
 
 function showNewArrivals(products){
 
-newProducts = products.slice(-12).reverse(); // latest
+// latest products
+naProducts = [...products].reverse();
 
-renderNewArrivals();
+renderNA();
 }
 
-function renderNewArrivals(){
+function renderNA(){
 
-let box = document.getElementById("newContainer");
-if(!box) return;
-
+let box = document.getElementById("newArrivalsContainer");
 box.innerHTML = "";
 
-let visible = newProducts.slice(newIndex, newIndex + 4);
+/* 🔥 ONLY 4 */
+let visible = naProducts.slice(naIndex, naIndex + 4);
 
 visible.forEach(p => {
 
 box.innerHTML += `
-<div class="product-card" onclick="openProduct('${p._id}')">
+<div class="na-card" onclick="openProduct('${p._id}')">
 
 <img src="${p.image}">
 
-<p class="price">
+<h3>${p.name}</h3>
+
+<p class="na-price">
 ₹${p.offerPrice ? p.offerPrice : p.price}
 </p>
 
-<h3>${p.name}</h3>
-
-<div class="stars">⭐⭐⭐⭐☆</div>
+<button>Add to Cart</button>
 
 </div>
 `;
@@ -177,23 +177,19 @@ box.innerHTML += `
 });
 }
 
-/* 🔥 SLIDER */
-function slideNewRight(){
-
-if(newIndex + 4 < newProducts.length){
-newIndex += 4;
-renderNewArrivals();
+/* SLIDER */
+function slideNARight(){
+if(naIndex + 4 < naProducts.length){
+naIndex += 4;
+renderNA();
+}
 }
 
+function slideNALeft(){
+if(naIndex - 4 >= 0){
+naIndex -= 4;
+renderNA();
 }
-
-function slideNewLeft(){
-
-if(newIndex - 4 >= 0){
-newIndex -= 4;
-renderNewArrivals();
-}
-
 }
 
 // 🔥 SALE PRODUCTS
