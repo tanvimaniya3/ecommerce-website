@@ -551,8 +551,8 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 .stars {
     color: gold;
     font-size: 14px;
-    margin-top: 5px;
-    margin-bottom:100px;
+    margin-top: auto;
+    
 }
 
 /* BUTTONS */
