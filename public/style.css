@@ -454,7 +454,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 .best-sellers {
     padding: 60px 40px;
     background: #f5f1eb;
-    margin-bottom: 80px;
+    /* margin-bottom: 80px; */
 }
 
 /* TITLE */
@@ -485,6 +485,18 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
     gap: 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
+    padding: 0 80px;   
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-bottom:40px;
+}
+.product-slider::after {
+    content: "";
+    flex: 0 0 80px;   /* 🔥 right side space */
+}
+
+.product-slider::-webkit-scrollbar {
+    display: none;   /* 🔥 grey line remove */
 }
 
 /* CARD */
