@@ -154,7 +154,7 @@ let box = document.getElementById("newArrivalsContainer");
 box.innerHTML = "";
 
 /* 🔥 ONLY 4 */
-let visible = naProducts.slice(naIndex, naIndex + 4);
+let visible = naProducts.slice(naIndex, naIndex + 5);
 
 visible.forEach(p => {
 
@@ -179,15 +179,15 @@ box.innerHTML += `
 
 /* SLIDER */
 function slideNARight(){
-if(naIndex + 4 < naProducts.length){
-naIndex += 4;
+if(naIndex + 5 < naProducts.length){
+naIndex += 5;
 renderNA();
 }
 }
 
 function slideNALeft(){
-if(naIndex - 4 >= 0){
-naIndex -= 4;
+if(naIndex - 5 >= 0){
+naIndex -= 5;
 renderNA();
 }
 }
