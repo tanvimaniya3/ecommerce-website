@@ -1003,7 +1003,7 @@ font-size:38px;
 }
 -----------------------/* products detalis */-----------------------------
 /* ===== PRODUCT PAGE WRAPPER ===== */
-.pd-container{
+/* .pd-container{
   display:flex;
   gap:40px;
   padding:40px;
@@ -1121,4 +1121,4 @@ font-size:38px;
 .pd-related-box{
   display:flex;
   gap:20px;
-}
+} */
