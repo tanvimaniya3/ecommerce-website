@@ -1002,153 +1002,237 @@ font-size:38px;
 
 }
 -----------------------/* products detalis */-----------------------------
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #f6f2ec;
-}
-
-.header {
-  padding: 15px 40px;
-  background: white;
-}
-
-.breadcrumb {
-  padding: 15px 40px;
-  color: gray;
-}
-
-/* MAIN */
-.product-page {
+/* ===== PRODUCT PAGE WRAPPER ===== */
+.pd-container {
   display: flex;
-  gap: 40px;
-  padding: 40px;
+  gap: 50px;
+  padding: 50px;
 }
 
-/* LEFT */
-.left {
+/* ===== LEFT SIDE ===== */
+.pd-left {
   width: 50%;
 }
 
-.main-img {
+.pd-main-img {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 16px;
+  object-fit: cover;
 }
 
-.thumbs {
+.pd-thumbs {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 15px;
 }
 
-.thumbs img {
-  width: 70px;
-  height: 70px;
-  border-radius: 8px;
+.pd-thumbs img {
+  width: 75px;
+  height: 75px;
+  border-radius: 10px;
   cursor: pointer;
+  object-fit: cover;
+  border: 1px solid #eee;
+  transition: 0.3s;
 }
 
-/* RIGHT */
-.right {
+.pd-thumbs img:hover {
+  border: 2px solid #b38b6d;
+}
+
+/* ===== RIGHT SIDE ===== */
+.pd-right {
   width: 50%;
 }
 
-.stars {
-  margin: 10px 0;
-  color: gold;
+/* TITLE */
+.pd-title {
+  font-size: 34px;
+  font-weight: 600;
 }
 
-.offer {
-  background: #e6d5c3;
+/* RATING */
+.pd-rating {
+  margin: 10px 0;
+  color: #c89c6c;
+  font-size: 15px;
+}
+
+/* PRICE */
+.pd-price {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.pd-old {
+  text-decoration: line-through;
+  color: gray;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.pd-new {
+  color: #b38b6d;
+}
+
+/* OFFER BADGE */
+.pd-offer {
   display: inline-block;
-  padding: 6px 10px;
-  border-radius: 6px;
-  margin: 10px 0;
+  background: #e8d6c2;
+  color: #6b4f3c;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  font-size: 14px;
 }
 
-/* QTY */
-.qty-box {
+/* DESCRIPTION */
+.pd-desc {
+  color: #555;
+  line-height: 1.6;
+  margin: 15px 0;
+}
+
+/* ===== QTY ===== */
+.pd-qty {
   display: flex;
   align-items: center;
   gap: 10px;
   margin: 20px 0;
 }
 
-.qty-box button {
+.pd-qty button {
   width: 35px;
   height: 35px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
 }
 
-/* BUTTONS */
-.btns {
+.pd-qty span {
+  font-size: 18px;
+}
+
+/* ===== BUTTONS ===== */
+.pd-btns {
   display: flex;
   gap: 15px;
 }
 
-.cart-btn {
+.pd-cart {
   background: #b38b6d;
   color: white;
-  padding: 12px 20px;
+  padding: 14px 25px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.wish-btn {
-  padding: 12px 20px;
-  border-radius: 8px;
+.pd-wish {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 14px 25px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-/* FEATURES */
-.features {
-  margin-top: 20px;
+/* ===== FEATURES ===== */
+.pd-features {
   display: flex;
-  gap: 20px;
-  color: #6a6a6a;
+  gap: 25px;
+  margin-top: 20px;
+  color: #777;
+  font-size: 14px;
 }
 
-/* TABS */
-.tabs {
-  padding: 40px;
+/* ===== TABS ===== */
+.pd-tabs {
+  padding: 50px;
 }
 
-.tab-head button {
-  margin-right: 10px;
+.pd-tab-head button {
+  border: none;
+  background: none;
+  margin-right: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  padding-bottom: 5px;
 }
 
-.tab-content {
+.pd-tab-head button.active {
+  border-bottom: 2px solid #b38b6d;
+}
+
+.pd-tab-content {
   display: none;
   margin-top: 20px;
+  color: #555;
 }
 
-.tab-content.active {
+.pd-tab-content.active {
   display: block;
 }
 
-/* RELATED */
-.related {
-  padding: 40px;
+/* ===== RIGHT BOX (QUESTIONS) ===== */
+.pd-help-box {
+  background: #f4ede6;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 20px;
 }
 
-.related-box {
+.pd-help-box h3 {
+  margin-bottom: 10px;
+}
+
+.pd-help-btn {
+  margin-top: 10px;
+  background: #b38b6d;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ===== RELATED PRODUCTS ===== */
+.pd-related {
+  padding: 50px;
+}
+
+.pd-related h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pd-related-box {
   display: flex;
   gap: 20px;
 }
 
-/* REVIEW */
-.reviews {
-  padding: 40px;
+.pd-related-card {
+  width: 220px;
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
 }
 
-.review-card {
+.pd-related-card img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ===== REVIEWS ===== */
+.pd-reviews {
+  padding: 50px;
+}
+
+.pd-review-card {
   background: white;
   padding: 15px;
-  margin-top: 10px;
-  border-radius: 10px;
-}
-
-/* FOOTER */
-.footer {
-  text-align: center;
-  padding: 20px;
-  background: white;
+  border-radius: 12px;
+  margin-top: 15px;
 }
