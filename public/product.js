@@ -5,33 +5,36 @@ let productData = null;
 let quantity = 1;
 
 fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
-.then(res=>res.json())
-.then(data=>{
+.then(res => res.json())
+.then(data => {
 
 let product = data.find(p => p._id == id);
 productData = product;
 
-// IMAGE
-let img = product.image 
+/* ================= IMAGE ================= */
+
+let mainImg = product.image 
 ? (product.image.startsWith("http") 
     ? product.image 
     : "https://ecommerce-website-1-psvr.onrender.com" + product.image)
 : "https://via.placeholder.com/400";
 
-document.getElementById("pImage").src = img;
+/* 🔥 FIX: HTML ke id match karo */
+document.getElementById("mainImage").src = mainImg;
 
-// 🔥 EXTRA IMAGES SHOW
-let extraBox = document.getElementById("extraImages");
-extraBox.innerHTML = "";
+/* ================= THUMB IMAGES ================= */
 
-// main image first add
+let thumbBox = document.getElementById("thumbContainer");
+thumbBox.innerHTML = "";
+
 let allImages = [];
 
+/* main image */
 if(product.image){
   allImages.push(product.image);
 }
 
-// extra images add
+/* extra images */
 if(product.images && product.images.length > 0){
   product.images.forEach(img => {
     if(img && img.trim() !== ""){
@@ -40,79 +43,91 @@ if(product.images && product.images.length > 0){
   });
 }
 
-// duplicate remove
+/* remove duplicate */
 allImages = [...new Set(allImages)];
 
 allImages.forEach(img => {
 
-  let finalImg = img;
+let finalImg = img.startsWith("http") 
+? img 
+: "https://ecommerce-website-1-psvr.onrender.com" + img;
 
-  if(!finalImg.startsWith("http")){
-    finalImg = "https://ecommerce-website-1-psvr.onrender.com" + finalImg;
-  }
+thumbBox.innerHTML += `
+<img src="${finalImg}" onclick="changeImage('${finalImg}')">
+`;
 
-  extraBox.innerHTML += `
-    <img src="${finalImg}" width="70"
-    style="cursor:pointer; border:1px solid #ccc; padding:5px;"
-    onclick="changeImage('${finalImg}')">
-  `;
 });
-// NAME
-document.getElementById("pName").innerText = product.name;
 
-// PRICE + DISCOUNT
-let priceBox = document.getElementById("priceBox");
+/* ================= NAME ================= */
+document.getElementById("name").innerText = product.name;
+
+/* ================= PRICE ================= */
+let priceBox = document.getElementById("price");
 
 if(product.offerPrice && product.offerPrice < product.price){
 
 let percent = Math.round(((product.price - product.offerPrice) / product.price) * 100);
 
 priceBox.innerHTML = `
-<span class="old">₹${product.price}</span>
-<span class="new">₹${product.offerPrice}</span>
-<span class="off">(${percent}% OFF)</span>
+<span style="text-decoration:line-through;color:gray;">₹${product.price}</span>
+<span style="color:#b38b6d;font-size:22px;margin-left:10px;">₹${product.offerPrice}</span>
 `;
 
+document.getElementById("offer").innerText = `${percent}% OFF`;
+
 }else{
-priceBox.innerHTML = `<span class="new">₹${product.price}</span>`;
+priceBox.innerHTML = `₹${product.price}`;
+document.getElementById("offer").innerText = "";
 }
 
-// STOCK
-let stockText = document.getElementById("stockStatus");
+/* ================= DESCRIPTION ================= */
+document.getElementById("desc").innerText = product.description || "No description available";
 
+/* ================= BUTTONS ================= */
+
+let cartBtn = document.querySelector(".cart-btn");
+let wishBtn = document.querySelector(".wish-btn");
+
+/* OUT OF STOCK */
 if(product.stock === false){
-stockText.innerHTML = "❌ Out of Stock";
-stockText.style.color = "red";
 
-document.getElementById("cartBtn").disabled = true;
-document.getElementById("buyBtn").disabled = true;
+cartBtn.innerText = "Out of Stock";
+cartBtn.disabled = true;
+cartBtn.style.background = "gray";
 
 }else{
-stockText.innerHTML = "✅ In Stock";
-stockText.style.color = "green";
+
+cartBtn.onclick = addToCart;
+
 }
 
-// DESCRIPTION
-document.getElementById("pDesc").innerText = product.description || "";
+/* wishlist */
+wishBtn.onclick = () => addToWishlist(product._id);
 
 updateCartCount();
 
 });
 
-// QTY
-function increaseQty(){
-quantity++;
-document.getElementById("qty").innerText = quantity;
+/* ================= CHANGE IMAGE ================= */
+
+function changeImage(src){
+document.getElementById("mainImage").src = src;
 }
 
-function decreaseQty(){
-if(quantity > 1){
-quantity--;
+/* ================= QTY ================= */
+
+function changeQty(val){
+
+quantity += val;
+
+if(quantity < 1) quantity = 1;
+
 document.getElementById("qty").innerText = quantity;
-}
+
 }
 
-// ADD TO CART
+/* ================= ADD TO CART ================= */
+
 function addToCart(){
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -130,35 +145,54 @@ localStorage.setItem("cart", JSON.stringify(cart));
 
 alert("Added to Cart ✅");
 updateCartCount();
+
 }
 
-// BUY NOW
-function buyNow(){
+/* ================= WISHLIST ================= */
 
-let cart = [];
-productData.qty = quantity;
-cart.push(productData);
+function addToWishlist(id){
 
-localStorage.setItem("cart", JSON.stringify(cart));
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-window.location.href = "checkout.html";
+let exists = wishlist.find(item => item == id);
+
+if(exists){
+alert("Already in Wishlist ❤️");
+return;
 }
 
-// CART COUNT
+wishlist.push(id);
+localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+alert("Added to Wishlist ❤️");
+
+}
+
+/* ================= CART COUNT ================= */
+
 function updateCartCount(){
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 let count = 0;
+
 cart.forEach(p=>{
 count += p.qty || 1;
 });
 
 let badge = document.getElementById("cartCount");
 if(badge) badge.innerText = count;
+
 }
 
-// new option error aye to
-function changeImage(src){
-document.getElementById("pImage").src = src;
+/* ================= TABS ================= */
+
+function showTab(id){
+
+document.querySelectorAll(".tab-content").forEach(tab=>{
+tab.classList.remove("active");
+});
+
+document.getElementById(id).classList.add("active");
+
 }
