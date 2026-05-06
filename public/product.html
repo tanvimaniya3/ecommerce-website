@@ -1,54 +1,115 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <title>Product</title>
-<link rel="stylesheet" href="style.css">
-<script defer src="product.js"></script>
+<link rel="stylesheet" href="product.css">
 </head>
 
 <body>
 
-<header class="navbar">
-
-<div class="logo">
-<a href="index.html">ShopSphere</a>
-</div>
-
-<nav>
-<a href="index.html">Home</a>
-<a href="products.html">Products</a>
-<a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-</nav>
-
+<!-- HEADER -->
+<header class="header">
+  <h2>ShopSphere</h2>
 </header>
 
-<section class="product-detail">
-
-<img id="pImage" width="350">
-<div id="extraImages" style="display:flex; gap:10px; margin-top:10px;"></div>
-<div>
-
-<h1 id="pName"></h1>
-
-<p id="priceBox"></p>
-
-<p id="pDesc"></p>
-
-<div>
-<button onclick="decreaseQty()">-</button>
-<span id="qty">1</span>
-<button onclick="increaseQty()">+</button>
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  Home / Shop / Product
 </div>
 
-<br>
+<!-- PRODUCT SECTION -->
+<div class="product-page">
 
-<button id="cartBtn" onclick="addToCart()">Add to Cart</button>
-<button id="buyBtn" onclick="buyNow()">Buy Now</button>
+  <!-- LEFT IMAGES -->
+  <div class="left">
+    <img id="mainImage" class="main-img" src="">
+    
+    <div class="thumbs" id="thumbContainer"></div>
+  </div>
+
+  <!-- RIGHT DETAILS -->
+  <div class="right">
+
+    <h1 id="name"></h1>
+
+    <div class="stars">⭐⭐⭐⭐☆ (48 Reviews)</div>
+
+    <h2 id="price"></h2>
+
+    <div class="offer" id="offer"></div>
+
+    <p id="desc"></p>
+
+    <!-- QTY -->
+    <div class="qty-box">
+      <button onclick="changeQty(-1)">-</button>
+      <span id="qty">1</span>
+      <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btns">
+      <button class="cart-btn">Add to Cart</button>
+      <button class="wish-btn">♡ Wishlist</button>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features">
+      <span>🚚 Free Shipping</span>
+      <span>🔁 7 Day Returns</span>
+      <span>🔒 Secure Checkout</span>
+    </div>
+
+  </div>
 
 </div>
 
-</section>
+<!-- TABS -->
+<div class="tabs">
+
+  <div class="tab-head">
+    <button onclick="showTab('descTab')">Description</button>
+    <button onclick="showTab('reviewTab')">Reviews</button>
+  </div>
+
+  <div id="descTab" class="tab-content active">
+    Premium quality product with modern design.
+  </div>
+
+  <div id="reviewTab" class="tab-content">
+    ⭐⭐⭐⭐⭐ Amazing product! <br><br>
+    ⭐⭐⭐⭐ Good quality.
+  </div>
+
+</div>
+
+<!-- RELATED -->
+<div class="related">
+  <h2>You May Also Like</h2>
+  <div id="relatedContainer" class="related-box"></div>
+</div>
+
+<!-- REVIEWS -->
+<div class="reviews">
+  <h2>Customer Reviews</h2>
+
+  <div class="review-card">
+    ⭐⭐⭐⭐⭐ Amazing quality!
+  </div>
+
+  <div class="review-card">
+    ⭐⭐⭐⭐ Fast delivery.
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 ShopSphere</p>
+</footer>
+
+<script src="product.js"></script>
 
 </body>
 </html>
