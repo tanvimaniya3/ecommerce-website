@@ -8,51 +8,44 @@
 
 <body>
 
-<!-- HEADER -->
-<header class="header">
+<header class="pd-header">
   <h2>ShopSphere</h2>
 </header>
 
-<!-- BREADCRUMB -->
-<div class="breadcrumb">
+<div class="pd-breadcrumb">
   Home / Shop / Product
 </div>
 
-<!-- PRODUCT SECTION -->
 <div class="pd-container">
 
   <!-- LEFT -->
   <div class="pd-left">
+    <img id="pImage" class="pd-main-img">
 
-    <img id="mainImage" class="pd-main-img" src="">
-
-    <div class="pd-thumbs" id="thumbContainer"></div>
-
+    <div id="extraImages" class="pd-thumbs"></div>
   </div>
 
   <!-- RIGHT -->
   <div class="pd-right">
 
-    <h1 id="name" class="pd-title"></h1>
+    <h1 id="pName"></h1>
 
-    <div class="pd-rating">⭐⭐⭐⭐☆ (48 Reviews)</div>
+    <div class="pd-stars">⭐⭐⭐⭐☆ <span>(48 Reviews)</span></div>
 
-    <div class="pd-price" id="price"></div>
+    <div id="priceBox" class="pd-price"></div>
 
-    <div class="pd-offer" id="offer"></div>
-
-    <p id="desc" class="pd-desc"></p>
+    <p id="pDesc" class="pd-desc"></p>
 
     <!-- QTY -->
     <div class="pd-qty">
-      <button onclick="changeQty(-1)">-</button>
+      <button onclick="decreaseQty()">-</button>
       <span id="qty">1</span>
-      <button onclick="changeQty(1)">+</button>
+      <button onclick="increaseQty()">+</button>
     </div>
 
     <!-- BUTTONS -->
     <div class="pd-btns">
-      <button class="pd-cart">Add to Cart</button>
+      <button onclick="addToCart()" class="pd-cart">Add to Cart</button>
       <button class="pd-wish">♡ Wishlist</button>
     </div>
 
@@ -63,15 +56,6 @@
       <span>🔒 Secure Checkout</span>
     </div>
 
-    <!-- HELP BOX -->
-    <div class="pd-help-box">
-      <h3>Questions?</h3>
-      <p>We’re here to help you</p>
-      <p>📞 +91 98765 43210</p>
-      <p>✉ support@shopsphere.com</p>
-      <button class="pd-help-btn">Live Chat</button>
-    </div>
-
   </div>
 
 </div>
@@ -80,54 +64,24 @@
 <div class="pd-tabs">
 
   <div class="pd-tab-head">
-    <button class="active" onclick="showTab('descTab')">Description</button>
+    <button onclick="showTab('descTab')">Description</button>
     <button onclick="showTab('reviewTab')">Reviews</button>
   </div>
 
-  <div id="descTab" class="pd-tab-content active">
-    Product description will appear here.
-  </div>
+  <div id="descTab" class="pd-tab active"></div>
 
-  <div id="reviewTab" class="pd-tab-content">
+  <div id="reviewTab" class="pd-tab">
     ⭐⭐⭐⭐⭐ Amazing product! <br><br>
     ⭐⭐⭐⭐ Good quality.
   </div>
 
 </div>
 
-<!-- RELATED PRODUCTS -->
+<!-- RELATED -->
 <div class="pd-related">
   <h2>You May Also Like</h2>
-
-  <div id="relatedContainer" class="pd-related-box">
-    <!-- JS se ayega -->
-  </div>
+  <div id="relatedContainer" class="pd-related-box"></div>
 </div>
-
-<!-- CUSTOMER REVIEWS -->
-<div class="pd-reviews">
-  <h2>Customer Reviews</h2>
-
-  <div class="pd-review-card">
-    ⭐⭐⭐⭐⭐ Amazing quality and beautiful product!
-  </div>
-
-  <div class="pd-review-card">
-    ⭐⭐⭐⭐ Fast delivery and good service.
-  </div>
-
-  <div class="pd-review-card">
-    ⭐⭐⭐⭐⭐ Highly recommended!
-  </div>
-
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <p>© 2026 ShopSphere</p>
-</footer>
-
-<script src="product.js"></script>
 
 </body>
 </html>
