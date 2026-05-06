@@ -1,87 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-<meta charset="UTF-8">
 <title>Product</title>
-<link rel="stylesheet" href="product.css">
+<link rel="stylesheet" href="style.css">
+<script defer src="product.js"></script>
 </head>
 
 <body>
 
-<header class="pd-header">
-  <h2>ShopSphere</h2>
+<header class="navbar">
+
+<div class="logo">
+<a href="index.html">ShopSphere</a>
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+<a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+</nav>
+
 </header>
 
-<div class="pd-breadcrumb">
-  Home / Shop / Product
+<section class="product-detail">
+
+<img id="pImage" width="350">
+
+<div>
+
+<h1 id="pName"></h1>
+
+<p id="pPrice"></p>
+
+<p id="pDesc"></p>
+
+<div>
+<button onclick="decreaseQty()">-</button>
+<span id="qty">1</span>
+<button onclick="increaseQty()">+</button>
 </div>
 
-<div class="pd-container">
+<br>
 
-  <!-- LEFT -->
-  <div class="pd-left">
-    <img id="pImage" class="pd-main-img">
-
-    <div id="extraImages" class="pd-thumbs"></div>
-  </div>
-
-  <!-- RIGHT -->
-  <div class="pd-right">
-
-    <h1 id="pName"></h1>
-
-    <div class="pd-stars">⭐⭐⭐⭐☆ <span>(48 Reviews)</span></div>
-
-    <div id="priceBox" class="pd-price"></div>
-
-    <p id="pDesc" class="pd-desc"></p>
-
-    <!-- QTY -->
-    <div class="pd-qty">
-      <button onclick="decreaseQty()">-</button>
-      <span id="qty">1</span>
-      <button onclick="increaseQty()">+</button>
-    </div>
-
-    <!-- BUTTONS -->
-    <div class="pd-btns">
-      <button onclick="addToCart()" class="pd-cart">Add to Cart</button>
-      <button class="pd-wish">♡ Wishlist</button>
-    </div>
-
-    <!-- FEATURES -->
-    <div class="pd-features">
-      <span>🚚 Free Shipping</span>
-      <span>🔁 7 Day Returns</span>
-      <span>🔒 Secure Checkout</span>
-    </div>
-
-  </div>
+<button onclick="addToCart()">Add to Cart</button>
+<button onclick="buyNow()">Buy Now</button>
 
 </div>
 
-<!-- TABS -->
-<div class="pd-tabs">
-
-  <div class="pd-tab-head">
-    <button onclick="showTab('descTab')">Description</button>
-    <button onclick="showTab('reviewTab')">Reviews</button>
-  </div>
-
-  <div id="descTab" class="pd-tab active"></div>
-
-  <div id="reviewTab" class="pd-tab">
-    ⭐⭐⭐⭐⭐ Amazing product! <br><br>
-    ⭐⭐⭐⭐ Good quality.
-  </div>
-
-</div>
-
-<!-- RELATED -->
-<div class="pd-related">
-  <h2>You May Also Like</h2>
-  <div id="relatedContainer" class="pd-related-box"></div>
-</div>
+</section>
 
 </body>
 </html>
