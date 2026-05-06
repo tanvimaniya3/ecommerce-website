@@ -1001,3 +1001,154 @@ font-size:38px;
 }
 
 }
+-----------------------/* products detalis */-----------------------------
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f6f2ec;
+}
+
+.header {
+  padding: 15px 40px;
+  background: white;
+}
+
+.breadcrumb {
+  padding: 15px 40px;
+  color: gray;
+}
+
+/* MAIN */
+.product-page {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+}
+
+/* LEFT */
+.left {
+  width: 50%;
+}
+
+.main-img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbs img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* RIGHT */
+.right {
+  width: 50%;
+}
+
+.stars {
+  margin: 10px 0;
+  color: gold;
+}
+
+.offer {
+  background: #e6d5c3;
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+/* QTY */
+.qty-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.qty-box button {
+  width: 35px;
+  height: 35px;
+}
+
+/* BUTTONS */
+.btns {
+  display: flex;
+  gap: 15px;
+}
+
+.cart-btn {
+  background: #b38b6d;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+}
+
+.wish-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+}
+
+/* FEATURES */
+.features {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  color: #6a6a6a;
+}
+
+/* TABS */
+.tabs {
+  padding: 40px;
+}
+
+.tab-head button {
+  margin-right: 10px;
+}
+
+.tab-content {
+  display: none;
+  margin-top: 20px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* RELATED */
+.related {
+  padding: 40px;
+}
+
+.related-box {
+  display: flex;
+  gap: 20px;
+}
+
+/* REVIEW */
+.reviews {
+  padding: 40px;
+}
+
+.review-card {
+  background: white;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: white;
+}
