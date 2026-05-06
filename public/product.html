@@ -19,46 +19,57 @@
 </div>
 
 <!-- PRODUCT SECTION -->
-<div class="product-page">
+<div class="pd-container">
 
-  <!-- LEFT IMAGES -->
-  <div class="left">
-    <img id="mainImage" class="main-img" src="">
-    
-    <div class="thumbs" id="thumbContainer"></div>
+  <!-- LEFT -->
+  <div class="pd-left">
+
+    <img id="mainImage" class="pd-main-img" src="">
+
+    <div class="pd-thumbs" id="thumbContainer"></div>
+
   </div>
 
-  <!-- RIGHT DETAILS -->
-  <div class="right">
+  <!-- RIGHT -->
+  <div class="pd-right">
 
-    <h1 id="name"></h1>
+    <h1 id="name" class="pd-title"></h1>
 
-    <div class="stars">⭐⭐⭐⭐☆ (48 Reviews)</div>
+    <div class="pd-rating">⭐⭐⭐⭐☆ (48 Reviews)</div>
 
-    <h2 id="price"></h2>
+    <div class="pd-price" id="price"></div>
 
-    <div class="offer" id="offer"></div>
+    <div class="pd-offer" id="offer"></div>
 
-    <p id="desc"></p>
+    <p id="desc" class="pd-desc"></p>
 
     <!-- QTY -->
-    <div class="qty-box">
+    <div class="pd-qty">
       <button onclick="changeQty(-1)">-</button>
       <span id="qty">1</span>
       <button onclick="changeQty(1)">+</button>
     </div>
 
     <!-- BUTTONS -->
-    <div class="btns">
-      <button class="cart-btn">Add to Cart</button>
-      <button class="wish-btn">♡ Wishlist</button>
+    <div class="pd-btns">
+      <button class="pd-cart">Add to Cart</button>
+      <button class="pd-wish">♡ Wishlist</button>
     </div>
 
     <!-- FEATURES -->
-    <div class="features">
+    <div class="pd-features">
       <span>🚚 Free Shipping</span>
       <span>🔁 7 Day Returns</span>
       <span>🔒 Secure Checkout</span>
+    </div>
+
+    <!-- HELP BOX -->
+    <div class="pd-help-box">
+      <h3>Questions?</h3>
+      <p>We’re here to help you</p>
+      <p>📞 +91 98765 43210</p>
+      <p>✉ support@shopsphere.com</p>
+      <button class="pd-help-btn">Live Chat</button>
     </div>
 
   </div>
@@ -66,40 +77,47 @@
 </div>
 
 <!-- TABS -->
-<div class="tabs">
+<div class="pd-tabs">
 
-  <div class="tab-head">
-    <button onclick="showTab('descTab')">Description</button>
+  <div class="pd-tab-head">
+    <button class="active" onclick="showTab('descTab')">Description</button>
     <button onclick="showTab('reviewTab')">Reviews</button>
   </div>
 
-  <div id="descTab" class="tab-content active">
-    Premium quality product with modern design.
+  <div id="descTab" class="pd-tab-content active">
+    Product description will appear here.
   </div>
 
-  <div id="reviewTab" class="tab-content">
+  <div id="reviewTab" class="pd-tab-content">
     ⭐⭐⭐⭐⭐ Amazing product! <br><br>
     ⭐⭐⭐⭐ Good quality.
   </div>
 
 </div>
 
-<!-- RELATED -->
-<div class="related">
+<!-- RELATED PRODUCTS -->
+<div class="pd-related">
   <h2>You May Also Like</h2>
-  <div id="relatedContainer" class="related-box"></div>
+
+  <div id="relatedContainer" class="pd-related-box">
+    <!-- JS se ayega -->
+  </div>
 </div>
 
-<!-- REVIEWS -->
-<div class="reviews">
+<!-- CUSTOMER REVIEWS -->
+<div class="pd-reviews">
   <h2>Customer Reviews</h2>
 
-  <div class="review-card">
-    ⭐⭐⭐⭐⭐ Amazing quality!
+  <div class="pd-review-card">
+    ⭐⭐⭐⭐⭐ Amazing quality and beautiful product!
   </div>
 
-  <div class="review-card">
-    ⭐⭐⭐⭐ Fast delivery.
+  <div class="pd-review-card">
+    ⭐⭐⭐⭐ Fast delivery and good service.
+  </div>
+
+  <div class="pd-review-card">
+    ⭐⭐⭐⭐⭐ Highly recommended!
   </div>
 
 </div>
