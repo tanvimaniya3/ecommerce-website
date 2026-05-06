@@ -5,36 +5,33 @@ let productData = null;
 let quantity = 1;
 
 fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
-.then(res => res.json())
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
 
 let product = data.find(p => p._id == id);
 productData = product;
 
-/* ================= IMAGE ================= */
-
-let mainImg = product.image 
+// IMAGE
+let img = product.image 
 ? (product.image.startsWith("http") 
     ? product.image 
     : "https://ecommerce-website-1-psvr.onrender.com" + product.image)
 : "https://via.placeholder.com/400";
 
-/* 🔥 FIX: HTML ke id match karo */
-document.getElementById("mainImage").src = mainImg;
+document.getElementById("pImage").src = img;
 
-/* ================= THUMB IMAGES ================= */
+// 🔥 EXTRA IMAGES SHOW
+let extraBox = document.getElementById("extraImages");
+extraBox.innerHTML = "";
 
-let thumbBox = document.getElementById("thumbContainer");
-thumbBox.innerHTML = "";
-
+// main image first add
 let allImages = [];
 
-/* main image */
 if(product.image){
   allImages.push(product.image);
 }
 
-/* extra images */
+// extra images add
 if(product.images && product.images.length > 0){
   product.images.forEach(img => {
     if(img && img.trim() !== ""){
@@ -43,91 +40,79 @@ if(product.images && product.images.length > 0){
   });
 }
 
-/* remove duplicate */
+// duplicate remove
 allImages = [...new Set(allImages)];
 
 allImages.forEach(img => {
 
-let finalImg = img.startsWith("http") 
-? img 
-: "https://ecommerce-website-1-psvr.onrender.com" + img;
+  let finalImg = img;
 
-thumbBox.innerHTML += `
-<img src="${finalImg}" onclick="changeImage('${finalImg}')">
-`;
+  if(!finalImg.startsWith("http")){
+    finalImg = "https://ecommerce-website-1-psvr.onrender.com" + finalImg;
+  }
 
+  extraBox.innerHTML += `
+    <img src="${finalImg}" width="70"
+    style="cursor:pointer; border:1px solid #ccc; padding:5px;"
+    onclick="changeImage('${finalImg}')">
+  `;
 });
+// NAME
+document.getElementById("pName").innerText = product.name;
 
-/* ================= NAME ================= */
-document.getElementById("name").innerText = product.name;
-
-/* ================= PRICE ================= */
-let priceBox = document.getElementById("price");
+// PRICE + DISCOUNT
+let priceBox = document.getElementById("priceBox");
 
 if(product.offerPrice && product.offerPrice < product.price){
 
 let percent = Math.round(((product.price - product.offerPrice) / product.price) * 100);
 
 priceBox.innerHTML = `
-<span style="text-decoration:line-through;color:gray;">₹${product.price}</span>
-<span style="color:#b38b6d;font-size:22px;margin-left:10px;">₹${product.offerPrice}</span>
+<span class="old">₹${product.price}</span>
+<span class="new">₹${product.offerPrice}</span>
+<span class="off">(${percent}% OFF)</span>
 `;
 
-document.getElementById("offer").innerText = `${percent}% OFF`;
-
 }else{
-priceBox.innerHTML = `₹${product.price}`;
-document.getElementById("offer").innerText = "";
+priceBox.innerHTML = `<span class="new">₹${product.price}</span>`;
 }
 
-/* ================= DESCRIPTION ================= */
-document.getElementById("desc").innerText = product.description || "No description available";
+// STOCK
+let stockText = document.getElementById("stockStatus");
 
-/* ================= BUTTONS ================= */
-
-let cartBtn = document.querySelector(".cart-btn");
-let wishBtn = document.querySelector(".wish-btn");
-
-/* OUT OF STOCK */
 if(product.stock === false){
+stockText.innerHTML = "❌ Out of Stock";
+stockText.style.color = "red";
 
-cartBtn.innerText = "Out of Stock";
-cartBtn.disabled = true;
-cartBtn.style.background = "gray";
+document.getElementById("cartBtn").disabled = true;
+document.getElementById("buyBtn").disabled = true;
 
 }else{
-
-cartBtn.onclick = addToCart;
-
+stockText.innerHTML = "✅ In Stock";
+stockText.style.color = "green";
 }
 
-/* wishlist */
-wishBtn.onclick = () => addToWishlist(product._id);
+// DESCRIPTION
+document.getElementById("pDesc").innerText = product.description || "";
 
 updateCartCount();
 
 });
 
-/* ================= CHANGE IMAGE ================= */
-
-function changeImage(src){
-document.getElementById("mainImage").src = src;
-}
-
-/* ================= QTY ================= */
-
-function changeQty(val){
-
-quantity += val;
-
-if(quantity < 1) quantity = 1;
-
+// QTY
+function increaseQty(){
+quantity++;
 document.getElementById("qty").innerText = quantity;
-
 }
 
-/* ================= ADD TO CART ================= */
+function decreaseQty(){
+if(quantity > 1){
+quantity--;
+document.getElementById("qty").innerText = quantity;
+}
+}
 
+// ADD TO CART
 function addToCart(){
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -145,54 +130,35 @@ localStorage.setItem("cart", JSON.stringify(cart));
 
 alert("Added to Cart ✅");
 updateCartCount();
-
 }
 
-/* ================= WISHLIST ================= */
+// BUY NOW
+function buyNow(){
 
-function addToWishlist(id){
+let cart = [];
+productData.qty = quantity;
+cart.push(productData);
 
-let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+localStorage.setItem("cart", JSON.stringify(cart));
 
-let exists = wishlist.find(item => item == id);
-
-if(exists){
-alert("Already in Wishlist ❤️");
-return;
+window.location.href = "checkout.html";
 }
 
-wishlist.push(id);
-localStorage.setItem("wishlist", JSON.stringify(wishlist));
-
-alert("Added to Wishlist ❤️");
-
-}
-
-/* ================= CART COUNT ================= */
-
+// CART COUNT
 function updateCartCount(){
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 let count = 0;
-
 cart.forEach(p=>{
 count += p.qty || 1;
 });
 
 let badge = document.getElementById("cartCount");
 if(badge) badge.innerText = count;
-
 }
 
-/* ================= TABS ================= */
-
-function showTab(id){
-
-document.querySelectorAll(".tab-content").forEach(tab=>{
-tab.classList.remove("active");
-});
-
-document.getElementById(id).classList.add("active");
-
+// new option error aye to
+function changeImage(src){
+document.getElementById("pImage").src = src;
 }
