@@ -9,6 +9,10 @@ fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
 .then(data=>{
 
 let product = data.find(p => p._id == id);
+    if(!product){
+alert("Product not found");
+return;
+}
 productData = product;
 
 // IMAGE
