@@ -25,15 +25,26 @@
 
 <section class="product-detail">
 
-<img id="pImage" width="350">
+<div class="left">
 
-<div>
+<img id="pImage" style="width:350px; height:350px; object-fit:contain;">
+
+<!-- 🔥 ADD THIS (IMPORTANT) -->
+<div id="extraImages" style="display:flex; gap:10px; margin-top:10px;"></div>
+
+</div>
+
+<div class="right">
 
 <h1 id="pName"></h1>
 
-<p id="pPrice"></p>
+<!-- 🔥 FIX ID -->
+<p id="priceBox"></p>
 
 <p id="pDesc"></p>
+
+<!-- 🔥 ADD STOCK -->
+<p id="stockStatus"></p>
 
 <div>
 <button onclick="decreaseQty()">-</button>
@@ -43,8 +54,9 @@
 
 <br>
 
-<button onclick="addToCart()">Add to Cart</button>
-<button onclick="buyNow()">Buy Now</button>
+<!-- 🔥 ADD IDs -->
+<button id="cartBtn" onclick="addToCart()">Add to Cart</button>
+<button id="buyBtn" onclick="buyNow()">Buy Now</button>
 
 </div>
 
