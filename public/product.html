@@ -23,54 +23,113 @@
 
 </header>
 
-<section class="product-detail">
+<section class="product-detail-page">
 
-<div class="left">
+<div class="product-main-box">
 
-<img id="pImage"
-style="width:350px;height:350px;object-fit:contain;">
+    <!-- LEFT -->
+    <div class="product-gallery">
 
-<!-- EXTRA IMAGES -->
-<div id="extraImages"
-style="display:flex;gap:10px;margin-top:10px;">
+        <div class="main-product-image">
+            <img id="pImage">
+        </div>
+
+        <div class="product-thumbs" id="extraImages">
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="product-info">
+
+        <h1 id="pName"></h1>
+
+        <div class="stars">
+            ⭐⭐⭐⭐⭐ <span>(48 Reviews)</span>
+        </div>
+
+        <div class="product-price-box" id="priceBox">
+        </div>
+
+        <div id="stockStatus" class="stock-status"></div>
+
+        <p id="pDesc" class="product-desc"></p>
+
+        <!-- QTY -->
+        <div class="qty-wrapper">
+
+            <button class="qty-btn" onclick="decreaseQty()">−</button>
+
+            <span id="qty" class="qty-number">1</span>
+
+            <button class="qty-btn" onclick="increaseQty()">+</button>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="product-btns">
+
+            <button id="cartBtn" class="add-cart-btn" onclick="addToCart()">
+                Add To Cart
+            </button>
+
+            <button id="buyBtn" class="buy-btn" onclick="buyNow()">
+                Buy Now
+            </button>
+
+        </div>
+
+        <!-- FEATURES -->
+        <div class="product-features">
+
+            <div class="product-feature">
+                🚚 Free Shipping
+            </div>
+
+            <div class="product-feature">
+                🔒 Secure Payment
+            </div>
+
+            <div class="product-feature">
+                🔁 Easy Returns
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
-</div>
+<!-- TABS -->
+<div class="product-tabs">
 
-<div class="right">
+    <div class="tab-buttons">
 
-<h1 id="pName"></h1>
+        <button class="active" onclick="showTab('descTab', this)">
+            Description
+        </button>
 
-<!-- PRICE -->
-<p id="priceBox"></p>
+        <button onclick="showTab('reviewTab', this)">
+            Reviews
+        </button>
 
-<!-- STOCK -->
-<p id="stockStatus"></p>
+    </div>
 
-<!-- DESCRIPTION -->
-<p id="pDesc"></p>
+    <div id="descTab" class="tab-panel active">
+        <p id="fullDesc"></p>
+    </div>
 
-<!-- QTY -->
-<div>
-<button onclick="decreaseQty()">-</button>
+    <div id="reviewTab" class="tab-panel">
 
-<span id="qty">1</span>
+        <div class="review-box">
+            ⭐⭐⭐⭐⭐ Amazing quality product!
+        </div>
 
-<button onclick="increaseQty()">+</button>
-</div>
+        <div class="review-box">
+            ⭐⭐⭐⭐ Fast delivery and premium packaging.
+        </div>
 
-<br>
-
-<!-- BUTTONS -->
-<button id="cartBtn"
-onclick="addToCart()">
-Add to Cart
-</button>
-
-<button id="buyBtn"
-onclick="buyNow()">
-Buy Now
-</button>
+    </div>
 
 </div>
 
