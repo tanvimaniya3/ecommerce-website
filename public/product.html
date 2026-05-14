@@ -23,113 +23,344 @@
 
 </header>
 
-<section class="product-detail-page">
+<!-- =========================================
+PRODUCT DETAILS PAGE
+PASTE INSIDE <body>
+========================================= -->
 
-<div class="product-main-box">
+<section class="pd-page">
 
-    <!-- LEFT -->
-    <div class="product-gallery">
+<!-- LEFT -->
+<div class="pd-left">
 
-        <div class="main-product-image">
-            <img id="pImage">
-        </div>
+<div class="pd-main-image-box">
+<img id="pImage" src="" alt="">
+</div>
 
-        <div class="product-thumbs" id="extraImages">
-        </div>
-
-    </div>
-
-    <!-- RIGHT -->
-    <div class="product-info">
-
-        <h1 id="pName"></h1>
-
-        <div class="stars">
-            ⭐⭐⭐⭐⭐ <span>(48 Reviews)</span>
-        </div>
-
-        <div class="product-price-box" id="priceBox">
-        </div>
-
-        <div id="stockStatus" class="stock-status"></div>
-
-        <p id="pDesc" class="product-desc"></p>
-
-        <!-- QTY -->
-        <div class="qty-wrapper">
-
-            <button class="qty-btn" onclick="decreaseQty()">−</button>
-
-            <span id="qty" class="qty-number">1</span>
-
-            <button class="qty-btn" onclick="increaseQty()">+</button>
-
-        </div>
-
-        <!-- BUTTONS -->
-        <div class="product-btns">
-
-            <button id="cartBtn" class="add-cart-btn" onclick="addToCart()">
-                Add To Cart
-            </button>
-
-            <button id="buyBtn" class="buy-btn" onclick="buyNow()">
-                Buy Now
-            </button>
-
-        </div>
-
-        <!-- FEATURES -->
-        <div class="product-features">
-
-            <div class="product-feature">
-                🚚 Free Shipping
-            </div>
-
-            <div class="product-feature">
-                🔒 Secure Payment
-            </div>
-
-            <div class="product-feature">
-                🔁 Easy Returns
-            </div>
-
-        </div>
-
-    </div>
+<div class="pd-thumb-row" id="extraImages">
+<!-- JS images -->
+</div>
 
 </div>
 
-<!-- TABS -->
-<div class="product-tabs">
+<!-- RIGHT -->
+<div class="pd-right">
 
-    <div class="tab-buttons">
+<h1 id="pName">Ceramic Table Lamp</h1>
 
-        <button class="active" onclick="showTab('descTab', this)">
-            Description
-        </button>
+<div class="pd-review-row">
 
-        <button onclick="showTab('reviewTab', this)">
-            Reviews
-        </button>
+<div class="pd-stars">
+★★★★★
+</div>
 
-    </div>
+<div class="pd-review-text">
+4.5 | 48 Reviews
+</div>
 
-    <div id="descTab" class="tab-panel active">
-        <p id="fullDesc"></p>
-    </div>
+</div>
 
-    <div id="reviewTab" class="tab-panel">
+<div id="priceBox">
 
-        <div class="review-box">
-            ⭐⭐⭐⭐⭐ Amazing quality product!
-        </div>
+<span class="old">₹2300</span>
 
-        <div class="review-box">
-            ⭐⭐⭐⭐ Fast delivery and premium packaging.
-        </div>
+<span class="new">₹1899</span>
 
-    </div>
+<span class="off">
+Save ₹300 (14% OFF)
+</span>
+
+</div>
+
+<h3 class="pd-subtitle">
+Ceramic Table Lamp
+</h3>
+
+<p id="pDesc">
+Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+Lorem ipsum dolor sit amet consectetur adipisicing elit.
+Velit quos.
+</p>
+
+<!-- QTY -->
+<div class="pd-cart-row">
+
+<div class="pd-qty-box">
+
+<button onclick="decreaseQty()">−</button>
+
+<span id="qty">1</span>
+
+<button onclick="increaseQty()">+</button>
+
+</div>
+
+<button id="cartBtn" onclick="addToCart()">
+🛒 Add to Cart
+</button>
+
+<button id="wishBtn">
+♡ Add to Wishlist
+</button>
+
+</div>
+
+<!-- FEATURES -->
+<div class="pd-features">
+
+<div class="pd-feature">
+🚚 Free Shipping
+</div>
+
+<div class="pd-feature">
+↺ 7-Day Returns
+</div>
+
+<div class="pd-feature">
+🔒 Secure Checkout
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================
+DESCRIPTION + HELP
+========================================= -->
+
+<section class="pd-bottom">
+
+<!-- LEFT -->
+<div class="pd-tabs-box">
+
+<div class="pd-tab-buttons">
+
+<button class="pd-tab-btn active"
+onclick="openTab(event,'descTab')">
+Description
+</button>
+
+<button class="pd-tab-btn"
+onclick="openTab(event,'reviewTab')">
+Reviews (48)
+</button>
+
+<button class="pd-tab-btn"
+onclick="openTab(event,'shipTab')">
+Shipping & Returns
+</button>
+
+</div>
+
+<!-- DESCRIPTION -->
+<div id="descTab" class="pd-tab-content active">
+
+<p>
+Lorem ipsum dolor sit amet consectetur adipisicing elit.
+Nemo enim ipsam voluptatem quia voluptas sit aspernatur.
+Lorem ipsum dolor sit amet consectetur adipisicing elit.
+Velit quos.
+</p>
+
+</div>
+
+<!-- REVIEWS -->
+<div id="reviewTab" class="pd-tab-content">
+
+<p>⭐⭐⭐⭐⭐ Amazing product!</p>
+
+<br>
+
+<p>⭐⭐⭐⭐ Very beautiful quality.</p>
+
+</div>
+
+<!-- SHIPPING -->
+<div id="shipTab" class="pd-tab-content">
+
+<p>
+Free shipping available all over India.
+Easy 7 day return policy.
+</p>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div class="pd-help-box">
+
+<h2>Questions?</h2>
+
+<p>
+Tell us your concerns and we'll get back to you
+</p>
+
+<div class="pd-help-item">
+📞 +91 98765 43210
+</div>
+
+<div class="pd-help-item">
+✉ support@shopsphere.com
+</div>
+
+<button class="pd-live-btn">
+Live Chat Available →
+</button>
+
+</div>
+
+</section>
+
+<!-- =========================================
+RELATED PRODUCTS
+========================================= -->
+
+<section class="pd-related">
+
+<div class="pd-head">
+
+<h2>You May Also Like</h2>
+
+<a href="#">
+View All →
+</a>
+
+</div>
+
+<div class="pd-related-grid" id="relatedContainer">
+
+<!-- CARD -->
+<div class="pd-card">
+
+<img src="image/product1.jpg">
+
+<div class="pd-card-info">
+
+<h3>Round Wooden Table</h3>
+
+<p>₹2499</p>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+<div class="pd-card">
+
+<img src="image/product2.jpg">
+
+<div class="pd-card-info">
+
+<h3>Wicker Basket Storage</h3>
+
+<p>₹1199</p>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+<div class="pd-card">
+
+<img src="image/product3.jpg">
+
+<div class="pd-card-info">
+
+<h3>Woven Placemats</h3>
+
+<p>₹999</p>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+<div class="pd-card">
+
+<img src="image/product4.jpg">
+
+<div class="pd-card-info">
+
+<h3>Jute Storage Basket</h3>
+
+<p>₹899</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================
+CUSTOMER REVIEWS
+========================================= -->
+
+<section class="pd-customer">
+
+<div class="pd-head">
+
+<h2>Customer Reviews</h2>
+
+<a href="#">
+Write a Review →
+</a>
+
+</div>
+
+<div class="pd-review-grid">
+
+<!-- REVIEW -->
+<div class="pd-review-card">
+
+<div class="pd-review-stars">
+★★★★★
+</div>
+
+<p>
+Amazing quality and beautiful products!
+Totally loved my purchase.
+</p>
+
+<h4>Aarya Sharma</h4>
+
+</div>
+
+<!-- REVIEW -->
+<div class="pd-review-card">
+
+<div class="pd-review-stars">
+★★★★★
+</div>
+
+<p>
+Fast delivery and great customer service.
+Highly recommended!
+</p>
+
+<h4>Rohit Mehta</h4>
+
+</div>
+
+<!-- REVIEW -->
+<div class="pd-review-card">
+
+<div class="pd-review-stars">
+★★★★★
+</div>
+
+<p>
+The products are even more beautiful in real.
+Will shop again.
+</p>
+
+<h4>Priya Verma</h4>
+
+</div>
 
 </div>
 
