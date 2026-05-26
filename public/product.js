@@ -161,6 +161,27 @@ count += p.qty || 1;
 let badge = document.getElementById("cartCount");
 if(badge) badge.innerText = count;
 }
+// orpn tab
+
+function openTab(evt, tabId){
+
+let contents = document.querySelectorAll(".pd-tab-content");
+
+contents.forEach(c=>{
+c.classList.remove("active");
+});
+
+let buttons = document.querySelectorAll(".pd-tab-btn");
+
+buttons.forEach(b=>{
+b.classList.remove("active");
+});
+
+document.getElementById(tabId).classList.add("active");
+
+evt.currentTarget.classList.add("active");
+
+}
 
 // new option error aye to
 function changeImage(src){
