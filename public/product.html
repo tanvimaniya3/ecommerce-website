@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-<title>Product</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Details</title>
+
 <link rel="stylesheet" href="style.css">
+
 <script defer src="product.js"></script>
 </head>
 
 <body>
 
+<!-- NAVBAR -->
 <header class="navbar">
 
 <div class="logo">
@@ -18,14 +24,15 @@
 <nav>
 <a href="index.html">Home</a>
 <a href="products.html">Products</a>
-<a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+<a href="cart.html">
+🛒 Cart (<span id="cartCount">0</span>)
+</a>
 </nav>
 
 </header>
 
 <!-- =========================================
-PRODUCT DETAILS PAGE
-PASTE INSIDE <body>
+PRODUCT DETAILS
 ========================================= -->
 
 <section class="pd-page">
@@ -34,11 +41,13 @@ PASTE INSIDE <body>
 <div class="pd-left">
 
 <div class="pd-main-image-box">
+
 <img id="pImage" src="" alt="">
+
 </div>
 
 <div class="pd-thumb-row" id="extraImages">
-<!-- JS images -->
+
 </div>
 
 </div>
@@ -46,7 +55,7 @@ PASTE INSIDE <body>
 <!-- RIGHT -->
 <div class="pd-right">
 
-<h1 id="pName">Ceramic Table Lamp</h1>
+<h1 id="pName"></h1>
 
 <div class="pd-review-row">
 
@@ -55,32 +64,21 @@ PASTE INSIDE <body>
 </div>
 
 <div class="pd-review-text">
-4.5 | 48 Reviews
+4.8 | 48 Reviews
 </div>
 
 </div>
 
-<div id="priceBox">
-
-<span class="old">₹2300</span>
-
-<span class="new">₹1899</span>
-
-<span class="off">
-Save ₹300 (14% OFF)
-</span>
-
-</div>
+<div id="priceBox"></div>
 
 <h3 class="pd-subtitle">
-Ceramic Table Lamp
+Premium Home Decor
 </h3>
 
-<p id="pDesc">
-Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
-Velit quos.
-</p>
+<p id="pDesc"></p>
+
+<!-- STOCK -->
+<p id="stockStatus"></p>
 
 <!-- QTY -->
 <div class="pd-cart-row">
@@ -100,7 +98,7 @@ Velit quos.
 </button>
 
 <button id="wishBtn">
-♡ Add to Wishlist
+♡ Wishlist
 </button>
 
 </div>
@@ -113,7 +111,7 @@ Velit quos.
 </div>
 
 <div class="pd-feature">
-↺ 7-Day Returns
+↺ 7 Day Returns
 </div>
 
 <div class="pd-feature">
@@ -127,7 +125,7 @@ Velit quos.
 </section>
 
 <!-- =========================================
-DESCRIPTION + HELP
+BOTTOM SECTION
 ========================================= -->
 
 <section class="pd-bottom">
@@ -144,12 +142,12 @@ Description
 
 <button class="pd-tab-btn"
 onclick="openTab(event,'reviewTab')">
-Reviews (48)
+Reviews
 </button>
 
 <button class="pd-tab-btn"
 onclick="openTab(event,'shipTab')">
-Shipping & Returns
+Shipping
 </button>
 
 </div>
@@ -158,10 +156,8 @@ Shipping & Returns
 <div id="descTab" class="pd-tab-content active">
 
 <p>
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
-Nemo enim ipsam voluptatem quia voluptas sit aspernatur.
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
-Velit quos.
+Premium quality handcrafted decor product.
+Beautiful modern aesthetic for your home.
 </p>
 
 </div>
@@ -169,11 +165,11 @@ Velit quos.
 <!-- REVIEWS -->
 <div id="reviewTab" class="pd-tab-content">
 
-<p>⭐⭐⭐⭐⭐ Amazing product!</p>
+<p>⭐⭐⭐⭐⭐ Amazing quality.</p>
 
 <br>
 
-<p>⭐⭐⭐⭐ Very beautiful quality.</p>
+<p>⭐⭐⭐⭐ Beautiful product.</p>
 
 </div>
 
@@ -181,8 +177,8 @@ Velit quos.
 <div id="shipTab" class="pd-tab-content">
 
 <p>
-Free shipping available all over India.
-Easy 7 day return policy.
+Free shipping all over India.
+Easy 7 day return policy available.
 </p>
 
 </div>
@@ -192,14 +188,14 @@ Easy 7 day return policy.
 <!-- RIGHT -->
 <div class="pd-help-box">
 
-<h2>Questions?</h2>
+<h2>Need Help?</h2>
 
 <p>
-Tell us your concerns and we'll get back to you
+Tell us your concerns and we’ll help you.
 </p>
 
 <div class="pd-help-item">
-📞 +91 98765 43210
+📞 +91 9876543210
 </div>
 
 <div class="pd-help-item">
@@ -207,7 +203,7 @@ Tell us your concerns and we'll get back to you
 </div>
 
 <button class="pd-live-btn">
-Live Chat Available →
+Live Chat →
 </button>
 
 </div>
@@ -230,46 +226,43 @@ View All →
 
 </div>
 
-<div class="pd-related-grid" id="relatedContainer">
+<div class="pd-related-grid">
 
-<!-- CARD -->
 <div class="pd-card">
 
 <img src="image/product1.jpg">
 
 <div class="pd-card-info">
 
-<h3>Round Wooden Table</h3>
+<h3>Modern Lamp</h3>
 
-<p>₹2499</p>
-
-</div>
+<p>₹1899</p>
 
 </div>
 
-<!-- CARD -->
+</div>
+
 <div class="pd-card">
 
 <img src="image/product2.jpg">
 
 <div class="pd-card-info">
 
-<h3>Wicker Basket Storage</h3>
+<h3>Wooden Vase</h3>
 
-<p>₹1199</p>
-
-</div>
+<p>₹1499</p>
 
 </div>
 
-<!-- CARD -->
+</div>
+
 <div class="pd-card">
 
 <img src="image/product3.jpg">
 
 <div class="pd-card-info">
 
-<h3>Woven Placemats</h3>
+<h3>Decor Basket</h3>
 
 <p>₹999</p>
 
@@ -277,16 +270,15 @@ View All →
 
 </div>
 
-<!-- CARD -->
 <div class="pd-card">
 
 <img src="image/product4.jpg">
 
 <div class="pd-card-info">
 
-<h3>Jute Storage Basket</h3>
+<h3>Wall Decor</h3>
 
-<p>₹899</p>
+<p>₹1299</p>
 
 </div>
 
@@ -307,14 +299,13 @@ CUSTOMER REVIEWS
 <h2>Customer Reviews</h2>
 
 <a href="#">
-Write a Review →
+Write Review →
 </a>
 
 </div>
 
 <div class="pd-review-grid">
 
-<!-- REVIEW -->
 <div class="pd-review-card">
 
 <div class="pd-review-stars">
@@ -322,15 +313,13 @@ Write a Review →
 </div>
 
 <p>
-Amazing quality and beautiful products!
-Totally loved my purchase.
+Amazing quality and premium look.
 </p>
 
 <h4>Aarya Sharma</h4>
 
 </div>
 
-<!-- REVIEW -->
 <div class="pd-review-card">
 
 <div class="pd-review-stars">
@@ -338,15 +327,13 @@ Totally loved my purchase.
 </div>
 
 <p>
-Fast delivery and great customer service.
-Highly recommended!
+Fast delivery and beautiful packaging.
 </p>
 
 <h4>Rohit Mehta</h4>
 
 </div>
 
-<!-- REVIEW -->
 <div class="pd-review-card">
 
 <div class="pd-review-stars">
@@ -354,8 +341,7 @@ Highly recommended!
 </div>
 
 <p>
-The products are even more beautiful in real.
-Will shop again.
+Very elegant product. Loved it.
 </p>
 
 <h4>Priya Verma</h4>
@@ -366,5 +352,15 @@ Will shop again.
 
 </section>
 
+<!-- FOOTER -->
+<footer>
+
+<h3>ShopSphere</h3>
+
+<p>© 2026 All Rights Reserved</p>
+
+</footer>
+
 </body>
+
 </html>
