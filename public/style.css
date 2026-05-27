@@ -908,8 +908,8 @@ flex-wrap:nowrap;
 /* LEFT SIDE */
 
 .pd-left{
-width:48%;
-min-width:0;
+flex:0 0 45%;
+max-width:45%;
 }
 
 /* IMAGE BOX */
@@ -959,10 +959,10 @@ border-color:#c79a63;
 }
 
 /* RIGHT SIDE */
-
 .pd-right{
-width:52%;
-padding-top:10px;
+flex:0 0 55%;
+max-width:55%;
+padding-left:20px;
 }
 
 .pd-right h1{
