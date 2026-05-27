@@ -41,10 +41,13 @@ PRODUCT DETAILS
 <div class="pd-left">
 
 <div class="pd-main-image-box">
-<img id="pImage" src="">
+
+<img id="pImage" src="" alt="">
+
 </div>
 
 <div class="pd-thumb-row" id="extraImages">
+
 </div>
 
 </div>
@@ -56,10 +59,12 @@ PRODUCT DETAILS
 
 <div class="pd-review-row">
 
-<div class="pd-stars">★★★★★</div>
+<div class="pd-stars">
+★★★★★
+</div>
 
 <div class="pd-review-text">
-4.5 | 48 Reviews
+4.8 | 48 Reviews
 </div>
 
 </div>
@@ -72,6 +77,10 @@ Premium Home Decor
 
 <p id="pDesc"></p>
 
+<!-- STOCK -->
+<p id="stockStatus"></p>
+
+<!-- QTY -->
 <div class="pd-cart-row">
 
 <div class="pd-qty-box">
@@ -94,6 +103,7 @@ Premium Home Decor
 
 </div>
 
+<!-- FEATURES -->
 <div class="pd-features">
 
 <div class="pd-feature">
@@ -101,7 +111,7 @@ Premium Home Decor
 </div>
 
 <div class="pd-feature">
-↺ 7-Day Returns
+↺ 7 Day Returns
 </div>
 
 <div class="pd-feature">
@@ -114,51 +124,78 @@ Premium Home Decor
 
 </section>
 
-<!-- DESCRIPTION -->
+<!-- =========================================
+BOTTOM SECTION
+========================================= -->
 
 <section class="pd-bottom">
 
+<!-- LEFT -->
 <div class="pd-tabs-box">
 
 <div class="pd-tab-buttons">
 
-<button class="pd-tab-btn active">
+<button class="pd-tab-btn active"
+onclick="openTab(event,'descTab')">
 Description
 </button>
 
-<button class="pd-tab-btn">
-Reviews (48)
+<button class="pd-tab-btn"
+onclick="openTab(event,'reviewTab')">
+Reviews
 </button>
 
-<button class="pd-tab-btn">
-Shipping & Returns
+<button class="pd-tab-btn"
+onclick="openTab(event,'shipTab')">
+Shipping
 </button>
 
 </div>
 
-<div class="pd-tab-content active">
+<!-- DESCRIPTION -->
+<div id="descTab" class="pd-tab-content active">
 
 <p>
-Premium quality home decor product.
-Beautiful design with modern luxury finish.
+Premium quality handcrafted decor product.
+Beautiful modern aesthetic for your home.
+</p>
+
+</div>
+
+<!-- REVIEWS -->
+<div id="reviewTab" class="pd-tab-content">
+
+<p>⭐⭐⭐⭐⭐ Amazing quality.</p>
+
+<br>
+
+<p>⭐⭐⭐⭐ Beautiful product.</p>
+
+</div>
+
+<!-- SHIPPING -->
+<div id="shipTab" class="pd-tab-content">
+
+<p>
+Free shipping all over India.
+Easy 7 day return policy available.
 </p>
 
 </div>
 
 </div>
 
-<!-- HELP BOX -->
-
+<!-- RIGHT -->
 <div class="pd-help-box">
 
-<h2>Questions?</h2>
+<h2>Need Help?</h2>
 
 <p>
-Tell us your concerns and we'll get back to you
+Tell us your concerns and we’ll help you.
 </p>
 
 <div class="pd-help-item">
-📞 +91 98765 43210
+📞 +91 9876543210
 </div>
 
 <div class="pd-help-item">
@@ -166,14 +203,16 @@ Tell us your concerns and we'll get back to you
 </div>
 
 <button class="pd-live-btn">
-Live Chat Available →
+Live Chat →
 </button>
 
 </div>
 
 </section>
 
-<!-- RELATED PRODUCTS -->
+<!-- =========================================
+RELATED PRODUCTS
+========================================= -->
 
 <section class="pd-related">
 
@@ -181,49 +220,77 @@ Live Chat Available →
 
 <h2>You May Also Like</h2>
 
-<a href="#">View All →</a>
+<a href="#">
+View All →
+</a>
 
 </div>
 
 <div class="pd-related-grid">
 
 <div class="pd-card">
+
 <img src="image/product1.jpg">
+
 <div class="pd-card-info">
-<h3>Wooden Table</h3>
-<p>₹2499</p>
+
+<h3>Modern Lamp</h3>
+
+<p>₹1899</p>
+
 </div>
+
 </div>
 
 <div class="pd-card">
+
 <img src="image/product2.jpg">
+
 <div class="pd-card-info">
-<h3>Storage Basket</h3>
-<p>₹1199</p>
+
+<h3>Wooden Vase</h3>
+
+<p>₹1499</p>
+
 </div>
+
 </div>
 
 <div class="pd-card">
+
 <img src="image/product3.jpg">
+
 <div class="pd-card-info">
-<h3>Woven Placemats</h3>
+
+<h3>Decor Basket</h3>
+
 <p>₹999</p>
+
 </div>
+
 </div>
 
 <div class="pd-card">
+
 <img src="image/product4.jpg">
+
 <div class="pd-card-info">
-<h3>Jute Basket</h3>
-<p>₹899</p>
+
+<h3>Wall Decor</h3>
+
+<p>₹1299</p>
+
 </div>
+
 </div>
 
 </div>
 
 </section>
 
-<!-- CUSTOMER REVIEWS -->
+<!-- =========================================
+CUSTOMER REVIEWS
+========================================= -->
 
 <section class="pd-customer">
 
@@ -231,33 +298,69 @@ Live Chat Available →
 
 <h2>Customer Reviews</h2>
 
-<a href="#">Write a Review →</a>
+<a href="#">
+Write Review →
+</a>
 
 </div>
 
 <div class="pd-review-grid">
 
 <div class="pd-review-card">
-<div class="pd-review-stars">★★★★★</div>
-<p>Amazing quality and beautiful products!</p>
+
+<div class="pd-review-stars">
+★★★★★
+</div>
+
+<p>
+Amazing quality and premium look.
+</p>
+
 <h4>Aarya Sharma</h4>
+
 </div>
 
 <div class="pd-review-card">
-<div class="pd-review-stars">★★★★★</div>
-<p>Fast delivery and great customer service.</p>
+
+<div class="pd-review-stars">
+★★★★★
+</div>
+
+<p>
+Fast delivery and beautiful packaging.
+</p>
+
 <h4>Rohit Mehta</h4>
+
 </div>
 
 <div class="pd-review-card">
-<div class="pd-review-stars">★★★★★</div>
-<p>The products are even more beautiful in real.</p>
+
+<div class="pd-review-stars">
+★★★★★
+</div>
+
+<p>
+Very elegant product. Loved it.
+</p>
+
 <h4>Priya Verma</h4>
+
 </div>
 
 </div>
 
 </section>
+
+<!-- FOOTER -->
+<footer>
+
+<h3>ShopSphere</h3>
+
+<p>© 2026 All Rights Reserved</p>
+
+</footer>
+
 </body>
 
 </html>
