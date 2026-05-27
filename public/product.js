@@ -81,20 +81,6 @@ priceBox.innerHTML = `
 priceBox.innerHTML = `<span class="new">₹${product.price}</span>`;
 }
 
-// STOCK
-let stockText = document.getElementById("stockStatus");
-
-if(product.stock === false){
-stockText.innerHTML = "❌ Out of Stock";
-stockText.style.color = "red";
-
-document.getElementById("cartBtn").disabled = true;
-document.getElementById("buyBtn").disabled = true;
-
-}else{
-stockText.innerHTML = "✅ In Stock";
-stockText.style.color = "green";
-}
 
 // DESCRIPTION
 document.getElementById("pDesc").innerText = product.description || "";
