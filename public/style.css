@@ -897,10 +897,21 @@ margin-bottom:10px;
 /* PRODUCT DETAILS PAGE */----
 .pd-page{
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:45px;
-padding:130px 60px 40px;
+grid-template-columns: 430px 1fr;
+gap:50px;
+padding:120px 60px 40px;
 background:#f6f0eb;
+align-items:start;
+}
+.pd-right{
+width:100%;
+padding-top:0;
+}
+
+.pd-right h1{
+font-size:58px;
+line-height:1.1;
+margin-bottom:18px;
 }
 
 /* LEFT */
