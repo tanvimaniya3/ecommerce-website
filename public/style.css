@@ -898,8 +898,8 @@ margin-bottom:10px;
 .pd-page{
 display:flex;
 align-items:flex-start;
-justify-content:center;
-gap:50px;
+justify-content:space-between;
+gap:30px;
 padding:140px 60px 60px;
 background:#f6f0eb;
 flex-wrap:nowrap;
@@ -908,15 +908,13 @@ flex-wrap:nowrap;
 /* LEFT SIDE */
 
 .pd-left{
-flex:0 0 45%;
-max-width:45%;
+width:48%;
 }
 
 /* IMAGE BOX */
 
 .pd-main-image-box{
 width:100%;
-max-width:520px;
 height:520px;
 background:#fff;
 border-radius:20px;
@@ -960,9 +958,12 @@ border-color:#c79a63;
 
 /* RIGHT SIDE */
 .pd-right{
-flex:0 0 55%;
-max-width:55%;
-padding-left:20px;
+width:48%;
+padding-left:0;
+}
+.pd-left,
+.pd-right{
+min-width:0;
 }
 
 .pd-right h1{
