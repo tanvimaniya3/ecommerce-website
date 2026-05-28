@@ -1,54 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Product Details</title>
+<title>Product</title>
 
 <link rel="stylesheet" href="style.css">
-
 <script defer src="product.js"></script>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<header class="navbar">
-
-<div class="logo">
-<a href="index.html">ShopSphere</a>
-</div>
-
-<nav>
-<a href="index.html">Home</a>
-<a href="products.html">Products</a>
-<a href="cart.html">
-🛒 Cart (<span id="cartCount">0</span>)
-</a>
-</nav>
-
-</header>
-
-<!-- =========================================
-PRODUCT DETAILS
-========================================= -->
-
+<!-- PRODUCT SECTION -->
 <section class="pd-page">
 
 <!-- LEFT -->
 <div class="pd-left">
 
 <div class="pd-main-image-box">
-
-<img id="pImage" src="" alt="">
-
+<img id="pImage" src="">
 </div>
 
-<div class="pd-thumb-row" id="extraImages">
-
-</div>
+<div class="pd-thumb-row" id="extraImages"></div>
 
 </div>
 
@@ -58,309 +31,108 @@ PRODUCT DETAILS
 <h1 id="pName"></h1>
 
 <div class="pd-review-row">
-
-<div class="pd-stars">
-★★★★★
-</div>
-
-<div class="pd-review-text">
-4.8 | 48 Reviews
-</div>
-
+<div class="pd-stars">★★★★★</div>
+<div class="pd-review-text">4.5 | 48 Reviews</div>
 </div>
 
 <div id="priceBox"></div>
 
-<h3 class="pd-subtitle">
-Premium Home Decor
-</h3>
+<h3 class="pd-subtitle">Premium Home Decor</h3>
 
 <p id="pDesc"></p>
 
-<!-- STOCK -->
-<p id="stockStatus"></p>
-
-<!-- QTY -->
 <div class="pd-cart-row">
 
 <div class="pd-qty-box">
-
 <button onclick="decreaseQty()">−</button>
-
 <span id="qty">1</span>
-
 <button onclick="increaseQty()">+</button>
+</div>
+
+<button id="cartBtn" onclick="addToCart()">Add to Cart</button>
+<button id="wishBtn">Wishlist</button>
 
 </div>
 
-<button id="cartBtn" onclick="addToCart()">
-🛒 Add to Cart
-</button>
-
-<button id="wishBtn">
-♡ Wishlist
-</button>
-
-</div>
-
-<!-- FEATURES -->
 <div class="pd-features">
-
-<div class="pd-feature">
-🚚 Free Shipping
-</div>
-
-<div class="pd-feature">
-↺ 7 Day Returns
-</div>
-
-<div class="pd-feature">
-🔒 Secure Checkout
-</div>
-
+<div class="pd-feature">🚚 Free Shipping</div>
+<div class="pd-feature">↺ 7 Day Returns</div>
+<div class="pd-feature">🔒 Secure Checkout</div>
 </div>
 
 </div>
 
 </section>
 
-<!-- =========================================
-BOTTOM SECTION
-========================================= -->
-
+<!-- BOTTOM -->
 <section class="pd-bottom">
 
-<!-- LEFT -->
 <div class="pd-tabs-box">
 
 <div class="pd-tab-buttons">
-
-<button class="pd-tab-btn active"
-onclick="openTab(event,'descTab')">
-Description
-</button>
-
-<button class="pd-tab-btn"
-onclick="openTab(event,'reviewTab')">
-Reviews
-</button>
-
-<button class="pd-tab-btn"
-onclick="openTab(event,'shipTab')">
-Shipping
-</button>
-
+<button class="pd-tab-btn active" onclick="openTab(event,'descTab')">Description</button>
+<button class="pd-tab-btn" onclick="openTab(event,'reviewTab')">Reviews</button>
+<button class="pd-tab-btn" onclick="openTab(event,'shipTab')">Shipping</button>
 </div>
 
-<!-- DESCRIPTION -->
 <div id="descTab" class="pd-tab-content active">
-
-<p>
-Premium quality handcrafted decor product.
-Beautiful modern aesthetic for your home.
-</p>
-
+<p>Premium quality handcrafted decor product.</p>
 </div>
 
-<!-- REVIEWS -->
 <div id="reviewTab" class="pd-tab-content">
-
-<p>⭐⭐⭐⭐⭐ Amazing quality.</p>
-
-<br>
-
-<p>⭐⭐⭐⭐ Beautiful product.</p>
-
+<p>⭐⭐⭐⭐⭐ Amazing product</p>
 </div>
 
-<!-- SHIPPING -->
 <div id="shipTab" class="pd-tab-content">
-
-<p>
-Free shipping all over India.
-Easy 7 day return policy available.
-</p>
-
+<p>Free shipping all over India</p>
 </div>
 
 </div>
 
-<!-- RIGHT -->
 <div class="pd-help-box">
-
-<h2>Need Help?</h2>
-
-<p>
-Tell us your concerns and we’ll help you.
-</p>
-
-<div class="pd-help-item">
-📞 +91 9876543210
-</div>
-
-<div class="pd-help-item">
-✉ support@shopsphere.com
-</div>
-
-<button class="pd-live-btn">
-Live Chat →
-</button>
-
+<h2>Questions?</h2>
+<p>Tell us your concerns</p>
+<div>📞 +91 9876543210</div>
+<div>✉ support@shop.com</div>
+<button class="pd-live-btn">Live Chat</button>
 </div>
 
 </section>
 
-<!-- =========================================
-RELATED PRODUCTS
-========================================= -->
-
+<!-- RELATED -->
 <section class="pd-related">
 
-<div class="pd-head">
-
 <h2>You May Also Like</h2>
-
-<a href="#">
-View All →
-</a>
-
-</div>
 
 <div class="pd-related-grid">
 
 <div class="pd-card">
-
-<img src="image/product1.jpg">
-
-<div class="pd-card-info">
-
-<h3>Modern Lamp</h3>
-
-<p>₹1899</p>
-
-</div>
-
-</div>
-
-<div class="pd-card">
-
-<img src="image/product2.jpg">
-
-<div class="pd-card-info">
-
-<h3>Wooden Vase</h3>
-
-<p>₹1499</p>
-
-</div>
-
-</div>
-
-<div class="pd-card">
-
-<img src="image/product3.jpg">
-
-<div class="pd-card-info">
-
-<h3>Decor Basket</h3>
-
+<img src="https://via.placeholder.com/200">
+<h3>Product</h3>
 <p>₹999</p>
-
-</div>
-
 </div>
 
 <div class="pd-card">
-
-<img src="image/product4.jpg">
-
-<div class="pd-card-info">
-
-<h3>Wall Decor</h3>
-
-<p>₹1299</p>
-
+<img src="https://via.placeholder.com/200">
+<h3>Product</h3>
+<p>₹999</p>
 </div>
 
+<div class="pd-card">
+<img src="https://via.placeholder.com/200">
+<h3>Product</h3>
+<p>₹999</p>
 </div>
 
-</div>
-
-</section>
-
-<!-- =========================================
-CUSTOMER REVIEWS
-========================================= -->
-
-<section class="pd-customer">
-
-<div class="pd-head">
-
-<h2>Customer Reviews</h2>
-
-<a href="#">
-Write Review →
-</a>
-
-</div>
-
-<div class="pd-review-grid">
-
-<div class="pd-review-card">
-
-<div class="pd-review-stars">
-★★★★★
-</div>
-
-<p>
-Amazing quality and premium look.
-</p>
-
-<h4>Aarya Sharma</h4>
-
-</div>
-
-<div class="pd-review-card">
-
-<div class="pd-review-stars">
-★★★★★
-</div>
-
-<p>
-Fast delivery and beautiful packaging.
-</p>
-
-<h4>Rohit Mehta</h4>
-
-</div>
-
-<div class="pd-review-card">
-
-<div class="pd-review-stars">
-★★★★★
-</div>
-
-<p>
-Very elegant product. Loved it.
-</p>
-
-<h4>Priya Verma</h4>
-
+<div class="pd-card">
+<img src="https://via.placeholder.com/200">
+<h3>Product</h3>
+<p>₹999</p>
 </div>
 
 </div>
 
 </section>
-
-<!-- FOOTER -->
-<footer>
-
-<h3>ShopSphere</h3>
-
-<p>© 2026 All Rights Reserved</p>
-
-</footer>
 
 </body>
-
 </html>
