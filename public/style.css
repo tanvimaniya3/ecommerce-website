@@ -1028,23 +1028,104 @@ font-weight:600;
 .insta-btn:hover{
 background:#b48750;
 }
+/* NEWSLETTER */
+
+.newsletter{
+padding:80px 20px;
+background:#f8f3ed;
+text-align:center;
+}
+
+.newsletter h2{
+font-size:42px;
+margin-bottom:15px;
+color:#2d2016;
+font-family:serif;
+}
+
+.newsletter p{
+color:#666;
+margin-bottom:30px;
+font-size:17px;
+}
+
+.newsletter-box{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.newsletter-box input{
+width:350px;
+max-width:90%;
+height:55px;
+padding:0 20px;
+border:1px solid #ddd;
+border-radius:40px;
+font-size:16px;
+}
+
+.newsletter-box button{
+height:55px;
+padding:0 30px;
+background:#c79a63;
+color:white;
+border:none;
+border-radius:40px;
+font-size:16px;
+font-weight:600;
+}
 
 
 
 /* ===============================
    FOOTER
 =================================*/
-footer{
+/* FOOTER */
+
+.footer{
 background:#111;
 color:white;
-text-align:center;
-padding:45px 20px;
-margin-top:0;
+padding:70px 60px 20px;
 }
 
-footer h3{
-font-size:28px;
+.footer-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:40px;
+}
+
+.footer h3{
+font-size:30px;
+margin-bottom:15px;
+}
+
+.footer h4{
+margin-bottom:15px;
+}
+
+.footer a{
+display:block;
 margin-bottom:10px;
+color:#ccc;
+}
+
+.footer a:hover{
+color:#c79a63;
+}
+
+.footer p{
+color:#bbb;
+line-height:1.8;
+}
+
+.footer-bottom{
+margin-top:40px;
+padding-top:20px;
+border-top:1px solid #333;
+text-align:center;
+color:#999;
 }
 
 /* PRODUCT DETAILS PAGE */----
