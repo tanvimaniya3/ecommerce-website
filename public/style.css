@@ -208,28 +208,61 @@ background:#f5f5f5;
 
 .product{
 position:relative;
+background:white;
+border-radius:20px;
+padding:18px;
+overflow:hidden;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+transition:0.35s ease;
+text-align:center;
+}
+
+.product:hover{
+transform:translateY(-8px);
+box-shadow:0 18px 40px rgba(0,0,0,0.12);
+}
+.product img{
+width:100%;
+height:240px;
+object-fit:contain;
+background:#fafafa;
+border-radius:14px;
+padding:10px;
+transition:0.3s;
+}
+
+.product:hover img{
+transform:scale(1.05);
+}
+.product h3{
+font-size:17px;
+margin-top:15px;
+margin-bottom:10px;
+color:#222;
+min-height:45px;
 }
 
 .wish-btn{
 position:absolute;
-top:14px;
-right:14px;
+top:15px;
+right:15px;
+width:42px;
+height:42px;
 background:white;
-width:38px;
-height:38px;
 border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 font-size:18px;
 cursor:pointer;
-box-shadow:0 6px 15px rgba(0,0,0,0.12);
+z-index:10;
 transition:0.3s;
-z-index:5;
 }
 
 .wish-btn:hover{
-transform:scale(1.12);
+background:#ffe9ee;
+transform:scale(1.1);
 }
 .remove-btn{
 margin-top:10px;
@@ -801,13 +834,13 @@ gap:28px;
 .old{
 text-decoration:line-through;
 color:#999;
-margin-right:8px;
 font-size:15px;
+margin-right:8px;
 }
 
 .new{
-color:#16a34a;
-font-size:22px;
+color:#c79a63;
+font-size:24px;
 font-weight:700;
 }
 
@@ -822,19 +855,22 @@ font-weight:600;
 /* BUTTON */
 .product button,
 .product-card button{
-margin-top:14px;
-padding:12px;
 width:100%;
-border-radius:10px;
-background:linear-gradient(135deg,#111,#333);
+margin-top:15px;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#c79a63;
 color:white;
+font-size:15px;
 font-weight:600;
+transition:0.3s;
 }
 
 .product button:hover,
 .product-card button:hover{
-background:linear-gradient(135deg,#ff8c42,#ff6a00);
-transform:scale(1.03);
+background:#b1844f;
+transform:translateY(-2px);
 }
 
 button.disabled{
