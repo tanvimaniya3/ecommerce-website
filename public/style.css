@@ -878,6 +878,103 @@ margin-bottom:25px;
 color:#555;
 }
 
+/* WHY US */
+
+.why-us{
+padding:80px 60px;
+background:#f6f0eb;
+text-align:center;
+}
+
+.why-title{
+font-size:48px;
+font-family:serif;
+font-weight:500;
+margin-bottom:50px;
+color:#2d2016;
+}
+
+.why-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+}
+
+.why-card{
+background:white;
+padding:35px 25px;
+border-radius:18px;
+transition:0.3s;
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.why-card:hover{
+transform:translateY(-6px);
+}
+
+.why-icon{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.why-card h3{
+font-size:22px;
+margin-bottom:10px;
+color:#222;
+}
+
+.why-card p{
+color:#666;
+line-height:1.7;
+}
+
+/* CUSTOMER REVIEW */
+
+.home-review{
+padding:80px 60px;
+background:#faf7f3;
+text-align:center;
+}
+
+.review-title{
+font-size:48px;
+font-family:serif;
+font-weight:500;
+margin-bottom:50px;
+color:#2d2016;
+}
+
+.review-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.review-box{
+background:white;
+padding:35px;
+border-radius:18px;
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.review-stars{
+font-size:22px;
+color:#d4a646;
+margin-bottom:15px;
+}
+
+.review-box p{
+color:#666;
+line-height:1.8;
+margin-bottom:20px;
+}
+
+.review-box h4{
+font-size:18px;
+color:#222;
+}
+
+
 /* ===============================
    FOOTER
 =================================*/
