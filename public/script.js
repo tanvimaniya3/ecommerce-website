@@ -20,9 +20,28 @@ box.innerHTML += `
 <span class="wish-btn" onclick="addToWishlist('${p._id}')">❤️</span>
 
 <a href="product.html?id=${p._id}">
+
+<div class="product-image">
+
+${p.offerPrice && p.offerPrice < p.price
+? `<span class="sale-badge">SALE</span>`
+: ""}
+
+${p.bestSeller
+? `<span class="best-badge">BEST</span>`
+: ""}
+
 <img src="${p.image}">
+
+</div>
+
 <h3>${p.name}</h3>
+
 </a>
+
+<div class="rating">
+⭐⭐⭐⭐⭐
+</div>
 
 ${
 p.offerPrice && p.offerPrice < p.price
@@ -42,7 +61,16 @@ p.offerPrice && p.offerPrice < p.price
 ${
 p.stock === false
 ? `<button class="disabled">Out of Stock</button>`
-: `<button onclick="addToCart('${p._id}')">Add to Cart</button>`
+: `
+<button class="quick-btn"
+onclick="openProduct('${p._id}')">
+Quick View
+</button>
+
+<button onclick="addToCart('${p._id}')">
+Add to Cart
+</button>
+`
 }
 
 </div>
