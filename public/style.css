@@ -1431,14 +1431,16 @@ border-radius:16px;
 
 .sale-badge{
 position:absolute;
-top:10px;
-left:10px;
+top:12px;
+left:12px;
+background:linear-gradient(135deg,#ff4d4d,#d62828);
 background:#e53935;
 color:white;
-padding:6px 10px;
-border-radius:20px;
-font-size:12px;
+padding:7px 12px;
+border-radius:30px;
+font-size:11px;
 font-weight:700;
+letter-spacing:1px;
 z-index:5;
 }
 
@@ -1465,4 +1467,11 @@ font-size:14px;
 background:white !important;
 color:#111 !important;
 border:1px solid #ddd !important;
+}
+.rating{
+margin-top:8px;
+margin-bottom:10px;
+font-size:15px;
+color:#d4a646;
+letter-spacing:2px;
 }
