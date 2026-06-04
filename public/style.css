@@ -1423,3 +1423,46 @@ font-size:38px;
 }
 
 }
+.product-image{
+position:relative;
+overflow:hidden;
+border-radius:16px;
+}
+
+.sale-badge{
+position:absolute;
+top:10px;
+left:10px;
+background:#e53935;
+color:white;
+padding:6px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:700;
+z-index:5;
+}
+
+.best-badge{
+position:absolute;
+top:10px;
+right:10px;
+background:#c79a63;
+color:white;
+padding:6px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:700;
+z-index:5;
+}
+
+.rating{
+margin-top:10px;
+color:#d4a646;
+font-size:14px;
+}
+
+.quick-btn{
+background:white !important;
+color:#111 !important;
+border:1px solid #ddd !important;
+}
