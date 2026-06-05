@@ -197,7 +197,7 @@ background:#f5f5f5;
 }
 /* WISHLIST BUTTON */
 
-.product{
+/* .product{
 
 background:#fff;
 border-radius:24px;
@@ -207,32 +207,55 @@ box-shadow:0 10px 30px rgba(0,0,0,0.06);
 transition:0.35s;
 position:relative;
 overflow:hidden;
+} */
+ .product{
+background:#fff;
+border-radius:22px;
+padding:22px;
+border:1px solid #eee7de;
+box-shadow:0 8px 20px rgba(0,0,0,0.06);
+transition:.3s;
+overflow:hidden;
+height:100%;
+display:flex;
+flex-direction:column;
 }
+
 
 
 .product:hover{
 transform:translateY(-8px);
 box-shadow:0 20px 40px rgba(0,0,0,0.12);
 }
-.product img{
+/* .product img{
 width:100%;
-height:260px;
+height:220px;
 object-fit:contain;
 background:#faf7f3;
 border-radius:18px;
-padding:15px;
-}
+padding:12px;
+} */
 
+.product img{
+width:100%;
+height:220px;
+object-fit:contain;
+background:#faf7f3;
+border-radius:16px;
+padding:12px;
+}
 .product:hover img{
 transform:scale(1.05);
 }
 .product h3{
-font-size:18px;
-margin-top:15px;
-margin-bottom:10px;
-color:#2d2016;
+font-size:17px;
 font-weight:600;
-line-height:1.4;
+line-height:1.5;
+height:52px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
 }
 
 .wish-btn{
@@ -765,12 +788,18 @@ font-size:17px;
 color:#777;
 }
 
-.product-grid{
+/* .product-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:30px;
 max-width:1400px;
 margin:auto;
+} */
+
+.product-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:30px;
 }
 
 /* PRODUCT CARD */
@@ -833,7 +862,7 @@ margin-right:8px;
 }
 
 .new{
-font-size:28px;
+font-size:22px;
 font-weight:700;
 color:#2d2016;
 }
@@ -853,7 +882,7 @@ font-weight:600;
 .product button,
 .product-card button{
 margin-top:15px;
-height:48px;
+height:50px;
 border-radius:12px;
 background:#c79a63;
 color:#fff;
