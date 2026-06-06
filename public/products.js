@@ -66,35 +66,36 @@ stockHTML = `<button onclick="addToCart('${p._id}')">Add to Cart</button>`;
 }
 
 box.innerHTML += `
-<div class="product-card-new">
 
-    <div class="card-image">
+<div class="premium-card">
 
-        <span class="card-badge">
+    <div class="premium-image">
+
+        <span class="premium-badge">
         ${p.offerPrice ? "HOT DEAL" : "BEST SELLER"}
         </span>
 
-        <span class="card-heart">♡</span>
+        <span class="wishlist-btn">♡</span>
 
         <a href="product.html?id=${p._id}">
-            <img src="https://ecommerce-website-1-psvr.onrender.com${p.image}">
+        <img src="https://ecommerce-website-1-psvr.onrender.com${p.image}">
         </a>
 
     </div>
 
-    <div class="card-content">
+    <div class="premium-content">
 
-        <h2>${p.name}</h2>
+        <h3>${p.name}</h3>
 
-        <p class="card-category">
+        <p class="premium-category">
         ${p.category || "Home Decor"}
         </p>
 
-        <div class="card-rating">
+        <div class="premium-rating">
         ⭐⭐⭐⭐⭐ <span>(128)</span>
         </div>
 
-        <div class="card-price">
+        <div class="premium-price">
 
             <span class="new-price">
             ₹${p.offerPrice || p.price}
@@ -108,19 +109,28 @@ box.innerHTML += `
 
             ${
             p.offerPrice
-            ? `<span class="offer-box">${Math.round(((p.price-p.offerPrice)/p.price)*100)}% OFF</span>`
+            ? `<span class="off-box">
+            ${Math.round(((p.price-p.offerPrice)/p.price)*100)}% OFF
+            </span>`
             : ""
             }
 
         </div>
 
         <button onclick="addToCart('${p._id}')">
-        Add to Cart
+
+            Add to Cart
+
+            <span class="bag-icon">
+            🛍
+            </span>
+
         </button>
 
     </div>
 
 </div>
+
 `;
 
 });
