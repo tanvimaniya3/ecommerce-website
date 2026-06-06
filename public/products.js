@@ -68,45 +68,54 @@ stockHTML = `<button onclick="addToCart('${p._id}')">Add to Cart</button>`;
 box.innerHTML += `
 <div class="product">
 
-<div class="product-image">
+    <div class="product-image">
 
-${p.offerPrice ? `<span class="sale-badge">SALE</span>` : ""}
+        ${p.offerPrice
+          ? `<span class="sale-badge">HOT DEAL</span>`
+          : `<span class="sale-badge">BEST SELLER</span>`
+        }
 
-<span class="wish-btn">♡</span>
+        <span class="wish-btn">♡</span>
 
-<a href="product.html?id=${p._id}">
-<img src="https://ecommerce-website-1-psvr.onrender.com${p.image}">
-</a>
+        <a href="product.html?id=${p._id}">
+            <img src="https://ecommerce-website-1-psvr.onrender.com${p.image}">
+        </a>
 
-</div>
+    </div>
 
-<div class="product-info">
+    <div class="product-info">
 
-<p class="product-category">
-${p.category || "Home Decor"}
-</p>
+        <p class="product-category">
+            ${p.category || "Home Decor"}
+        </p>
 
-<h3>${p.name}</h3>
+        <h3>${p.name}</h3>
 
-<div class="rating">
-★★★★★ <span>(128)</span>
-</div>
+        <div class="rating">
+            ⭐⭐⭐⭐⭐ <span>(128)</span>
+        </div>
 
-<div class="price-row">
+        <div class="price">
 
-<span class="new">
-₹${p.offerPrice || p.price}
-</span>
+            <span class="new">
+                ₹${p.offerPrice || p.price}
+            </span>
 
-${p.offerPrice ? `<span class="old">₹${p.price}</span>` : ""}
+            ${p.offerPrice
+            ? `<span class="old">₹${p.price}</span>`
+            : ""}
 
-${p.offerPrice ? `<span class="discount">${Math.round(((p.price-p.offerPrice)/p.price)*100)}% OFF</span>` : ""}
+            ${p.offerPrice
+            ? `<span class="discount">${Math.round(((p.price-p.offerPrice)/p.price)*100)}% OFF</span>`
+            : ""}
 
-</div>
+        </div>
 
-${stockHTML}
+        <button>
+            Add to Cart
+        </button>
 
-</div>
+    </div>
 
 </div>
 `;
