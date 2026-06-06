@@ -60,9 +60,27 @@ priceHTML = `<p>₹${p.price}</p>`;
 let stockHTML = "";
 
 if(p.stock === false){
-stockHTML = `<p style="color:red;">Out of Stock ❌</p>`;
+
+stockHTML = `
+<button disabled style="background:#999;">
+Out of Stock ❌
+</button>
+`;
+
 }else{
-stockHTML = `<button onclick="addToCart('${p._id}')">Add to Cart</button>`;
+
+stockHTML = `
+<button onclick="addToCart('${p._id}')">
+
+Add to Cart
+
+<span class="bag-icon">
+🛍
+</span>
+
+</button>
+`;
+
 }
 
 box.innerHTML += `
@@ -117,15 +135,7 @@ box.innerHTML += `
 
         </div>
 
-        <button onclick="addToCart('${p._id}')">
-
-            Add to Cart
-
-            <span class="bag-icon">
-            🛍
-            </span>
-
-        </button>
+  ${stockHTML}
 
     </div>
 
