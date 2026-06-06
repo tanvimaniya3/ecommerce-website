@@ -2,84 +2,71 @@
 <html>
 
 <head>
-<title>Products</title>
-<link rel="stylesheet" href="style.css">
-<script defer src="products.js"></script>
+    <title>Products</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="products.js"></script>
 </head>
 
 <body class="products-page">
 
-<header class="navbar">
+    <header class="navbar">
 
-<div class="logo">
-<a href="index.html">ShopSphere</a>
-</div>
+        <div class="logo">
+            <a href="index.html">ShopSphere</a>
+        </div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="products.html">Products</a>
-<a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-</nav>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+        </nav>
 
-</header>
+    </header>
 
-<section class="products">
+    <section class="products">
 
-<h2>All Products</h2>
+        <div class="section-header">
+            <h2>Our Collection</h2>
+            <p>Premium Home & Kitchen Collection</p>
+        </div>
 
-<!-- 🔥 FILTER BAR -->
-<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; position:relative;">
+        <div class="filter-wrapper">
 
-<!-- 🔍 SEARCH -->
-<input 
-type="text" 
-id="searchInput" 
-placeholder="🔍 Search products..." 
-onkeyup="applyFilters()" 
-style="padding:10px; width:200px;">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Search Products..."
+                onkeyup="applyFilters()">
 
-<!-- 📂 CATEGORY -->
-<select id="categoryFilter" onchange="applyFilters()" style="padding:10px;">
-<option value="">All Categories</option>
-<option value="cookware">Cookware</option>
-<option value="appliances">Appliances</option>
-<option value="storage">Storage</option>
-<option value="dining">Dining</option>
-</select>
+            <select id="categoryFilter" onchange="applyFilters()">
+                <option value="">All Categories</option>
+                <option value="cookware">Cookware</option>
+                <option value="appliances">Appliances</option>
+                <option value="storage">Storage</option>
+                <option value="dining">Dining</option>
+            </select>
 
-<!-- 💰 PRICE -->
-<select id="priceFilter" onchange="applyFilters()" style="padding:10px;">
-<option value="">All Prices</option>
-<option value="low">Below ₹500</option>
-<option value="mid">₹500 - ₹2000</option>
-<option value="high">Above ₹2000</option>
-</select>
+            <select id="priceFilter" onchange="applyFilters()">
+                <option value="">All Prices</option>
+                <option value="low">Below ₹500</option>
+                <option value="mid">₹500 - ₹2000</option>
+                <option value="high">Above ₹2000</option>
+            </select>
 
-<!-- 🔃 SORT -->
-<select id="sortFilter" onchange="applyFilters()" style="padding:10px;">
-<option value="">Sort By</option>
-<option value="low">Price Low → High</option>
-<option value="high">Price High → Low</option>
-</select>
+            <select id="sortFilter" onchange="applyFilters()">
+                <option value="">Sort By</option>
+                <option value="low">Price Low → High</option>
+                <option value="high">Price High → Low</option>
+            </select>
 
-<!-- 🔥 SUGGESTIONS -->
-<div id="suggestions" style="
-background:white;
-position:absolute;
-top:45px;
-left:0;
-width:200px;
-z-index:1000;
-border-radius:5px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-"></div>
+            <div id="suggestions"></div>
 
-</div>
+        </div>
 
-<!-- PRODUCTS -->
-<div id="productContainer"></div>
+        <div id="productContainer" class="product-grid"></div>
 
-</section>
+    </section>
 
 </body>
+
 </html>
