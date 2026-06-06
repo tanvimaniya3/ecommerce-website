@@ -1410,7 +1410,7 @@ font-size:38px;
 }
 
 }
-/* .product-image{
+.product-image{
 position:relative;
 overflow:hidden;
 border-radius:16px;
@@ -1448,7 +1448,7 @@ margin-bottom:15px;
 }
 .rating span{
 color:#777;
-} */
+}
 
 #productContainer{
 display:grid;
