@@ -1,72 +1,66 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Products</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Premium Collection</title>
     <link rel="stylesheet" href="style.css">
     <script defer src="products.js"></script>
 </head>
-
 <body class="products-page">
 
 <header class="navbar">
-
-<div class="logo">
-<a href="index.html">ShopSphere</a>
-</div>
-
-<nav>
-<a href="index.html">Home</a>
-<a href="products.html">Products</a>
-<a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-</nav>
-
+    <div class="logo">
+        <a href="index.html">ShopSphere</a>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+    </nav>
 </header>
 
 <section class="products">
+    <div class="section-header">
+        <h2>Our Collection</h2>
+        <p>Premium Home & Kitchen Lifestyle Products</p>
+    </div>
 
-<div class="section-header">
-<h2>Our Collection</h2>
-<p>Premium Home & Kitchen Products</p>
-</div>
+    <div class="filter-bar">
+        <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="🔍 Search for products..." 
+            onkeyup="applyFilters()">
 
-<div class="filter-bar">
+        <select id="categoryFilter" onchange="applyFilters()">
+            <option value="">All Categories</option>
+            <option value="cookware">Cookware</option>
+            <option value="appliances">Appliances</option>
+            <option value="storage">Storage</option>
+            <option value="dining">Dining</option>
+            <option value="furniture">Furniture</option>
+            <option value="lighting">Lighting</option>
+        </select>
 
-<input
-type="text"
-id="searchInput"
-placeholder="🔍 Search Products"
-onkeyup="applyFilters()">
+        <select id="priceFilter" onchange="applyFilters()">
+            <option value="">All Prices</option>
+            <option value="low">Below ₹500</option>
+            <option value="mid">₹500 - ₹2000</option>
+            <option value="high">Above ₹2000</option>
+        </select>
 
-<select id="categoryFilter" onchange="applyFilters()">
-<option value="">All Categories</option>
-<option value="cookware">Cookware</option>
-<option value="appliances">Appliances</option>
-<option value="storage">Storage</option>
-<option value="dining">Dining</option>
-</select>
+        <select id="sortFilter" onchange="applyFilters()">
+            <option value="">Sort By</option>
+            <option value="low">Price Low → High</option>
+            <option value="high">Price High → Low</option>
+        </select>
 
-<select id="priceFilter" onchange="applyFilters()">
-<option value="">All Prices</option>
-<option value="low">Below ₹500</option>
-<option value="mid">₹500 - ₹2000</option>
-<option value="high">Above ₹2000</option>
-</select>
+        <div id="suggestions"></div>
+    </div>
 
-<select id="sortFilter" onchange="applyFilters()">
-<option value="">Sort By</option>
-<option value="low">Price Low → High</option>
-<option value="high">Price High → Low</option>
-</select>
-
-<div id="suggestions"></div>
-
-</div>
-
-<div id="productContainer" class="product-grid"></div>
-
+    <div id="productContainer" class="product-grid"></div>
 </section>
 
 </body>
-
 </html>
