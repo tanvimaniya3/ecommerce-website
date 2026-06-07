@@ -815,7 +815,7 @@ gap:30px;
   margin: auto;
 }
 
-/* .product-card {
+.product-card {
   background: white;
   border-radius: 14px;
   padding: 12px;
@@ -823,10 +823,10 @@ gap:30px;
   transition: 0.3s;
 } */
 
-/* .product-card img {
+ .product-card img {
   width: 100%;
   border-radius: 10px;
-} */
+}
 
 .product-card h3 {
   font-size: 14px;
@@ -842,12 +842,12 @@ gap:30px;
   cursor: pointer;
 }
 
-/* .product-card:hover {
+.product-card:hover {
   transform: translateY(-5px);
-} */
+} 
 
 /* PRICE */
-/* .old{
+.old{
 font-size:20px;
 text-decoration:line-through;
 color:#999;
@@ -877,8 +877,8 @@ font-size:13px;
 font-weight:600;
 }
 
-/* BUTTON */
-/* .product button,
+/* BUTTON  */
+.product button,
 .product-card button{
 width:100%;
 height:58px;
@@ -892,7 +892,7 @@ font-weight:600;
 .product-card button:hover{
 background:#b1844f;
 transform:translateY(-2px);
-} */ */
+}
 
 button.disabled{
 background:#b48750;
@@ -1282,12 +1282,12 @@ border:none;
 cursor:pointer;
 }
 
-/* #wishBtn{
+#wishBtn{
 padding:10px 20px;
 border:1px solid black;
 background:white;
 cursor:pointer;
-} */
+}
 
 /* FEATURES */
 .pd-features{
