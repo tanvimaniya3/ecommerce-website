@@ -1,5 +1,9 @@
 // 🔥 GLOBAL VARIABLE: Isme saare products save rahenge taaki baar-baar fetch na karna pade
 let allProducts = [];
+let bestProducts = [];
+let currentIndex = 0;
+let naProducts = [];
+let naIndex = 0;
 
 // Page load hote hi data fetch karega
 fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
@@ -8,6 +12,8 @@ fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
     allProducts = data; // Data ko global variable mein save kiya ✅
     showProducts(data);
     showBestSellers(data);
+    showNewArrivals(data);
+    showSaleProducts(data);
   })
   .catch(err => console.error("Error fetching products:", err));
 
@@ -23,9 +29,14 @@ function showProducts(products) {
       <div class="product">
         <span class="wish-btn" onclick="addToWishlist('${p._id}')">❤️</span>
         <a href="product.html?id=${p._id}">
-          <img src="${p.image}" alt="${p.name}">
+          <div class="product-image">
+            ${p.offerPrice && p.offerPrice < p.price ? `<span class="sale-badge">SALE</span>` : ""}
+            ${p.bestSeller ? `<span class="best-badge">BEST</span>` : ""}
+            <img src="${p.image}" alt="${p.name}">
+          </div>
           <h3>${p.name}</h3>
         </a>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
         ${
           p.offerPrice && p.offerPrice < p.price
             ? `<p><span class="old">₹${p.price}</span><span class="new">₹${p.offerPrice}</span></p>
@@ -35,7 +46,8 @@ function showProducts(products) {
         ${
           p.stock === false
             ? `<button class="disabled" disabled>Out of Stock</button>`
-            : `<button onclick="addToCart('${p._id}')">Add to Cart</button>`
+            : `<button class="quick-btn" onclick="openProduct('${p._id}')">Quick View</button>
+               <button onclick="addToCart('${p._id}')">Add to Cart</button>`
         }
       </div>
     `;
@@ -44,7 +56,7 @@ function showProducts(products) {
 
 // ===== ADD TO CART (⚡ FIXED & OPTIMIZED) =====
 function addToCart(id) {
-  // Ab yahan koi fetch call nahi hogi, seedhe memory se product milega!
+  // Ab internet se fetch nahi karega, seedhe global variable se instantly uthayega!
   let product = allProducts.find(p => p._id == id);
   
   if (!product) {
@@ -58,7 +70,6 @@ function addToCart(id) {
   if (existing) {
     existing.qty += 1;
   } else {
-    // Original product object ko mutate hone se bachane ke liye copy banayi
     let cartItem = { ...product, qty: 1 };
     cart.push(cartItem);
   }
@@ -73,18 +84,22 @@ function showBestSellers(products) {
   let box = document.getElementById("bestSellerContainer");
   if (!box) return;
 
-  box.innerHTML = "";
-  let best = products.filter(p => p.bestSeller === true);
+  bestProducts = products.filter(p => p.bestSeller === true);
+  renderBestSellers();
+}
 
-  best.forEach(p => {
+function renderBestSellers() {
+  let box = document.getElementById("bestSellerContainer");
+  if (!box) return;
+  box.innerHTML = "";
+
+  let visible = bestProducts.slice(currentIndex, currentIndex + 4);
+
+  visible.forEach((p, index) => {
     box.innerHTML += `
-      <div class="product-card" onclick="openProduct('${p._id}')">
+      <div class="product-card" style="${index === visible.length - 1 ? 'margin-right:0px;' : ''}" onclick="openProduct('${p._id}')">
         <img src="${p.image}" alt="${p.name}">
-        ${
-          p.offerPrice && p.offerPrice < p.price
-            ? `<p class="price"><span style="text-decoration:line-through; color:gray; font-size:13px;">₹${p.price}</span> ₹${p.offerPrice}</p>`
-            : `<p class="price">₹${p.price}</p>`
-        }
+        <p class="price">₹${p.offerPrice ? p.offerPrice : p.price}</p>
         <h3>${p.name}</h3>
         <div class="stars">⭐⭐⭐⭐☆</div>
       </div>
@@ -92,29 +107,97 @@ function showBestSellers(products) {
   });
 }
 
-// ===== SLIDER FUNCTIONS =====
-function slideLeft() {
-  let container = document.getElementById("bestSellerContainer");
-  if (container) container.scrollLeft -= 300;
+function slideRight() {
+  if (currentIndex + 4 < bestProducts.length) {
+    currentIndex += 4;
+    renderBestSellers();
+  }
 }
 
-function slideRight() {
-  let container = document.getElementById("bestSellerContainer");
-  if (container) container.scrollLeft += 300;
+function slideLeft() {
+  if (currentIndex - 4 >= 0) {
+    currentIndex -= 4;
+    renderBestSellers();
+  }
+}
+
+// ===== NEW ARRIVALS =====
+function showNewArrivals(products) {
+  naProducts = [...products].reverse();
+  renderNA();
+}
+
+function renderNA() {
+  let box = document.getElementById("newArrivalsContainer");
+  if (!box) return;
+  box.innerHTML = "";
+
+  let visible = naProducts.slice(naIndex, naIndex + 5);
+
+  visible.forEach(p => {
+    box.innerHTML += `
+      <div class="na-card" onclick="openProduct('${p._id}')">
+        <img src="${p.image}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <p class="na-price">₹${p.offerPrice ? p.offerPrice : p.price}</p>
+        <button onclick="event.stopPropagation(); addToCart('${p._id}')">Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+function slideNARight() {
+  if (naIndex + 5 < naProducts.length) {
+    naIndex += 5;
+    renderNA();
+  }
+}
+
+function slideNALeft() {
+  if (naIndex - 5 >= 0) {
+    naIndex -= 5;
+    renderNA();
+  }
+}
+
+// ===== SALE PRODUCTS =====
+function showSaleProducts(products) {
+  let box = document.getElementById("saleContainer");
+  if (!box) return;
+
+  box.innerHTML = "";
+  let sale = products.filter(p => p.offerPrice && p.offerPrice < p.price);
+
+  sale.forEach(p => {
+    box.innerHTML += `
+      <div class="product">
+        <a href="product.html?id=${p._id}">
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+        </a>
+        <p>
+          <span class="old">₹${p.price}</span>
+          <span class="new">₹${p.offerPrice}</span>
+        </p>
+        <p class="off">🔥 ${Math.round(((p.price - p.offerPrice) / p.price) * 100)}% OFF</p>
+      </div>
+    `;
+  });
+}
+
+// ===== NAVIGATION & UTILITIES =====
+function goToSale() {
+  window.location.href = "products.html?sale=true";
 }
 
 function openProduct(id) {
   window.location.href = "product.html?id=" + id;
 }
 
-// ===== CART COUNT =====
 function updateCartCount() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   let count = 0;
-
-  cart.forEach(p => {
-    count += p.qty || 1;
-  });
+  cart.forEach(p => { count += p.qty || 1; });
 
   let cartBox = document.getElementById("cartCount");
   if (cartBox) cartBox.innerText = count;
@@ -158,7 +241,7 @@ function addToWishlist(id) {
   alert("Added to Wishlist ❤️");
 }
 
-// ===== USER STATUS & MENUS =====
+// ===== USER PROFILE STATUS =====
 function showUserStatus() {
   let user = JSON.parse(localStorage.getItem("user"));
   let area = document.getElementById("userArea");
@@ -179,18 +262,17 @@ function showUserStatus() {
         </div>
       </div>
     `;
-    
-    // Adding dynamic styles for menu-item hover effect cleanly
-    let style = document.createElement('style');
-    style.innerHTML = `.menu-item { display:block; padding:12px; color:black; text-decoration:none; transition:0.3s; } .menu-item:hover { background:#f5f5f5; }`;
-    document.head.appendChild(style);
 
+    if (!document.getElementById("menuItemStyle")) {
+      let style = document.createElement('style');
+      style.id = "menuItemStyle";
+      style.innerHTML = `.menu-item { display:block; padding:12px; color:black; text-decoration:none; transition:0.3s; } .menu-item:hover { background:#f5f5f5; }`;
+      document.head.appendChild(style);
+    }
   } else {
     area.innerHTML = `
       <div class="account-menu">
-        <a href="javascript:void(0)" onclick="toggleAccountMenu()" style="color:white;text-decoration:none;">
-          👤 Account
-        </a>
+        <a href="javascript:void(0)" onclick="toggleAccountMenu()" style="color:white;text-decoration:none;">👤 Account</a>
         <div id="accountDropdown" class="account-dropdown" style="display:none;">
           <a href="login.html">Login</a>
           <a href="register.html">Register</a>
@@ -202,8 +284,7 @@ function showUserStatus() {
 
 function toggleAccountMenu() {
   let box = document.getElementById("accountDropdown");
-  if (!box) return;
-  box.style.display = box.style.display === "block" ? "none" : "block";
+  if (box) box.style.display = box.style.display === "block" ? "none" : "block";
 }
 
 function logoutUser() {
@@ -228,15 +309,13 @@ function toggleUserMenu() {
   }
 }
 
-// Global click listener to close dropdowns when clicking outside
+// Global click listener to auto-close dropdowns
 document.addEventListener("click", function (e) {
-  // Close Account Menu
   if (!e.target.closest(".account-menu")) {
     let box = document.getElementById("accountDropdown");
     if (box) box.style.display = "none";
   }
   
-  // Close User Menu
   let menu = document.getElementById("userMenu");
   if (menu && !e.target.closest(".user-menu-container")) {
     menu.style.opacity = "0";
