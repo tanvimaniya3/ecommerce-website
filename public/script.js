@@ -1,22 +1,12 @@
-let allProducts = [];
-
-// 🔥 LOAD PRODUCTS ON INITIALIZATION
 fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
-  .then(res => res.json())
-  .then(data => {
-    allProducts = data;
+.then(res => res.json())
+.then(data => {
+showProducts(data);
+showBestSellers(data);
+showNewArrivals(data);
+showSaleProducts(data);
+});
 
-    // Saare sections ko data initialize karna
-    showProducts(data);
-    showBestSellers(data);
-    showNewArrivals(data);
-    showSaleProducts(data);
-  })
-  .catch(err => console.error("Error fetching items:", err));
-
-// ==========================================================================
-/* 🔥 PREMIUM MAIN PRODUCT GRID (IMAGE-LIKE SPEC FIXED) */
-// ==========================================================================
 function showProducts(products) {
   let box = document.getElementById("productContainer");
   if (!box) return;
@@ -106,287 +96,401 @@ function showProducts(products) {
   });
 }
 
-// ==========================================================================
-/* 🔥 ADD TO CART ENGINE (ULTRA SPEED CACHE FIX) */
-// ==========================================================================
-function addToCart(id) {
-  let product = allProducts.find(p => p._id == id);
-  if (!product) return;
+function addToCart(id){
+fetch("https://ecommerce-website-1-psvr.onrender.com/api/products")
+.then(res => res.json())
+.then(data => {
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let existing = cart.find(p => p._id == id);
+let product = data.find(p => p._id == id);
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    product.qty = 1;
-    cart.push(product);
-  }
+let existing = cart.find(p => p._id == id);
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Added to Cart 🛒 ✅");
-  updateCartCount();
+if(existing){
+existing.qty += 1;
+}else{
+product.qty = 1;
+cart.push(product);
 }
 
-// ==========================================================================
-/* 🔥 BEST SELLERS SLIDER LOGIC */
-// ==========================================================================
+localStorage.setItem("cart", JSON.stringify(cart));
+alert("Added to Cart");
+updateCartCount();
+});
+}
 let bestProducts = [];
 let currentIndex = 0;
 
-function showBestSellers(products) {
-  let box = document.getElementById("bestSellerContainer");
-  if (!box) return;
+function showBestSellers(products){
 
-  bestProducts = products.filter(p => p.bestSeller === true);
-  renderBestSellers();
+let box = document.getElementById("bestSellerContainer");
+if(!box) return;
+
+/* 🔥 filter best seller */
+bestProducts = products.filter(p => p.bestSeller === true);
+
+/* 🔥 first render */
+renderBestSellers();
 }
 
-function renderBestSellers() {
-  let box = document.getElementById("bestSellerContainer");
-  if (!box) return;
-  box.innerHTML = "";
+/* 🔥 ONLY 4 SHOW */
+function renderBestSellers(){
 
-  let visible = bestProducts.slice(currentIndex, currentIndex + 4);
+let box = document.getElementById("bestSellerContainer");
+box.innerHTML = "";
 
-  visible.forEach((p, index) => {
-    box.innerHTML += `
-      <div class="product-card" style="${index === visible.length - 1 ? 'margin-right:0px;' : ''}" onclick="openProduct('${p._id}')">
-        <img src="${p.image}">
-        <p class="price">₹${p.offerPrice ? p.offerPrice : p.price}</p>
-        <h3>${p.name}</h3>
-        <div class="stars">⭐⭐⭐⭐☆</div>
-      </div>
-    `;
-  });
+/* 🔥 slice 4 items */
+let visible = bestProducts.slice(currentIndex, currentIndex + 4);
+
+visible.forEach((p, index) => {   // 👈 बस ये add किया
+
+box.innerHTML += `
+<div class="product-card" 
+style="${index === visible.length - 1 ? 'margin-right:0px;' : ''}"
+onclick="openProduct('${p._id}')">
+
+<img src="${p.image}">
+
+<p class="price">
+₹${p.offerPrice ? p.offerPrice : p.price}
+</p>
+
+<h3>${p.name}</h3>
+
+<div class="stars">⭐⭐⭐⭐☆</div>
+
+</div>
+`;
+
+});
+}
+function slideRight(){
+
+if(currentIndex + 4 < bestProducts.length){
+currentIndex += 4;
+renderBestSellers();
 }
 
-function slideRight() {
-  if (currentIndex + 4 < bestProducts.length) {
-    currentIndex += 4;
-    renderBestSellers();
-  }
 }
 
-function slideLeft() {
-  if (currentIndex - 4 >= 0) {
-    currentIndex -= 4;
-    renderBestSellers();
-  }
+function slideLeft(){
+
+if(currentIndex - 4 >= 0){
+currentIndex -= 4;
+renderBestSellers();
 }
 
-// ==========================================================================
-/* 🔥 NEW ARRIVALS MODULE SLIDER */
-// ==========================================================================
+}
+
+// 🔥 NEW ARRIVALS
 let naProducts = [];
 let naIndex = 0;
 
-function showNewArrivals(products) {
-  let box = document.getElementById("newArrivalsContainer");
-  if (!box) return;
+function showNewArrivals(products){
 
-  naProducts = [...products].reverse();
-  renderNA();
+// latest products
+naProducts = [...products].reverse();
+
+renderNA();
 }
 
-function renderNA() {
-  let box = document.getElementById("newArrivalsContainer");
-  if (!box) return;
-  box.innerHTML = "";
+function renderNA(){
 
-  let visible = naProducts.slice(naIndex, naIndex + 5);
+let box = document.getElementById("newArrivalsContainer");
+box.innerHTML = "";
 
-  visible.forEach(p => {
-    box.innerHTML += `
-      <div class="na-card" onclick="openProduct('${p._id}')">
-        <img src="${p.image}">
-        <h3>${p.name}</h3>
-        <p class="na-price">₹${p.offerPrice ? p.offerPrice : p.price}</p>
-        <button>Add to Cart</button>
-      </div>
-    `;
-  });
+/* 🔥 ONLY 4 */
+let visible = naProducts.slice(naIndex, naIndex + 5);
+
+visible.forEach(p => {
+
+box.innerHTML += `
+<div class="na-card" onclick="openProduct('${p._id}')">
+
+<img src="${p.image}">
+
+<h3>${p.name}</h3>
+
+<p class="na-price">
+₹${p.offerPrice ? p.offerPrice : p.price}
+</p>
+
+<button>Add to Cart</button>
+
+</div>
+`;
+
+});
 }
 
-function slideNARight() {
-  if (naIndex + 5 < naProducts.length) {
-    naIndex += 5;
-    renderNA();
-  }
+/* SLIDER */
+function slideNARight(){
+if(naIndex + 5 < naProducts.length){
+naIndex += 5;
+renderNA();
+}
 }
 
-function slideNALeft() {
-  if (naIndex - 5 >= 0) {
-    naIndex -= 5;
-    renderNA();
-  }
+function slideNALeft(){
+if(naIndex - 5 >= 0){
+naIndex -= 5;
+renderNA();
+}
 }
 
-// ==========================================================================
-/* 🔥 SALE SECTIONS GRID MODULE */
-// ==========================================================================
-function showSaleProducts(products) {
-  let box = document.getElementById("saleContainer");
-  if (!box) return;
+// 🔥 SALE PRODUCTS
+function showSaleProducts(products){
+let box = document.getElementById("saleContainer");
+if(!box) return;
 
-  box.innerHTML = "";
-  let sale = products.filter(p => p.offerPrice && p.offerPrice < p.price);
+box.innerHTML = "";
 
-  sale.forEach(p => {
-    // Reusing structural premium definitions for exact parity
-    box.innerHTML += `
-      <div class="premium-card">
-          <div class="premium-image">
-              <span class="premium-badge badge-hot">SALE</span>
-              <a href="product.html?id=${p._id}">
-                <img src="${p.image}">
-              </a>
-          </div>
-          <div class="premium-content">
-              <h3>${p.name}</h3>
-              <div class="premium-price">
-                  <span class="new-price">₹${p.offerPrice}</span>
-                  <span class="old-price">₹${p.price}</span>
-                  <span class="off-box">${Math.round(((p.price - p.offerPrice) / p.price) * 100)}% OFF</span>
-              </div>
-          </div>
-      </div>
-    `;
-  });
+/* only discounted */
+let sale = products.filter(p => p.offerPrice && p.offerPrice < p.price);
+
+sale.forEach(p => {
+box.innerHTML += `
+<div class="product">
+
+<a href="product.html?id=${p._id}">
+<img src="${p.image}">
+<h3>${p.name}</h3>
+</a>
+
+<p>
+<span class="old">₹${p.price}</span>
+<span class="new">₹${p.offerPrice}</span>
+</p>
+
+<p class="off">
+🔥 ${Math.round(((p.price - p.offerPrice) / p.price) * 100)}% OFF
+</p>
+
+</div>
+`;
+});
 }
 
-// ==========================================================================
-/* ⚙️ UTILITIES & ACCESSORY HANDLERS */
-// ==========================================================================
-function goToSale() { window.location.href = "products.html?sale=true"; }
-function openProduct(id) { window.location.href = "product.html?id=" + id; }
-
-function updateCartCount() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let count = 0;
-  cart.forEach(p => { count += p.qty || 1; });
-  let cartBox = document.getElementById("cartCount");
-  if (cartBox) cartBox.innerText = count;
+// 🔥 OFFER BUTTON CLICK
+function goToSale(){
+window.location.href = "products.html?sale=true";
 }
 
-function addToWishlist(id) {
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  if (wishlist.includes(id)) {
-    alert("Already in Wishlist ❤️");
-    return;
-  }
-  wishlist.push(id);
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  alert("Added to Wishlist ❤️");
+function openProduct(id){
+window.location.href = "product.html?id=" + id;
 }
 
-// SEARCH BAR INTERACTION
-document.addEventListener("DOMContentLoaded", function () {
-  let btn = document.getElementById("searchBtn");
-  let box = document.getElementById("searchBox");
+function updateCartCount(){
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let count = 0;
 
-  if (btn && box) {
-    btn.addEventListener("click", function () {
-      if (box.style.display === "none" || box.style.display === "") {
-        box.style.display = "block";
-        box.focus();
-      } else {
-        box.style.display = "none";
-      }
-    });
-
-    box.addEventListener("keyup", function (e) {
-      if (e.key === "Enter" && box.value.length > 2) {
-        window.location.href = "products.html?search=" + box.value;
-      }
-    });
-  }
+cart.forEach(p=>{
+count += p.qty || 1;
 });
 
-// ==========================================================================
-/* 👥 USER MANAGEMENT & DROPDOWNS */
-// ==========================================================================
-function showUserStatus() {
-  let user = JSON.parse(localStorage.getItem("user"));
-  let area = document.getElementById("userArea");
-  if (!area) return;
-
-  if (user) {
-    area.innerHTML = `
-      <div style="position:relative; display:inline-block;">
-        <button onclick="toggleUserMenu()" style="background:none; border:none; color:white; cursor:pointer; font-size:16px; font-weight:600;">
-          👤 Hi ${user.name} ▾
-        </button>
-        <div id="userMenu" style="display:none; position:absolute; right:0; top:45px; background:white; min-width:190px; border-radius:14px; box-shadow:0 15px 35px rgba(0,0,0,0.18); overflow:hidden; z-index:999; opacity:0; transform:translateY(15px) scale(0.96); transition:0.35s ease;">
-          <a href="profile.html" class="drop-item">👤 My Profile</a>
-          <a href="my-orders.html" class="drop-item">📦 My Orders</a>
-          <a href="wishlist.html" class="drop-item">❤️ Wishlist</a>
-          <a href="#" onclick="logoutUser()" style="color:red;" class="drop-item">🚪 Logout</a>
-        </div>
-      </div>
-    `;
-    // Adding internal runtime drop styles
-    let style = document.createElement('style');
-    style.innerHTML = `.drop-item{display:block; padding:12px; color:black; text-decoration:none; transition:0.2s;} .drop-item:hover{background:#f5f5f5;}`;
-    document.head.appendChild(style);
-  } else {
-    area.innerHTML = `
-      <div class="account-menu">
-        <a href="javascript:void(0)" onclick="toggleAccountMenu()" style="color:white; text-decoration:none;">👤 Account</a>
-        <div id="accountDropdown" class="account-dropdown">
-          <a href="login.html">Login</a>
-          <a href="register.html">Register</a>
-        </div>
-      </div>
-    `;
-  }
+let cartBox = document.getElementById("cartCount");
+if(cartBox) cartBox.innerText = count;
 }
 
-function toggleAccountMenu() {
-  let box = document.getElementById("accountDropdown");
-  if (!box) return;
-  box.style.display = box.style.display === "block" ? "none" : "block";
+
+// 🔥 FINAL SEARCH FIX (ONLY THIS USED)
+document.addEventListener("DOMContentLoaded", function(){
+
+let btn = document.getElementById("searchBtn");
+let box = document.getElementById("searchBox");
+
+if(btn && box){
+
+btn.addEventListener("click", function(){
+
+if(box.style.display === "none" || box.style.display === ""){
+box.style.display = "block";
+box.focus();
+}else{
+box.style.display = "none";
 }
 
-document.addEventListener("click", function (e) {
-  if (!e.target.closest(".account-menu")) {
-    let box = document.getElementById("accountDropdown");
-    if (box) box.style.display = "none";
-  }
 });
 
-function logoutUser() {
-  localStorage.removeItem("user");
-  location.reload();
+box.addEventListener("keyup", function(e){
+if(e.key === "Enter" && box.value.length > 2){
+window.location.href = "products.html?search=" + box.value;
 }
-
-function toggleUserMenu() {
-  let menu = document.getElementById("userMenu");
-  if (!menu) return;
-
-  if (menu.style.display === "block") {
-    menu.style.opacity = "0";
-    menu.style.transform = "translateY(15px) scale(0.96)";
-    setTimeout(() => { menu.style.display = "none"; }, 300);
-  } else {
-    menu.style.display = "block";
-    setTimeout(() => {
-      menu.style.opacity = "1";
-      menu.style.transform = "translateY(0) scale(1)";
-    }, 20);
-  }
-}
-
-document.addEventListener("click", function (e) {
-  let menu = document.getElementById("userMenu");
-  if (!menu) return;
-  if (!e.target.closest("#userMenu") && !e.target.closest("button")) {
-    menu.style.opacity = "0";
-    menu.style.transform = "translateY(15px) scale(0.96)";
-    setTimeout(() => { menu.style.display = "none"; }, 300);
-  }
 });
 
-// Run commands on layout compile
+}
+
+});
+
+function addToWishlist(id){
+
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+let exists = wishlist.find(item => item == id);
+
+if(exists){
+alert("Already in Wishlist ❤️");
+return;
+}
+
+wishlist.push(id);
+
+localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+alert("Added to Wishlist ❤️");
+}
+function showUserStatus(){
+
+let user = JSON.parse(localStorage.getItem("user"));
+let area = document.getElementById("userArea");
+
+if(!area) return;
+
+if(user){
+
+area.innerHTML = `
+<div style="position:relative; display:inline-block;">
+
+<button onclick="toggleUserMenu()" style="
+background:none;
+border:none;
+color:white;
+cursor:pointer;
+font-size:16px;
+font-weight:600;
+">
+👤 Hi ${user.name} ▾
+</button>
+
+<div id="userMenu" style="
+display:none;
+position:absolute;
+right:0;
+top:45px;
+background:white;
+min-width:190px;
+border-radius:14px;
+box-shadow:0 15px 35px rgba(0,0,0,0.18);
+overflow:hidden;
+z-index:999;
+opacity:0;
+transform:translateY(15px) scale(0.96);
+transition:0.35s ease;
+">
+
+<a href="profile.html" style="display:block;padding:12px;color:black;text-decoration:none;transition:0.3s;"
+onmouseover="this.style.background='#f5f5f5'"
+onmouseout="this.style.background='white'">👤 My Profile</a>
+
+<a href="my-orders.html" style="display:block;padding:12px;color:black;text-decoration:none;transition:0.3s;"
+onmouseover="this.style.background='#f5f5f5'"
+onmouseout="this.style.background='white'">📦 My Orders</a>
+
+<a href="wishlist.html" style="display:block;padding:12px;color:black;text-decoration:none;transition:0.3s;"
+onmouseover="this.style.background='#f5f5f5'"
+onmouseout="this.style.background='white'">❤️ Wishlist</a>
+
+<a href="#" onclick="logoutUser()" style="display:block;padding:12px;color:red;text-decoration:none;transition:0.3s;"
+onmouseover="this.style.background='#fff0f0'"
+onmouseout="this.style.background='white'">🚪 Logout</a>
+
+</div>
+
+</div>
+`;
+
+}else{
+
+area.innerHTML = `
+<div class="account-menu">
+
+<a href="javascript:void(0)" onclick="toggleAccountMenu()" style="color:white;text-decoration:none;">
+👤 Account
+</a>
+
+<div id="accountDropdown" class="account-dropdown">
+
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+
+</div>
+
+</div>
+`;
+
+}
+
+}
+function toggleAccountMenu(){
+
+let box = document.getElementById("accountDropdown");
+
+if(box.style.display=="block"){
+box.style.display="none";
+}else{
+box.style.display="block";
+}
+
+}
+
+document.addEventListener("click",function(e){
+
+if(!e.target.closest(".account-menu")){
+
+let box = document.getElementById("accountDropdown");
+
+if(box) box.style.display="none";
+
+}
+
+});
+
+function logoutUser(){
+localStorage.removeItem("user");
+location.reload();
+}
+function toggleUserMenu(){
+
+let menu = document.getElementById("userMenu");
+
+if(menu.style.display === "block"){
+
+menu.style.opacity = "0";
+menu.style.transform = "translateY(15px) scale(0.96)";
+
+setTimeout(()=>{
+menu.style.display = "none";
+},300);
+
+}else{
+
+menu.style.display = "block";
+
+setTimeout(()=>{
+menu.style.opacity = "1";
+menu.style.transform = "translateY(0) scale(1)";
+},20);
+
+}
+
+}
+document.addEventListener("click", function(e){
+
+let menu = document.getElementById("userMenu");
+
+if(!menu) return;
+
+if(!e.target.closest("#userMenu") && !e.target.closest("button")){
+
+menu.style.opacity = "0";
+menu.style.transform = "translateY(15px) scale(0.96)";
+
+setTimeout(()=>{
+menu.style.display = "none";
+},300);
+
+}
+
+});
 showUserStatus();
 updateCartCount();
