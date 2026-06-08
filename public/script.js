@@ -141,30 +141,37 @@ function renderBestSellers(){
 let box = document.getElementById("bestSellerContainer");
 box.innerHTML = "";
 
-/* 🔥 slice 4 items */
 let visible = bestProducts.slice(currentIndex, currentIndex + 4);
 
-visible.forEach((p, index) => {   // 👈 बस ये add किया
+visible.forEach(p => {
 
 box.innerHTML += `
-<div class="product-card" 
-style="${index === visible.length - 1 ? 'margin-right:0px;' : ''}"
+
+<div class="product-card"
 onclick="openProduct('${p._id}')">
 
-<img src="${p.image}">
+    <div class="bs-image">
 
-<p class="price">
-₹${p.offerPrice ? p.offerPrice : p.price}
-</p>
+        <img src="${p.image}">
 
-<h3>${p.name}</h3>
+    </div>
 
-<div class="stars">⭐⭐⭐⭐☆</div>
+    <h3>${p.name}</h3>
+
+    <p class="price">
+    ₹${p.offerPrice ? p.offerPrice : p.price}
+    </p>
+
+    <div class="stars">
+    ★★★★☆
+    </div>
 
 </div>
+
 `;
 
 });
+
 }
 function slideRight(){
 
