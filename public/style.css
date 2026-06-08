@@ -485,33 +485,6 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
     /* margin-bottom: 80px; */
 }
 
-.card-image{
-    background:#f7f3ee;
-    border-radius:15px;
-    overflow:hidden;
-    padding:15px;
-}
-
-
-.card-image img{
-    width:100%;
-    height:180px;
-    object-fit:contain;
-}
-
-.product-card h3{
-    font-size:15px;
-    margin-top:12px;
-    color:#333;
-    font-weight:500;
-}
-
-.product-card .price{
-    font-size:18px;
-    font-weight:bold;
-    color:#000;
-    margin-top:8px;
-}
 
 /* TITLE */
 .section-title {
@@ -546,28 +519,38 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
     margin: auto;
 }
 
-.product-slider{
-    display:flex;
-    gap:20px;
-    justify-content:center;
-    flex-wrap:nowrap;
-    overflow:hidden;
+.product-slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: hidden;
+    justify-content: center;
+    scroll-behavior: smooth;
+    padding: 0 80px;   
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-bottom:40px;
 }
-/* .product-slider::after {
+ .product-slider::after {
     content: "";
     flex: 0 0 80px;   /* 🔥 right side space */
-} */
+} 
 
 .product-slider::-webkit-scrollbar {
     display: none;   /* 🔥 grey line remove */
 }
 
 /* CARD */
-.product-card{
-    width:220px;
-    cursor:pointer;
-    text-align:center;
-    transition:.3s;
+.product-card {
+    min-width: 250px;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    height: 320px;   /* 🔥 fixed card height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-card:hover {
@@ -604,26 +587,22 @@ margin-bottom:18px;
 }
 
 /* BUTTONS */
-.slide-btn{
-    position:absolute;
-    top:40%;
-    width:40px;
-    height:40px;
-    border:none;
-    border-radius:50%;
-    background:white;
-    box-shadow:0 4px 10px rgba(0,0,0,.15);
-    cursor:pointer;
-    font-size:22px;
+.slide-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    background: #b89b7b;
+    color: white;
+    border: none;
+    font-size: 25px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
 }
 
-.slide-btn.left{
-    left:-20px;
-}
+.slide-btn.left { left: -15px; }
+.slide-btn.right { right: -15px; }
 
-.slide-btn.right{
-    right:-20px;
-}
 /* offer sectionn */
 
 .offer-banner {
