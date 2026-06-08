@@ -121,6 +121,8 @@ updateCartCount();
 let bestProducts = [];
 let currentIndex = 0;
 
+// best sellerss
+
 function showBestSellers(products){
 
 let box = document.getElementById("bestSellerContainer");
@@ -139,32 +141,30 @@ function renderBestSellers(){
 let box = document.getElementById("bestSellerContainer");
 box.innerHTML = "";
 
-let visible = bestProducts.slice(currentIndex, currentIndex + 6);
+/* 🔥 slice 4 items */
+let visible = bestProducts.slice(currentIndex, currentIndex + 4);
 
-visible.forEach(p => {
+visible.forEach((p, index) => {   // 👈 बस ये add किया
 
 box.innerHTML += `
+<div class="product-card" 
+style="${index === visible.length - 1 ? 'margin-right:0px;' : ''}"
+onclick="openProduct('${p._id}')">
 
-<div class="product-card" onclick="openProduct('${p._id}')">
+<img src="${p.image}">
 
-    <div class="card-image">
+<p class="price">
+₹${p.offerPrice ? p.offerPrice : p.price}
+</p>
 
-        <img src="${p.image}" alt="${p.name}">
+<h3>${p.name}</h3>
 
-    </div>
-
-    <h3>${p.name}</h3>
-
-    <p class="price">
-        ₹${p.offerPrice ? p.offerPrice : p.price}
-    </p>
+<div class="stars">⭐⭐⭐⭐☆</div>
 
 </div>
-
 `;
 
 });
-
 }
 function slideRight(){
 
