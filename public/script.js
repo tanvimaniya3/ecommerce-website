@@ -121,76 +121,62 @@ updateCartCount();
 let bestProducts = [];
 let currentIndex = 0;
 
-// best sellerss
+function showBestSellers(products) {
+  let box = document.getElementById("bestSellerContainer");
+  if (!box) return;
 
-function showBestSellers(products){
+  // Filter only best seller products
+  bestProducts = products.filter(p => p.bestSeller === true);
 
-let box = document.getElementById("bestSellerContainer");
-if(!box) return;
-
-/* 🔥 filter best seller */
-bestProducts = products.filter(p => p.bestSeller === true);
-
-/* 🔥 first render */
-renderBestSellers();
+  /* Render first initial items */
+  renderBestSellers();
 }
 
-/* 🔥 ONLY 4 SHOW */
-function renderBestSellers(){
+function renderBestSellers() {
+  let box = document.getElementById("bestSellerContainer");
+  if (!box) return;
+  box.innerHTML = "";
 
-let box = document.getElementById("bestSellerContainer");
-box.innerHTML = "";
+  // Slice exactly 4 items horizontally matching image card layout
+  let visible = bestProducts.slice(currentIndex, currentIndex + 4);
 
-let visible = bestProducts.slice(currentIndex, currentIndex + 4);
-
-visible.forEach(p => {
-
-box.innerHTML += `
-
-<div class="product-card"
-onclick="openProduct('${p._id}')">
-
-    <div class="bs-image">
-
-        <img src="${p.image}">
-
-    </div>
-
-    <h3>${p.name}</h3>
-
-    <p class="price">
-    ₹${p.offerPrice ? p.offerPrice : p.price}
-    </p>
-
-    <div class="stars">
-    ★★★★☆
-    </div>
-
-</div>
-
-`;
-
-});
-
-}
-function slideRight(){
-
-if(currentIndex + 4 < bestProducts.length){
-currentIndex += 4;
-renderBestSellers();
+  visible.forEach(p => {
+    let exactPrice = p.offerPrice ? p.offerPrice : p.price;
+    
+    box.innerHTML += `
+      <div class="mini-slider-card" onclick="openProduct('${p._id}')">
+        <img src="${p.image}" alt="${p.name}">
+        <h4>${p.name}</h4>
+        <p class="mini-price">₹${exactPrice.toLocaleString('en-IN')}</p>
+      </div>
+    `;
+  });
 }
 
+// Slider Movement Controller Mechanics
+function slideRight() {
+  if (currentIndex + 4 < bestProducts.length) {
+    currentIndex += 4;
+    renderBestSellers();
+  } else {
+    // Optional loop to start back at 0 if end is reached
+    currentIndex = 0;
+    renderBestSellers();
+  }
 }
 
-function slideLeft(){
-
-if(currentIndex - 4 >= 0){
-currentIndex -= 4;
-renderBestSellers();
+function slideLeft() {
+  if (currentIndex - 4 >= 0) {
+    currentIndex -= 4;
+    renderBestSellers();
+  } else {
+    // Optional loop to end if clicked left at start
+    if (bestProducts.length > 4) {
+      currentIndex = Math.floor((bestProducts.length - 1) / 4) * 4;
+      renderBestSellers();
+    }
+  }
 }
-
-}
-
 // 🔥 NEW ARRIVALS
 let naProducts = [];
 let naIndex = 0;
