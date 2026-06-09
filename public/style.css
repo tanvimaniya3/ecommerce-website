@@ -479,6 +479,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 /*  BEST SELLER*/
 
+/* --- BEST SELLER SLIDER WRAPPER --- */
 .bestseller-section {
   max-width: 1200px;
   margin: 50px auto;
@@ -486,12 +487,23 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   position: relative;
   text-align: center;
 }
+
+.bestseller-section h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+}
+
+/* Slider Track Layout */
 .slider-relative-container {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 #bestSellerContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -499,38 +511,30 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   width: 100%;
   transition: all 0.4s ease;
 }
+
+/* --- DESIGN SPEC MATCH: MINI COMPACT CARD --- */
 .mini-slider-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   cursor: pointer;
-  
-  /* Yahan humne soft light background aur website se match karti border add ki hai */
-  background: #fdfbf9;          /* Ekdum light warm ivory color */
-  border: 1px solid #eaddcd;    /* Soft beige/clay colored light border */
-  border-radius: 22px;          /* Card ke corners ko round karne ke liye */
-  padding: 16px;                /* Border ke andar thoda space dene ke liye */
-  
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01); /* Bilkul halka sa premium shadow */
-  transition: all 0.3s ease;
+  background: transparent; /* No outer white border card block */
 }
-.mini-slider-card:hover {
-  transform: translateY(-5px);
-  border-color: #ba6a47;        /* Terracotta color jo button se match karega */
-  box-shadow: 0 8px 24px rgba(186, 106, 71, 0.08); 
-}
+
 .mini-slider-card img {
   width: 100%;
-  height: 230px;                /* Padding ke hisab se height balance ki hai */
+  height: 260px; /* Perfect square-ish soft profile aspect */
   object-fit: cover;
-  border-radius: 14px;          /* Image ke corners andark ki taraf rounded rhenge */
-  margin-bottom: 14px;
+  border-radius: 18px; /* Smooth corners as per image */
+  margin-bottom: 16px;
+  transition: transform 0.3s ease;
 }
 
 .mini-slider-card:hover img {
   transform: translateY(-4px);
 }
+
 .mini-slider-card h4 {
   font-size: 15px;
   font-weight: 500;
@@ -543,6 +547,54 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   font-size: 16px;
   font-weight: 600;
   color: #8e6d45; /* Soft premium brown price tint matching view all */
+}
+
+/* --- ABSOLUTE CIRCULAR SLIDER ARROWS --- */
+.slider-arrow {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.slider-arrow:hover {
+  background: #fbfbfb;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.arrow-left { left: -22px; }
+.arrow-right { right: -22px; }
+
+/* --- BOTTOM VIEW ALL BUTTON --- */
+.view-all-bottom-btn {
+  display: inline-block;
+  margin-top: 35px;
+  padding: 10px 28px;
+  background: transparent;
+  border: 1px solid #8e6d45;
+  color: #8e6d45;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-all-bottom-btn:hover {
+  background: #8e6d45;
+  color: #ffffff;
 }
 
 /* --- ABSOLUTE CIRCULAR SLIDER ARROWS --- */
