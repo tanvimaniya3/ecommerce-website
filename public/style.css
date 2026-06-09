@@ -505,15 +505,27 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   align-items: center;
   text-align: center;
   cursor: pointer;
-  background: transparent; /* No outer white border card block */
+  
+  /* Yahan humne soft light background aur website se match karti border add ki hai */
+  background: #fdfbf9;          /* Ekdum light warm ivory color */
+  border: 1px solid #eaddcd;    /* Soft beige/clay colored light border */
+  border-radius: 22px;          /* Card ke corners ko round karne ke liye */
+  padding: 16px;                /* Border ke andar thoda space dene ke liye */
+  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01); /* Bilkul halka sa premium shadow */
+  transition: all 0.3s ease;
+}
+.mini-slider-card:hover {
+  transform: translateY(-5px);
+  border-color: #ba6a47;        /* Terracotta color jo button se match karega */
+  box-shadow: 0 8px 24px rgba(186, 106, 71, 0.08); 
 }
 .mini-slider-card img {
   width: 100%;
-  height: 260px; /* Perfect square-ish soft profile aspect */
+  height: 230px;                /* Padding ke hisab se height balance ki hai */
   object-fit: cover;
-  border-radius: 18px; /* Smooth corners as per image */
-  margin-bottom: 16px;
-  transition: transform 0.3s ease;
+  border-radius: 14px;          /* Image ke corners andark ki taraf rounded rhenge */
+  margin-bottom: 14px;
 }
 
 .mini-slider-card:hover img {
