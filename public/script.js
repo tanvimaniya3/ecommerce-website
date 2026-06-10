@@ -137,13 +137,13 @@ function renderBestSellers() {
   if (!box) return;
   box.innerHTML = "";
 
-  // Exact 4 items slide se nikal rahe hain
+  // Original array se 4 items slice ho rahe hain
   let visible = bestProducts.slice(currentIndex, currentIndex + 4);
 
   visible.forEach(p => {
     let exactPrice = p.offerPrice ? p.offerPrice : p.price;
     
-    // Sleek Shopping Bag Icon SVG button ke liye
+    // Sleek Shopping Bag Icon SVG
     let smallBagSvg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
@@ -152,7 +152,7 @@ function renderBestSellers() {
       </svg>
     `;
 
-    // Note: onclick event ko stopPropagation() diya hai taaki button click karne par detail page open na ho jaye
+    // Note: stopPropagation() laga diya hai taaki Add to Cart dabaane par product detail page open na ho
     box.innerHTML += `
       <div class="mini-slider-card" onclick="openProduct('${p._id}')">
         
