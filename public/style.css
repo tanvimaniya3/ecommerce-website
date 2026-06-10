@@ -484,7 +484,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 .bestseller-section {
   max-width: 1200px;
   margin: 50px auto;
-  padding: 0 40px;
+  /* padding: 0 40px; */
   position: relative;
   text-align: center;
 }
@@ -554,7 +554,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   transform: translateX(-50%);
   width: 85%;
   height: 42px;
-  background-color: rgba(25, 25, 27, 0.95); /* Premium dark translucent look */
+  background-color: #e8dccd; /* Premium dark translucent look */
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -612,7 +612,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   transform: translateY(-50%);
   width: 44px;
   height: 44px;
-  background: #ffffff;
+  background: #e8dccd;
   border: 1px solid #eaeaea;
   border-radius: 50%;
   display: flex;
