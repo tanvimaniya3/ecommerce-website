@@ -494,7 +494,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   font-size: 32px;
   font-weight: 600;
   color: #1a1a1a;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 /* Slider Track Layout */
@@ -510,7 +510,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   width: 100%;
-  padding-bottom: 30px; /* Niche space banayega jisse card lamba dikhe */
+  /* padding-bottom: 30px; */
   align-items: stretch; /* Saare cards ko barabar lamba karega */
   transition: all 0.4s ease;
 }
@@ -571,7 +571,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 
 .hover-cart-btn:hover {
-  background-color: #8e6d45; /* Hover karne par website ka accent theme color */
+  background-color: #b1844fe8; /* Hover karne par website ka accent theme color */
 }
 .mini-slider-card:hover .hover-cart-btn {
   bottom: 14px; /* Image block ke andar bottom se 14px upar set ho jayega */
@@ -649,7 +649,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 
 .view-all-bottom-btn:hover {
-  background: #8e6d45;
+  background: #8e6d45ed;
   color: #ffffff;
 }
 /* --- BOTTOM VIEW ALL BUTTON --- */
