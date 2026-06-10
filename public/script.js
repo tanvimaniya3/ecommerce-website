@@ -137,22 +137,40 @@ function renderBestSellers() {
   if (!box) return;
   box.innerHTML = "";
 
-  // Slice exactly 4 items horizontally matching image card layout
+  // Exact 4 items slide se nikal rahe hain
   let visible = bestProducts.slice(currentIndex, currentIndex + 4);
 
   visible.forEach(p => {
     let exactPrice = p.offerPrice ? p.offerPrice : p.price;
     
+    // Sleek Shopping Bag Icon SVG button ke liye
+    let smallBagSvg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+        <path d="M3 6h18"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+    `;
+
+    // Note: onclick event ko stopPropagation() diya hai taaki button click karne par detail page open na ho jaye
     box.innerHTML += `
       <div class="mini-slider-card" onclick="openProduct('${p._id}')">
-        <img src="${p.image}" alt="${p.name}">
+        
+        <div class="mini-card-img-container">
+          <img src="${p.image}" alt="${p.name}">
+          
+          <button class="hover-cart-btn" onclick="event.stopPropagation(); addToCart('${p._id}')">
+            ${smallBagSvg}
+            Add to Cart
+          </button>
+        </div>
+
         <h4>${p.name}</h4>
         <p class="mini-price">₹${exactPrice.toLocaleString('en-IN')}</p>
       </div>
     `;
   });
 }
-
 // Slider Movement Controller Mechanics
 function slideRight() {
   if (currentIndex + 4 < bestProducts.length) {
