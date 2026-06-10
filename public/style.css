@@ -519,7 +519,32 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   align-items: center;
   text-align: center;
   cursor: pointer;
-  background: transparent; /* No outer white border card block */
+  background: #fdfbf9;
+  border: 1px solid #eaddcd;
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+  transition: all 0.3s ease;
+}
+.mini-slider-card:hover {
+  transform: translateY(-5px);
+  border-color: #ba6a47;
+  box-shadow: 0 8px 24px rgba(186, 106, 71, 0.08);
+}
+.mini-card-img-container {
+  position: relative; /* Iske andar button absolutely fit hoga */
+  width: 100%;
+  height: 230px;
+  border-radius: 14px;
+  overflow: hidden; /* Taaki button border ke bahaar na nikle */
+  margin-bottom: 14px;
+}
+
+.mini-card-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
 .mini-slider-card img {
@@ -546,7 +571,40 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 .mini-slider-card .mini-price {
   font-size: 16px;
   font-weight: 600;
-  color: #8e6d45; /* Soft premium brown price tint matching view all */
+  color: #8e6d45;
+}
+.mini-slider-card:hover .mini-card-img-container img {
+  transform: scale(1.05);
+}
+.hover-cart-btn {
+  position: absolute;
+  bottom: -50px; /* Shuruat mein button image ke niche chupa rahega */
+  left: 50%;
+  transform: translateX(-50%); /* Center alignment fix */
+  width: 85%;
+  height: 42px;
+  background-color: rgba(25, 25, 27, 0.9); /* Premium Dark Glassy Look */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  opacity: 0; /* Shuruat mein invisible */
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth slide up transition */
+  z-index: 5;
+}
+
+.hover-cart-btn:hover {
+  background-color: #ba6a47; /* Hover par website ka terracotta color */
+}
+.mini-slider-card:hover .hover-cart-btn {
+  bottom: 12px; /* Image ke andar bottom se 12px upar rukega */
+  opacity: 1;   /* Dikhne lagega */
 }
 
 /* --- ABSOLUTE CIRCULAR SLIDER ARROWS --- */
