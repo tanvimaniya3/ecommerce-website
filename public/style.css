@@ -520,7 +520,54 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   align-items: center;
   text-align: center;
   cursor: pointer;
-  background: transparent; /* No outer white border card block */
+  background: transparent; /* Background bilkul transparent rahega */
+}
+.mini-card-img-container {
+  position: relative;
+  width: 100%;
+  height: 260px; /* Aapki original image height */
+  border-radius: 18px; /* Smooth corners jo aapki image mein the */
+  overflow: hidden; /* Taaki hidden button bahar na dikhe */
+  margin-bottom: 16px;
+}
+.mini-card-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease; /* Smooth zoom effect */
+}
+.mini-slider-card:hover .mini-card-img-container img {
+  transform: scale(1.04);
+}
+.hover-cart-btn {
+  position: absolute;
+  bottom: -60px; /* Shuruat mein image ke frame se niche hiden rahega */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  height: 42px;
+  background-color: rgba(25, 25, 27, 0.95); /* Premium dark translucent look */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth pop-up animation */
+  z-index: 5;
+}
+
+.hover-cart-btn:hover {
+  background-color: #ba6a47; /* Hover karne par website ka accent theme color */
+}
+.mini-slider-card:hover .hover-cart-btn {
+  bottom: 14px; /* Image block ke andar bottom se 14px upar set ho jayega */
+  opacity: 1;
 }
 
 .mini-slider-card img {
@@ -547,7 +594,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 .mini-slider-card .mini-price {
   font-size: 16px;
   font-weight: 600;
-  color: #8e6d45; /* Soft premium brown price tint matching view all */
+  color: #8e6d45;
 }
 
 /* --- ABSOLUTE CIRCULAR SLIDER ARROWS --- */
