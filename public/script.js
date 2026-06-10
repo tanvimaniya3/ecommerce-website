@@ -220,7 +220,7 @@ function renderNA() {
   box.innerHTML = "";
 
   // Slider horizontal view logic (Ek baar mein screen par 4 products dikhenge)
-  let visible = naProducts.slice(naIndex, naIndex + 4);
+  let visible = naProducts.slice(naIndex, naIndex + 3);
 
   visible.forEach(p => {
     let exactPrice = p.offerPrice ? p.offerPrice : p.price;
@@ -256,8 +256,8 @@ function renderNA() {
 // SLIDER MOVEMENT ENGINE CONTROLLERS FOR 9 ITEMS MAX LIMIT
 function slideNARight() {
   // Agar next clique par 4 elements available hain, tabhi slide hoga
-  if (naIndex + 4 < naProducts.length) {
-    naIndex += 4;
+  if (naIndex + 3 < naProducts.length) {
+    naIndex += 3;
     renderNA();
   } else {
     // Agar loop end par aagya hai, toh wapas first product standard index (0) par push karega
@@ -267,12 +267,12 @@ function slideNARight() {
 }
 
 function slideNALeft() {
-  if (naIndex - 4 >= 0) {
-    naIndex -= 4;
+  if (naIndex - 3 >= 0) {
+    naIndex -= 3;
     renderNA();
   } else {
     // Agar shuruat mein left click kiya, toh automatic loop end index par transfer kar dega (Since limit is 9, last cluster starts at index 8)
-    naIndex = 8;
+    naIndex = 9;
     renderNA();
   }
 }
