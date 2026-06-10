@@ -554,7 +554,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   transform: translateX(-50%);
   width: 85%;
   height: 42px;
-  background-color: #8e6d45; /* Premium dark translucent look */
+  background-color: #c79a63; /* Premium dark translucent look */
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -571,7 +571,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 
 .hover-cart-btn:hover {
-  background-color: #ba6a47; /* Hover karne par website ka accent theme color */
+  background-color: #8e6d45; /* Hover karne par website ka accent theme color */
 }
 .mini-slider-card:hover .hover-cart-btn {
   bottom: 14px; /* Image block ke andar bottom se 14px upar set ho jayega */
