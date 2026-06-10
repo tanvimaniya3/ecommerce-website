@@ -510,6 +510,8 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   width: 100%;
+  padding-bottom: 30px; /* Niche space banayega jisse card lamba dikhe */
+  align-items: stretch; /* Saare cards ko barabar lamba karega */
   transition: all 0.4s ease;
 }
 
@@ -520,24 +522,27 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   align-items: center;
   text-align: center;
   cursor: pointer;
-  background: transparent; /* Background bilkul transparent rahega */
-  min-height: 380px;        /* Card ko overall lamba karne ke liye min-height di hai */
-  justify-content: flex-start; /* Items top se start honge */
-  padding-bottom: 20px;
+  background: transparent;
+  
+  /* Yahan height force karne ke liye height property use ki hai */
+  height: 390px !important;    /* !important lagaya hai taaki agar koi aur rule ise daba raha ho toh ye force kare */
+  padding-bottom: 25px;       /* Text ke neeche extra lambai dikhane ke liye */
+  box-sizing: border-box;
 }
 .mini-card-img-container {
   position: relative;
   width: 100%;
-  height: 260px; /* Aapki original image height */
-  border-radius: 18px; /* Smooth corners jo aapki image mein the */
-  overflow: hidden; /* Taaki hidden button bahar na dikhe */
-  margin-bottom: 20px;
+  height: 260px; /* Image size bilkul wahi hai */
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 25px; /* Image aur Text ke beech ka space kafi badha diya hai */
+  flex-shrink: 0;      /* Taaki image kisi bhi haal mein choti na ho */
 }
 .mini-card-img-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease; /* Smooth zoom effect */
+  transition: transform 0.4s ease;
 }
 .mini-slider-card:hover .mini-card-img-container img {
   transform: scale(1.04);
