@@ -521,6 +521,9 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   text-align: center;
   cursor: pointer;
   background: transparent; /* Background bilkul transparent rahega */
+  min-height: 380px;        /* Card ko overall lamba karne ke liye min-height di hai */
+  justify-content: flex-start; /* Items top se start honge */
+  padding-bottom: 20px;
 }
 .mini-card-img-container {
   position: relative;
@@ -528,7 +531,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   height: 260px; /* Aapki original image height */
   border-radius: 18px; /* Smooth corners jo aapki image mein the */
   overflow: hidden; /* Taaki hidden button bahar na dikhe */
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 .mini-card-img-container img {
   width: 100%;
