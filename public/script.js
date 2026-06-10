@@ -196,61 +196,86 @@ function slideLeft() {
   }
 }
 // 🔥 NEW ARRIVALS
+// 🔥 NEW ARRIVALS STATE MANAGEMENT
 let naProducts = [];
 let naIndex = 0;
 
-function showNewArrivals(products){
+function showNewArrivals(products) {
+  let box = document.getElementById("newArrivalsContainer");
+  if (!box) return;
 
-// latest products
-naProducts = [...products].reverse();
+  // 1. Array ko reverse karke bilkul latest upload hui products ko pehle laya
+  let sortedLatest = [...products].reverse();
 
-renderNA();
+  // 2. SLICE EXACTLY 9 ITEMS: Taaki database mein chahe 50 items ho, humein sirf top 9 new items milen
+  naProducts = sortedLatest.slice(0, 9);
+
+  /* Render first loop cluster */
+  renderNA();
 }
 
-function renderNA(){
+function renderNA() {
+  let box = document.getElementById("newArrivalsContainer");
+  if (!box) return;
+  box.innerHTML = "";
 
-let box = document.getElementById("newArrivalsContainer");
-box.innerHTML = "";
+  // Slider horizontal view logic (Ek baar mein screen par 4 products dikhenge)
+  let visible = naProducts.slice(naIndex, naIndex + 4);
 
-/* 🔥 ONLY 4 */
-let visible = naProducts.slice(naIndex, naIndex + 5);
+  visible.forEach(p => {
+    let exactPrice = p.offerPrice ? p.offerPrice : p.price;
+    
+    // Shopping Bag Vector SVG Icon
+    let smallBagSvg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+        <path d="M3 6h18"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+    `;
 
-visible.forEach(p => {
+    box.innerHTML += `
+      <div class="na-slider-card" onclick="openProduct('${p._id}')">
+        
+        <div class="na-card-img-container">
+          <img src="${p.image}" alt="${p.name}">
+          
+          <button class="na-hover-cart-btn" onclick="event.stopPropagation(); addToCart('${p._id}')">
+            ${smallBagSvg}
+            Add to Cart
+          </button>
+        </div>
 
-box.innerHTML += `
-<div class="na-card" onclick="openProduct('${p._id}')">
-
-<img src="${p.image}">
-
-<h3>${p.name}</h3>
-
-<p class="na-price">
-₹${p.offerPrice ? p.offerPrice : p.price}
-</p>
-
-<button>Add to Cart</button>
-
-</div>
-`;
-
-});
+        <h3>${p.name}</h3>
+        <p class="na-price">₹${exactPrice.toLocaleString('en-IN')}</p>
+      </div>
+    `;
+  });
 }
 
-/* SLIDER */
-function slideNARight(){
-if(naIndex + 5 < naProducts.length){
-naIndex += 5;
-renderNA();
-}
-}
-
-function slideNALeft(){
-if(naIndex - 5 >= 0){
-naIndex -= 5;
-renderNA();
-}
+// SLIDER MOVEMENT ENGINE CONTROLLERS FOR 9 ITEMS MAX LIMIT
+function slideNARight() {
+  // Agar next clique par 4 elements available hain, tabhi slide hoga
+  if (naIndex + 4 < naProducts.length) {
+    naIndex += 4;
+    renderNA();
+  } else {
+    // Agar loop end par aagya hai, toh wapas first product standard index (0) par push karega
+    naIndex = 0;
+    renderNA();
+  }
 }
 
+function slideNALeft() {
+  if (naIndex - 4 >= 0) {
+    naIndex -= 4;
+    renderNA();
+  } else {
+    // Agar shuruat mein left click kiya, toh automatic loop end index par transfer kar dega (Since limit is 9, last cluster starts at index 8)
+    naIndex = 8;
+    renderNA();
+  }
+}
 // 🔥 SALE PRODUCTS
 function showSaleProducts(products){
 let box = document.getElementById("saleContainer");
