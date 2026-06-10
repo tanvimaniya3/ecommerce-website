@@ -479,12 +479,9 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 /*  BEST SELLER*/
 
-/* --- BEST SELLER SLIDER WRAPPER --- */
-/* --- BEST SELLER SLIDER WRAPPER --- */
 .bestseller-section {
   max-width: 1200px;
   margin: 50px auto;
-  /* padding: 0 40px; */
   position: relative;
   text-align: center;
 }
@@ -523,10 +520,8 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
   text-align: center;
   cursor: pointer;
   background: transparent;
-  
-  /* Yahan height force karne ke liye height property use ki hai */
-  height: 390px !important;    /* !important lagaya hai taaki agar koi aur rule ise daba raha ho toh ye force kare */
-  padding-bottom: 25px;       /* Text ke neeche extra lambai dikhane ke liye */
+  height: 390px !important;    
+  padding-bottom: 25px;     
   box-sizing: border-box;
 }
 .mini-card-img-container {
@@ -635,7 +630,7 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 /* --- BOTTOM VIEW ALL BUTTON --- */
 .view-all-bottom-btn {
   display: inline-block;
-  margin-top: 35px;
+  margin-top: -10px;
   padding: 10px 28px;
   background: transparent;
   border: 1px solid #8e6d45;
@@ -650,74 +645,6 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 
 .view-all-bottom-btn:hover {
   background: #8e6d45ed;
-  color: #ffffff;
-}
-/* --- BOTTOM VIEW ALL BUTTON --- */
-.view-all-bottom-btn {
-  display: inline-block;
-  margin-top: 35px;
-  padding: 10px 28px;
-  background: transparent;
-  border: 1px solid #8e6d45;
-  color: #8e6d45;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.view-all-bottom-btn:hover {
-  background: #8e6d45;
-  color: #ffffff;
-}
-
-/* --- ABSOLUTE CIRCULAR SLIDER ARROWS --- */
-.slider-arrow {
-  position: absolute;
-  top: 45%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  background: #ffffff;
-  border: 1px solid #eaeaea;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  z-index: 10;
-  transition: all 0.2s ease;
-}
-
-.slider-arrow:hover {
-  background: #fbfbfb;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-}
-
-.arrow-left { left: -22px; }
-.arrow-right { right: -22px; }
-
-/* --- BOTTOM VIEW ALL BUTTON --- */
-.view-all-bottom-btn {
-  display: inline-block;
-  margin-top: 35px;
-  padding: 10px 28px;
-  background: transparent;
-  border: 1px solid #8e6d45;
-  color: #8e6d45;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.view-all-bottom-btn:hover {
-  background: #8e6d45;
   color: #ffffff;
 }
 
