@@ -281,36 +281,49 @@ function slideNALeft() {
 }
 // 🔥 SALE PRODUCTS
 // 🔥 ON SALE PRODUCTS DYNAMIC FILTER RUNNER
+// 🔥 ON SALE PRODUCTS - AUTOMATIC CONTENT FIX
 function showSaleProducts(products) {
   let box = document.getElementById("saleContainer");
   if (!box) return;
 
   box.innerHTML = "";
 
-  /* 🔥 STRICT FILTER: Sirf wahi products filter honge jinki offerPrice database mein database fields ke mutabik real hai 
-    aur offerPrice unki original price se kam (discounted) hai.
-  */
-  let saleProducts = products.filter(p => p.offerPrice && p.offerPrice < p.price && p.visible !== false);
+  // Pehle strict offers dhoondhte hain, agar nahi mile toh normal products utha lenge taaki screen khali na dikhe
+  let saleProducts = products.filter(p => p.visible !== false && p.offerPrice && Number(p.offerPrice) < Number(p.price));
 
+  // BACKUP LOGIC: Agar database mein koi bhi discounted product nahi mila, toh pehle 4 normal products dikha do
   if (saleProducts.length === 0) {
-    box.innerHTML = "<h3 style='grid-column: 1/-1; text-align:center; padding: 20px; color:#7c7c7c;'>No Offers Right Now 🏷️</h3>";
+    console.warn("API mein koi bhi discounted product nahi mila. Showing normal products as backup.");
+    saleProducts = products.filter(p => p.visible !== false);
+  }
+
+  // Agar poore database mein ek bhi product nahi hai
+  if (saleProducts.length === 0) {
+    box.innerHTML = "<h3 style='grid-column: 1/-1; text-align:center; padding: 40px; color:#aa9b8a;'>No Products Available 📦</h3>";
     return;
   }
 
-  // Sirf pehle 4 dynamic deals ko main home-screen row par highlight karne ke liye slice kiya
+  // Max 4 items ko display grid par lekar aana hai
   let topDeals = saleProducts.slice(0, 4);
 
   topDeals.forEach(p => {
-    // Math logic calculation for dynamic discount percentage label overlay
-    let discountPercent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
+    let originalPrice = Number(p.price);
+    // Agar offerPrice hai aur choti hai toh use karo, nahi toh original price use karo
+    let hasDiscount = p.offerPrice && Number(p.offerPrice) < originalPrice;
+    let currentOfferPrice = hasDiscount ? Number(p.offerPrice) : originalPrice;
+    
+    // Dynamic percentage value calculation
+    let discountPercent = hasDiscount ? Math.round(((originalPrice - currentOfferPrice) / originalPrice) * 100) : 0;
 
     box.innerHTML += `
       <div class="premium-slider-card" onclick="openProduct('${p._id}')">
         
         <div class="card-img-wrapper">
-          <span class="premium-badge badge-hot" style="position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background-color: #ebdcd1; color: #874e36; text-transform: uppercase; z-index: 2;">
-            ${discountPercent}% OFF
-          </span>
+          ${hasDiscount ? `
+            <span class="premium-badge badge-hot" style="position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background-color: #ebdcd1; color: #874e36; text-transform: uppercase; z-index: 2;">
+              ${discountPercent}% OFF
+            </span>
+          ` : ''}
 
           <img src="${p.image}" alt="${p.name}">
           
@@ -322,8 +335,8 @@ function showSaleProducts(products) {
         <h3>${p.name}</h3>
         
         <p class="shared-price">
-          <span style="color: #000000; font-weight: 700; margin-right: 8px;">₹${p.offerPrice.toLocaleString('en-IN')}</span>
-          <span style="color: #aaaaaa; font-size: 13px; text-decoration: line-through; font-weight: 400;">₹${p.price.toLocaleString('en-IN')}</span>
+          <span style="color: #000000; font-weight: 700; margin-right: 8px;">₹${currentOfferPrice.toLocaleString('en-IN')}</span>
+          ${hasDiscount ? `<span style="color: #aaaaaa; font-size: 13px; text-decoration: line-through; font-weight: 400;">₹${originalPrice.toLocaleString('en-IN')}</span>` : ""}
         </p>
 
       </div>
