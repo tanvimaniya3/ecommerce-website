@@ -280,46 +280,78 @@ function slideNALeft() {
   }
 }
 // 🔥 SALE PRODUCTS
-// 🔥 ON SALE PRODUCTS (YOUR ORIGINAL WORKING LOGIC WITH NEW PREMIUM CARDS)
-function showSaleProducts(products) {
-  let box = document.getElementById("saleContainer");
-  if (!box) return;
+function showSaleProducts(products){
 
-  box.innerHTML = "";
+let box = document.getElementById("saleContainer");
+if(!box) return;
 
-  /* Aapka original working strict filter */
-  let sale = products.filter(p => p.offerPrice && p.offerPrice < p.price);
+box.innerHTML = "";
 
-  sale.forEach(p => {
-    // Dynamic discount label calculation (Aapka original formula)
-    let discountPercent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
+/* Only Sale Products */
 
-    // Humne bas yahan aapki purani dynamic image ko hamare naye premium structure ke sath map kiya hai
-    box.innerHTML += `
-      <div class="premium-slider-card" onclick="openProduct('${p._id}')">
-        
-        <div class="card-img-wrapper">
-          <span class="premium-badge badge-hot" style="position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background-color: #ebdcd1; color: #874e36; text-transform: uppercase; z-index: 2;">
-            ${discountPercent}% OFF
-          </span>
+let sale = products.filter(
+p => p.offerPrice && p.offerPrice < p.price
+);
 
-          <img src="${p.image}" alt="${p.name}">
-          
-          <button class="shared-hover-btn" onclick="event.stopPropagation(); addToCart('${p._id}')">
-            ${bagIconSvg} Add to Cart
-          </button>
-        </div>
+/* Maximum 4 Products */
 
-        <h3>${p.name}</h3>
-        
-        <p class="shared-price">
-          <span style="color: #000000; font-weight: 700; margin-right: 8px;">₹${p.offerPrice}</span>
-          <span style="color: #aaaaaa; font-size: 13px; text-decoration: line-through; font-weight: 400;">₹${p.price}</span>
-        </p>
+sale.slice(0,4).forEach(p=>{
 
-      </div>
-    `;
-  });
+let percent = Math.round(
+((p.price - p.offerPrice) / p.price) * 100
+);
+
+box.innerHTML += `
+
+<div class="premium-slider-card"
+onclick="openProduct('${p._id}')">
+
+<div class="card-img-wrapper">
+
+<span class="premium-badge badge-hot">
+${percent}% OFF
+</span>
+
+<img src="${p.image}" alt="${p.name}">
+
+<button class="shared-hover-btn"
+onclick="event.stopPropagation();
+addToCart('${p._id}')">
+
+🛍 Add to Cart
+
+</button>
+
+</div>
+
+<h3>${p.name}</h3>
+
+<p class="shared-price">
+
+<span style="
+font-weight:700;
+font-size:22px;
+color:#000;
+">
+₹${p.offerPrice}
+</span>
+
+<span style="
+text-decoration:line-through;
+color:#999;
+margin-left:8px;
+">
+₹${p.price}
+</span>
+
+</p>
+
+</div>
+
+`;
+
+});
+
 }
 
 // 🔥 OFFER BUTTON CLICK
