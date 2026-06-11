@@ -353,6 +353,26 @@ addToCart('${p._id}')">
 });
 
 }
+function saleSlideRight(){
+
+if(saleIndex + 4 < saleProducts.length){
+
+saleIndex += 4;
+renderSaleProducts();
+
+}
+
+}
+function saleSlideLeft(){
+
+if(saleIndex - 4 >= 0){
+
+saleIndex -= 4;
+renderSaleProducts();
+
+}
+
+}
 
 // 🔥 OFFER BUTTON CLICK
 function goToSale(){
