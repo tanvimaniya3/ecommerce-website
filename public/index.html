@@ -284,11 +284,19 @@ helpful and responsive.
 
   <button class="view-all-bottom-btn" onclick="window.location.href='products.html'">View All Collection</button>
 </section>
+    
+<!-- on sale section -->
+    
+    
+<section class="bestseller-section"> 
+     <h2 class="section-title">
+        <span></span> On Sale <span></span>
+    </h2>
 
-<!-- 💸 SALE PRODUCTS -->
-<section class="products">
-    <h2>🔥 On Sale</h2>
-    <div class="product-grid" id="saleContainer"></div>
+  <div id="saleContainer" class="slider-relative-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 100%; padding-bottom: 30px;">
+    </div>
+
+  <button class="view-all-bottom-btn" onclick="goToSale()">View All Offers</button>
 </section>
 
 <!-- 🎁 OFFER BANNER -->
