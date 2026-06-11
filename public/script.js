@@ -280,50 +280,28 @@ function slideNALeft() {
   }
 }
 // 🔥 SALE PRODUCTS
-// 🔥 ON SALE PRODUCTS DYNAMIC FILTER RUNNER
-// 🔥 ON SALE PRODUCTS - AUTOMATIC CONTENT FIX
+// 🔥 ON SALE PRODUCTS (YOUR ORIGINAL WORKING LOGIC WITH NEW PREMIUM CARDS)
 function showSaleProducts(products) {
   let box = document.getElementById("saleContainer");
   if (!box) return;
 
   box.innerHTML = "";
 
-  // Pehle strict offers dhoondhte hain, agar nahi mile toh normal products utha lenge taaki screen khali na dikhe
-  let saleProducts = products.filter(p => p.visible !== false && p.offerPrice && Number(p.offerPrice) < Number(p.price));
+  /* Aapka original working strict filter */
+  let sale = products.filter(p => p.offerPrice && p.offerPrice < p.price);
 
-  // BACKUP LOGIC: Agar database mein koi bhi discounted product nahi mila, toh pehle 4 normal products dikha do
-  if (saleProducts.length === 0) {
-    console.warn("API mein koi bhi discounted product nahi mila. Showing normal products as backup.");
-    saleProducts = products.filter(p => p.visible !== false);
-  }
+  sale.forEach(p => {
+    // Dynamic discount label calculation (Aapka original formula)
+    let discountPercent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
 
-  // Agar poore database mein ek bhi product nahi hai
-  if (saleProducts.length === 0) {
-    box.innerHTML = "<h3 style='grid-column: 1/-1; text-align:center; padding: 40px; color:#aa9b8a;'>No Products Available 📦</h3>";
-    return;
-  }
-
-  // Max 4 items ko display grid par lekar aana hai
-  let topDeals = saleProducts.slice(0, 4);
-
-  topDeals.forEach(p => {
-    let originalPrice = Number(p.price);
-    // Agar offerPrice hai aur choti hai toh use karo, nahi toh original price use karo
-    let hasDiscount = p.offerPrice && Number(p.offerPrice) < originalPrice;
-    let currentOfferPrice = hasDiscount ? Number(p.offerPrice) : originalPrice;
-    
-    // Dynamic percentage value calculation
-    let discountPercent = hasDiscount ? Math.round(((originalPrice - currentOfferPrice) / originalPrice) * 100) : 0;
-
+    // Humne bas yahan aapki purani dynamic image ko hamare naye premium structure ke sath map kiya hai
     box.innerHTML += `
       <div class="premium-slider-card" onclick="openProduct('${p._id}')">
         
         <div class="card-img-wrapper">
-          ${hasDiscount ? `
-            <span class="premium-badge badge-hot" style="position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background-color: #ebdcd1; color: #874e36; text-transform: uppercase; z-index: 2;">
-              ${discountPercent}% OFF
-            </span>
-          ` : ''}
+          <span class="premium-badge badge-hot" style="position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background-color: #ebdcd1; color: #874e36; text-transform: uppercase; z-index: 2;">
+            ${discountPercent}% OFF
+          </span>
 
           <img src="${p.image}" alt="${p.name}">
           
@@ -335,8 +313,8 @@ function showSaleProducts(products) {
         <h3>${p.name}</h3>
         
         <p class="shared-price">
-          <span style="color: #000000; font-weight: 700; margin-right: 8px;">₹${currentOfferPrice.toLocaleString('en-IN')}</span>
-          ${hasDiscount ? `<span style="color: #aaaaaa; font-size: 13px; text-decoration: line-through; font-weight: 400;">₹${originalPrice.toLocaleString('en-IN')}</span>` : ""}
+          <span style="color: #000000; font-weight: 700; margin-right: 8px;">₹${p.offerPrice}</span>
+          <span style="color: #aaaaaa; font-size: 13px; text-decoration: line-through; font-weight: 400;">₹${p.price}</span>
         </p>
 
       </div>
