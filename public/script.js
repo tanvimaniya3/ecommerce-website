@@ -280,24 +280,32 @@ function slideNALeft() {
   }
 }
 // 🔥 SALE PRODUCTS
+let saleProducts = [];
+let saleIndex = 0;
+
 function showSaleProducts(products){
 
+saleProducts = products.filter(
+p => p.offerPrice && p.offerPrice < p.price
+);
+
+renderSaleProducts();
+
+}
+
+function renderSaleProducts(){
+
 let box = document.getElementById("saleContainer");
+
 if(!box) return;
 
 box.innerHTML = "";
 
-/* Only Sale Products */
+let visible = saleProducts.slice(saleIndex, saleIndex + 4);
 
-let sale = products.filter(
-p => p.offerPrice && p.offerPrice < p.price
-);
+visible.forEach(p=>{
 
-/* Maximum 4 Products */
-
-sale.slice(0,4).forEach(p=>{
-
-let percent = Math.round(
+let discount = Math.round(
 ((p.price - p.offerPrice) / p.price) * 100
 );
 
@@ -308,8 +316,8 @@ onclick="openProduct('${p._id}')">
 
 <div class="card-img-wrapper">
 
-<span class="premium-badge badge-hot">
-${percent}% OFF
+<span class="sale-tag">
+${discount}% OFF
 </span>
 
 <img src="${p.image}" alt="${p.name}">
@@ -328,19 +336,11 @@ addToCart('${p._id}')">
 
 <p class="shared-price">
 
-<span style="
-font-weight:700;
-font-size:22px;
-color:#000;
-">
+<span class="new-price">
 ₹${p.offerPrice}
 </span>
 
-<span style="
-text-decoration:line-through;
-color:#999;
-margin-left:8px;
-">
+<span class="old-price">
 ₹${p.price}
 </span>
 
