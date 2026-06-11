@@ -287,18 +287,38 @@ helpful and responsive.
     
 <!-- on sale section -->
     
-    
 <section class="bestseller-section">
 
-    <h2 class="section-title">
-        <span></span> On Sale <span></span>
-    </h2>
+<h2 class="section-title">
+<span></span>
+On Sale
+<span></span>
+</h2>
 
-    <div id="saleContainer"></div>
+<div class="slider-wrapper">
 
-    <button class="view-all-bottom-btn" onclick="goToSale()">
-        View All Offers
-    </button>
+<button class="slide-btn left"
+onclick="saleSlideLeft()">
+‹
+</button>
+
+<div id="saleContainer"
+class="product-slider">
+</div>
+
+<button class="slide-btn right"
+onclick="saleSlideRight()">
+›
+</button>
+
+</div>
+
+<button class="view-all-bottom-btn"
+onclick="goToSale()">
+
+View All Offers
+
+</button>
 
 </section>
 
