@@ -280,36 +280,55 @@ function slideNALeft() {
   }
 }
 // 🔥 SALE PRODUCTS
-function showSaleProducts(products){
-let box = document.getElementById("saleContainer");
-if(!box) return;
+// 🔥 ON SALE PRODUCTS DYNAMIC FILTER RUNNER
+function showSaleProducts(products) {
+  let box = document.getElementById("saleContainer");
+  if (!box) return;
 
-box.innerHTML = "";
+  box.innerHTML = "";
 
-/* only discounted */
-let sale = products.filter(p => p.offerPrice && p.offerPrice < p.price);
+  /* 🔥 STRICT FILTER: Sirf wahi products filter honge jinki offerPrice database mein database fields ke mutabik real hai 
+    aur offerPrice unki original price se kam (discounted) hai.
+  */
+  let saleProducts = products.filter(p => p.offerPrice && p.offerPrice < p.price && p.visible !== false);
 
-sale.forEach(p => {
-box.innerHTML += `
-<div class="product">
+  if (saleProducts.length === 0) {
+    box.innerHTML = "<h3 style='grid-column: 1/-1; text-align:center; padding: 20px; color:#7c7c7c;'>No Offers Right Now 🏷️</h3>";
+    return;
+  }
 
-<a href="product.html?id=${p._id}">
-<img src="${p.image}">
-<h3>${p.name}</h3>
-</a>
+  // Sirf pehle 4 dynamic deals ko main home-screen row par highlight karne ke liye slice kiya
+  let topDeals = saleProducts.slice(0, 4);
 
-<p>
-<span class="old">₹${p.price}</span>
-<span class="new">₹${p.offerPrice}</span>
-</p>
+  topDeals.forEach(p => {
+    // Math logic calculation for dynamic discount percentage label overlay
+    let discountPercent = Math.round(((p.price - p.offerPrice) / p.price) * 100);
 
-<p class="off">
-🔥 ${Math.round(((p.price - p.offerPrice) / p.price) * 100)}% OFF
-</p>
+    box.innerHTML += `
+      <div class="premium-slider-card" onclick="openProduct('${p._id}')">
+        
+        <div class="card-img-wrapper">
+          <span class="premium-badge badge-hot" style="position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background-color: #ebdcd1; color: #874e36; text-transform: uppercase; z-index: 2;">
+            ${discountPercent}% OFF
+          </span>
 
-</div>
-`;
-});
+          <img src="${p.image}" alt="${p.name}">
+          
+          <button class="shared-hover-btn" onclick="event.stopPropagation(); addToCart('${p._id}')">
+            ${bagIconSvg} Add to Cart
+          </button>
+        </div>
+
+        <h3>${p.name}</h3>
+        
+        <p class="shared-price">
+          <span style="color: #000000; font-weight: 700; margin-right: 8px;">₹${p.offerPrice.toLocaleString('en-IN')}</span>
+          <span style="color: #aaaaaa; font-size: 13px; text-decoration: line-through; font-weight: 400;">₹${p.price.toLocaleString('en-IN')}</span>
+        </p>
+
+      </div>
+    `;
+  });
 }
 
 // 🔥 OFFER BUTTON CLICK
