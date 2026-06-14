@@ -317,7 +317,7 @@ onclick="openProduct('${p._id}')">
 <div class="card-img-wrapper">
 
 <span class="premium-badge">
-${discountPercent}% OFF
+${discount}% OFF
 </span>
 
 <img src="${p.image}" alt="${p.name}">
