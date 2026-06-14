@@ -335,15 +335,8 @@ addToCart('${p._id}')">
 <h3>${p.name}</h3>
 
 <p class="shared-price">
-
-<span class="new-price">
-₹${p.offerPrice}
-</span>
-
-<span class="old-price">
-₹${p.price}
-</span>
-
+<span class="new">₹${p.offerPrice}</span>
+<span class="old">₹${p.price}</span>
 </p>
 
 </div>
