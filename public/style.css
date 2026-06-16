@@ -1750,40 +1750,48 @@ transform:translateY(-6px);
 .card-img-wrapper{
     position:relative;
     overflow:hidden;
-    border-radius:14px;
-    background:#f6f1ea;
+   border-radius:16px;
+   background:#f7f3ef
 }
 
 .card-img-wrapper img{
 width:100%;
 height:250px;
-object-fit:cover;
-border-radius:14px;
+object-fit:contain;
+transition:0.4s;
 }
 .shared-hover-btn{
-width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-background:#7b6557;
+position:absolute;
+left:50%;
+bottom:-60px;
+transform:translateX(-50%);
+width:85%;
+background:#8b6b47;
 color:white;
-font-size:18px;
+border:none;
+padding:14px;
+border-radius:12px;
 font-weight:600;
 cursor:pointer;
-margin-top:12px;
+transition:0.35s;
+opacity:0;
 }
+
 
 .shared-hover-btn:hover{
 background:#6f5234;
 }
 
 .card-img-wrapper:hover .shared-hover-btn{
-    opacity:1;
+bottom:15px;
+opacity:1;
 }
 .card-img-wrapper:hover .hover-cart-btn{
     opacity:1;
 }
-
+.card-img-wrapper:hover img{
+transform:scale(1.08);
+}
 .premium-slider-card h3{
 font-size:18px;
 font-weight:500;
@@ -1812,5 +1820,15 @@ display:flex;
 gap:28px;
 justify-content:center;
 }
+.card-img-wrapper::after{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0);
+transition:.3s;
+}
 
+.card-img-wrapper:hover::after{
+background:rgba(0,0,0,.08);
+}
 
