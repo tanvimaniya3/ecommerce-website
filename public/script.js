@@ -320,15 +320,9 @@ onclick="openProduct('${p._id}')">
 ${discount}% OFF
 </span>
 
-<img src="${p.image}" alt="${p.name}">
-
-<button class="shared-hover-btn"
-onclick="event.stopPropagation();
-addToCart('${p._id}')">
-
-🛍 Add to Cart
-
-</button>
+          <button class="hover-cart-btn" onclick="event.stopPropagation(); addToCart('${p._id}')">
+            ${smallBagSvg} Add to Cart
+          </button>
 
 </div>
 
@@ -336,7 +330,7 @@ addToCart('${p._id}')">
 
 <p class="shared-price">
 <span class="new">₹${p.offerPrice}</span>
-<span class="old">₹${p.price}</span>
+// <span class="old">₹${p.price}</span>
 </p>
 
 </div>
