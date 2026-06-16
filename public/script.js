@@ -322,7 +322,7 @@ ${discount}% OFF
 
 <img src="${p.image}" alt="${p.name}">
 
-<button class="hover-cart-btn"
+<button class="shared-hover-btn"
 onclick="event.stopPropagation(); addToCart('${p._id}')">
 
 🛍 Add to Cart
