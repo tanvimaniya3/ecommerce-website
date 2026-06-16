@@ -768,7 +768,7 @@ width:42px;
 height:42px;
 border:none;
 border-radius:50%;
-background:white;
+background:#e8dccd;
 color:#444;
 font-size:22px;
 cursor:pointer;
@@ -1766,7 +1766,7 @@ left:50%;
 bottom:-60px;
 transform:translateX(-50%);
 width:85%;
-background:#8b6b47;
+background:#c9a984d1;
 color:white;
 border:none;
 padding:14px;
@@ -1779,7 +1779,7 @@ opacity:0;
 
 
 .shared-hover-btn:hover{
-background:#6f5234;
+background:#b1844fe8;
 }
 
 .card-img-wrapper:hover .shared-hover-btn{
@@ -1793,10 +1793,11 @@ opacity:1;
 transform:scale(1.08);
 }
 .premium-slider-card h3{
-font-size:18px;
-font-weight:500;
-margin-top:15px;
-margin-bottom:10px;
+font-size: 15px;
+    font-weight: 500;
+    color: #2b2b2b;
+    margin-bottom: 6px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .shared-price{
@@ -1804,9 +1805,9 @@ margin-top:8px;
 }
 
 .shared-price .new{
-font-size:20px;
-font-weight:600;
-color:#111;
+    font-size: 16px;
+    font-weight: 600;
+    color: #8e6d45;
 }
 
 .shared-price .old{
