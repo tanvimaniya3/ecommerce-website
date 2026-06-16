@@ -314,16 +314,20 @@ box.innerHTML += `
 <div class="premium-slider-card"
 onclick="openProduct('${p._id}')">
 
- <div class="mini-card-img-container">
+<div class="card-img-wrapper">
 
 <span class="premium-badge">
 ${discount}% OFF
 </span>
 
 <img src="${p.image}" alt="${p.name}">
-          <button class="hover-cart-btn" onclick="event.stopPropagation(); addToCart('${p._id}')">
-            ${smallBagSvg} Add to Cart
-          </button>
+
+<button class="hover-cart-btn"
+onclick="event.stopPropagation(); addToCart('${p._id}')">
+
+🛍 Add to Cart
+
+</button>
 
 
 
