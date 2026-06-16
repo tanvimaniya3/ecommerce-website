@@ -337,7 +337,6 @@ onclick="event.stopPropagation(); addToCart('${p._id}')">
 
 <p class="shared-price">
 <span class="new">₹${p.offerPrice}</span>
-// <span class="old">₹${p.price}</span>
 </p>
 
 </div>
