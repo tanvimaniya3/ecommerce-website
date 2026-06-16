@@ -683,7 +683,6 @@ box-shadow:0 4px 15px rgba(0,0,0,0.06);
 .product-slider {
     display: flex;
     gap: 20px;
-    overflow-x: hidden;
     justify-content: center;
     scroll-behavior: smooth;
     padding: 0 80px;   
@@ -777,11 +776,11 @@ box-shadow:0 4px 12px rgba(0,0,0,.12);
 }
 
 .slide-btn.left{
-left:-20px;
+left:-70px;
 }
 
 .slide-btn.right{
-right:-20px;
+right:-70px;
 }
 
 /* offer sectionn */
@@ -1783,9 +1782,9 @@ background:#6f5234;
 }
 
 .premium-slider-card h3{
-font-size:22px;
+font-size:18px;
 font-weight:500;
-margin-top:18px;
+margin-top:15px;
 margin-bottom:10px;
 }
 
@@ -1794,8 +1793,8 @@ margin-top:8px;
 }
 
 .shared-price .new{
-font-size:34px;
-font-weight:700;
+font-size:20px;
+font-weight:600;
 color:#111;
 }
 
