@@ -320,9 +320,14 @@ onclick="openProduct('${p._id}')">
 ${discount}% OFF
 </span>
 
-          <button class="hover-cart-btn" onclick="event.stopPropagation(); addToCart('${p._id}')">
-            ${smallBagSvg} Add to Cart
-          </button>
+<img src="${p.image}" alt="${p.name}">
+
+<button class="hover-cart-btn"
+onclick="event.stopPropagation(); addToCart('${p._id}')">
+
+🛍 Add to Cart
+
+</button>
 
 </div>
 
